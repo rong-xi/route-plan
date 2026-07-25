@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>徐汇区 · 新店拜访路线规划</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #16162a;
+  --bg-card-hover: #1c1c38;
+  --border-color: rgba(108, 92, 231, 0.15);
+  --border-active: rgba(108, 92, 231, 0.4);
+  --purple: #6c5ce7;
+  --purple-light: #a78bfa;
+  --purple-glow: rgba(108, 92, 231, 0.3);
+  --gold: #c9a84c;
+  --gold-light: #e8d48b;
+  --gold-glow: rgba(201, 168, 76, 0.25);
+  --text-primary: #f0eff5;
+  --text-secondary: rgba(240, 239, 245, 0.65);
+  --text-muted: rgba(240, 239, 245, 0.35);
+  --danger: #ff6b6b;
+  --success: #51cf66;
+  --warning: #fcc419;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+  --nav-height: 52px;
+  --max-width: 480px;
+  --shadow-card: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(108,92,231,0.08);
+  --shadow-glow: 0 0 40px rgba(108,92,231,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ===== 噪点纹理 ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== 顶部导航 ===== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(108, 92, 231, 0.08);
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(10, 10, 15, 0.92);
+  border-bottom-color: rgba(108, 92, 231, 0.15);
+  box-shadow: 0 1px 30px rgba(0,0,0,0.3);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--purple), #8b5cf6);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+}
+
+.nav-logo-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 1.2px;
+}
+
+.nav-logo-sub {
+  font-size: 9px;
+  color: var(--purple-light);
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-menu-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(108, 92, 231, 0.2);
+  border-radius: 10px;
+  background: rgba(108, 92, 231, 0.06);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-menu-btn:hover {
+  background: rgba(108, 92, 231, 0.15);
+  border-color: rgba(108, 92, 231, 0.35);
+}
+
+.nav-menu-btn span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-menu-btn.active span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.nav-menu-btn.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-menu-btn.active span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* ===== 侧边菜单 ===== */
+.sidebar-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: -300px;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
+  border-right: 1px solid rgba(108, 92, 231, 0.12);
+  z-index: 2001;
+  transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.sidebar.open { left: 0; }
+
+.sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(108, 92, 231, 0.08);
+  margin-bottom: 12px;
+}
+
+.sidebar-logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo span {
+  background: linear-gradient(135deg, var(--purple), #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sidebar-user {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  padding-left: 36px;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.sidebar-item:hover {
+  background: rgba(108, 92, 231, 0.1);
+  color: var(--text-primary);
+}
+
+.sidebar-item .icon { width: 20px; text-align: center; font-size: 16px; }
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(108, 92, 231, 0.08);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ===== 主容器 ===== */
+.main-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-top: var(--nav-height);
+  position: relative;
+}
+
+/* ===== 封面区 ===== */
+.hero {
+  position: relative;
+  padding: 60px 20px 50px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+  background: rgba(201, 168, 76, 0.06);
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--gold); }
+  50% { opacity: 0.4; box-shadow: 0 0 12px var(--gold); }
+}
+
+.hero-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.4s;
+}
+
+.hero-title .gradient {
+  background: linear-gradient(135deg, var(--purple-light) 0%, var(--gold) 50%, var(--purple-light) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+  max-width: 320px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.6s;
+}
+
+.hero-divider {
+  margin: 28px auto 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--gold), transparent);
+  border-radius: 2px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.7s;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 数据统计网格 ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 18px 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--gold));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before { opacity: 1; }
+.stat-card:hover { border-color: var(--border-active); transform: translateY(-2px); }
+
+.stat-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-number.purple { color: var(--purple-light); }
+.stat-number.gold { color: var(--gold); }
+.stat-number.blue { color: #60a5fa; }
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  font-weight: 400;
+}
+
+.stat-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ===== 板块标题 ===== */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 14px;
+  margin-top: 10px;
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.section-title .accent {
+  color: var(--gold);
+}
+
+.section-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(108, 92, 231, 0.08);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* ===== 板块卡片 ===== */
+.zone-section {
+  margin-bottom: 24px;
+}
+
+.zone-card {
+  margin: 0 16px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.zone-card:hover {
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-glow);
+}
+
+.zone-card-header {
+  padding: 16px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(108, 92, 231, 0.06);
+  cursor: pointer;
+}
+
+.zone-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zone-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.zone-number.purple { background: rgba(108, 92, 231, 0.15); color: var(--purple-light); }
+.zone-number.gold { background: rgba(201, 168, 76, 0.15); color: var(--gold); }
+
+.zone-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.zone-arrow {
+  color: var(--text-muted);
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.zone-card.expanded .zone-arrow { transform: rotate(180deg); }
+
+.zone-badge {
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.zone-badge.hot {
+  background: rgba(255, 107, 107, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(255, 107, 107, 0.15);
+}
+
+.zone-badge.normal {
+  background: rgba(108, 92, 231, 0.08);
+  color: var(--purple-light);
+  border: 1px solid var(--border-color);
+}
+
+/* ===== 商家列表 ===== */
+.merchant-list {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zone-card.expanded .merchant-list {
+  max-height: 1200px;
+}
+
+.merchant-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(108, 92, 231, 0.04);
+  transition: background 0.2s ease;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.zone-card.expanded .merchant-item {
+  animation: merchantFadeIn 0.35s ease forwards;
+}
+
+.zone-card.expanded .merchant-item:nth-child(1) { animation-delay: 0.05s; }
+.zone-card.expanded .merchant-item:nth-child(2) { animation-delay: 0.1s; }
+.zone-card.expanded .merchant-item:nth-child(3) { animation-delay: 0.15s; }
+.zone-card.expanded .merchant-item:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes merchantFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.merchant-item:last-child { border-bottom: none; }
+.merchant-item:hover { background: rgba(108, 92, 231, 0.04); }
+
+.merchant-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.merchant-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  margin-left: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tag-hot { background: rgba(255, 107, 107, 0.1); color: var(--danger); border: 1px solid rgba(255, 107, 107, 0.12); }
+.tag-mid { background: rgba(201, 168, 76, 0.1); color: var(--gold); border: 1px solid rgba(201, 168, 76, 0.12); }
+.tag-normal { background: rgba(108, 92, 231, 0.06); color: var(--text-muted); border: 1px solid var(--border-color); }
+
+.merchant-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.merchant-info span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.merchant-info .info-icon { font-size: 10px; }
+
+/* ===== 路线总览 ===== */
+.route-section {
+  margin: 0 16px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.route-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--gold), var(--purple));
+  opacity: 0.6;
+}
+
+.route-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.route-title .emoji { font-size: 18px; }
+
+.route-step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.route-step:last-child { margin-bottom: 0; }
+
+.route-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.route-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--purple);
+  background: var(--bg-card);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.route-dot.active { background: var(--purple); box-shadow: 0 0 10px rgba(108,92,231,0.4); }
+.route-dot.finish { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.3); }
+
+.route-connector {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg, var(--purple) 0%, rgba(108,92,231,0.2) 100%);
+  margin: 2px 0;
+  min-height: 30px;
+}
+
+.route-content {
+  flex: 1;
+  padding-bottom: 4px;
+}
+
+.route-content-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.route-content-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.route-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 10px 38px;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.3px;
+}
+
+.route-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+}
+
+.route-summary {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.route-summary-item {
+  text-align: center;
+  flex: 1;
+}
+
+.route-summary-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--purple-light);
+}
+
+.route-summary-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ===== 拜访优先级 ===== */
+.priority-section {
+  margin: 0 16px 28px;
+}
+
+.priority-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priority-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.priority-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: all 0.3s ease;
+}
+
+.priority-item:hover {
+  border-color: var(--border-active);
+  transform: translateX(4px);
+}
+
+.priority-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.priority-icon.high { background: rgba(255, 107, 107, 0.12); }
+.priority-icon.mid { background: rgba(201, 168, 76, 0.12); }
+.priority-icon.low { background: rgba(108, 92, 231, 0.08); }
+
+.priority-info { flex: 1; }
+
+.priority-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.priority-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ===== 底部进度条 ===== */
+.footer-progress {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 999;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-top: 1px solid rgba(108, 92, 231, 0.08);
+  padding: 10px 16px 14px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(108, 92, 231, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--purple), var(--gold));
+  border-radius: 3px;
+  transition: width 0.15s ease-out;
+  box-shadow: 0 0 12px rgba(108,92,231,0.3);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.progress-percent {
+  font-family: 'Orbitron', monospace;
+  color: var(--purple-light);
+  font-weight: 500;
+}
+
+/* ===== 页脚间距 ===== */
+.page-footer {
+  height: 60px;
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(108, 92, 231, 0.3); border-radius: 4px; }
+
+/* ===== 响应式 ===== */
+@media (min-width: 520px) {
+  .main-container { border-left: 1px solid rgba(108,92,231,0.06); border-right: 1px solid rgba(108,92,231,0.06); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="navbar" id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">S</div>
+    <div>
+      <div class="nav-logo-text">SALES·ROUTE</div>
+      <div class="nav-logo-sub">徐汇·新店拜访</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <button class="nav-menu-btn" id="menuBtn" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== 侧边菜单遮罩 ===== -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== 侧边菜单 ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">〈 <span>S</span> 〉</div>
+    <div class="sidebar-user">文宇涵 · 地面产品销售</div>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="sidebar-item" href="#" onclick="closeMenu(); scrollToTop();"><span class="icon">🏠</span> 首页</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelector('.stats-grid').scrollIntoView({behavior:'smooth', block:'center'});"><span class="icon">📊</span> 数据概览</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelectorAll('.zone-section')[0].scrollIntoView({behavior:'smooth', block:'start'});"><span class="icon">📍</span> 滨江板块</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelectorAll('.zone-section')[1].scrollIntoView({behavior:'smooth', block:'start'});"><span class="icon">📍</span> 田林/漕河泾</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelectorAll('.zone-section')[2].scrollIntoView({behavior:'smooth', block:'start'});"><span class="icon">📍</span> 龙华/南站</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelectorAll('.zone-section')[3].scrollIntoView({behavior:'smooth', block:'start'});"><span class="icon">📍</span> 凯旋路</a>
+    <a class="sidebar-item" href="#" onclick="closeMenu(); document.querySelector('.route-section').scrollIntoView({behavior:'smooth', block:'start'});"><span class="icon">🗺️</span> 路线总览</a>
+  </nav>
+  <div class="sidebar-footer">POWERED BY AI · 2026</div>
+</aside>
+
+<!-- ===== 主内容 ===== -->
+<div class="main-container">
+
+  <!-- 封面 -->
+  <section class="hero">
+    <div class="hero-badge">● 2026年7月 数据更新</div>
+    <h1 class="hero-title">
+      <span class="gradient">徐汇区</span><br>
+      新店拜访路线规划
+    </h1>
+    <p class="hero-subtitle">
+      基于企查查·2026年7月20日-24日新增企业数据<br>
+      智能规划最优拜访路线 · 高效覆盖目标客户
+    </p>
+    <div class="hero-divider"></div>
+  </section>
+
+  <!-- 数据统计 -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number purple">11</div>
+      <div class="stat-label">餐饮新店</div>
+      <div class="stat-sub">覆盖目标</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number gold">0</div>
+      <div class="stat-label">非餐商户</div>
+      <div class="stat-sub">待拓展</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number blue">4</div>
+      <div class="stat-label">覆盖板块</div>
+      <div class="stat-sub">徐汇全域</div>
+    </div>
+  </div>
+
+  <!-- ===== 四大板块 ===== -->
+
+  <!-- 第1站：徐汇滨江 -->
+  <div class="section-header">
+    <div class="section-title">📍 <span class="accent">滨江</span>板块</div>
+    <div class="section-count">4 家商户</div>
+  </div>
+  <div class="zone-section" id="zone1">
+    <div class="zone-card expanded" onclick="toggleZone(this)">
+      <div class="zone-card-header">
+        <div class="zone-card-header-left">
+          <div class="zone-number purple">01</div>
+          <span class="zone-name">徐汇滨江板块</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="zone-badge hot">🔥 重点</span>
+          <span class="zone-arrow">▼</span>
+        </div>
+      </div>
+      <div class="merchant-list">
+        <div class="merchant-item">
+          <div class="merchant-name">
+            ☕ 库迪咖啡（上海）有限公司徐汇第五分公司
+            <span class="merchant-tag tag-mid">中优先</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 船厂路28号5-104</span>
+            <span>📅 7月23日</span>
+            <span>🏷️ 咖啡</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍽️ 置吉（上海）餐饮有限责任公司
+            <span class="merchant-tag tag-mid">中优先</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 船厂路36号地下一层B-50、B-51</span>
+            <span>📅 7月20日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🏢 上海缘来思餐饮管理有限公司一分公司
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 瑞宁路2.6.10号地下1层B1004室</span>
+            <span>📅 7月21日</span>
+            <span>🏷️ 餐饮管理</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🧋 礼舍的茶餐饮分公司
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 瑞宁路2.6.10号地下1层B1010-4室</span>
+            <span>📅 7月20日</span>
+            <span>🏷️ 茶饮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第2站：田林/漕河泾 -->
+  <div class="section-header">
+    <div class="section-title">📍 <span class="accent">田林/漕河泾</span>板块</div>
+    <div class="section-count">3 家商户</div>
+  </div>
+  <div class="zone-section" id="zone2">
+    <div class="zone-card" onclick="toggleZone(this)">
+      <div class="zone-card-header">
+        <div class="zone-card-header-left">
+          <div class="zone-number gold">02</div>
+          <span class="zone-name">田林/漕河泾板块</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="zone-badge normal">📍 覆盖</span>
+          <span class="zone-arrow">▼</span>
+        </div>
+      </div>
+      <div class="merchant-list">
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍜 唐倪熊餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 田林十村37号一楼23号房</span>
+            <span>📅 7月23日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍜 恩贵餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 漕东路30号-7、30号-8</span>
+            <span>📅 7月20日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍜 申晓磊餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 虹梅路2578号1层</span>
+            <span>📅 7月21日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第3站：龙华/上海南站 -->
+  <div class="section-header">
+    <div class="section-title">📍 <span class="accent">龙华/上海南站</span>板块</div>
+    <div class="section-count">3 家商户</div>
+  </div>
+  <div class="zone-section" id="zone3">
+    <div class="zone-card" onclick="toggleZone(this)">
+      <div class="zone-card-header">
+        <div class="zone-card-header-left">
+          <div class="zone-number purple">03</div>
+          <span class="zone-name">龙华/上海南站板块</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="zone-badge hot">🔥 重点</span>
+          <span class="zone-arrow">▼</span>
+        </div>
+      </div>
+      <div class="merchant-list">
+        <div class="merchant-item">
+          <div class="merchant-name">
+            ☕ 瑞幸咖啡徐汇老沪闵路二店
+            <span class="merchant-tag tag-hot">🔥 高优先</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 老沪闵路718号1层L1-07B室</span>
+            <span>📅 7月23日</span>
+            <span>🏷️ 品牌连锁</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍽️ 玉煌姬餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 龙吴路1333-54号一层A室</span>
+            <span>📅 7月21日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍽️ 细妹餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 天等路220号</span>
+            <span>📅 7月20日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第4站：凯旋路 -->
+  <div class="section-header">
+    <div class="section-title">📍 <span class="accent">凯旋路</span>板块</div>
+    <div class="section-count">1 家商户</div>
+  </div>
+  <div class="zone-section" id="zone4">
+    <div class="zone-card" onclick="toggleZone(this)">
+      <div class="zone-card-header">
+        <div class="zone-card-header-left">
+          <div class="zone-number gold">04</div>
+          <span class="zone-name">凯旋路板块</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="zone-badge normal">📍 顺路</span>
+          <span class="zone-arrow">▼</span>
+        </div>
+      </div>
+      <div class="merchant-list">
+        <div class="merchant-item">
+          <div class="merchant-name">
+            🍽️ 浅川餐饮店（个体工商户）
+            <span class="merchant-tag tag-normal">常规</span>
+          </div>
+          <div class="merchant-info">
+            <span>📌 凯旋路1671号底层北部</span>
+            <span>📅 7月21日</span>
+            <span>🏷️ 餐饮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 路线总览 ===== -->
+  <div class="route-section">
+    <div class="route-title"><span class="emoji">🗺️</span> 推荐路线总览</div>
+
+    <div class="route-step">
+      <div class="route-line">
+        <div class="route-dot active"></div>
+        <div class="route-connector"></div>
+      </div>
+      <div class="route-content">
+        <div class="route-content-title">第1站 · 滨江板块 <span style="color:var(--gold);font-size:11px;">（4家）</span></div>
+        <div class="route-content-desc">船厂路 → 瑞宁路 · 库迪咖啡→置吉→缘来思→礼舍的茶</div>
+      </div>
+    </div>
+
+    <div class="route-divider">
+      <span>↓</span>
+      <span style="font-size:12px;flex:1;">沿宛平南路/天钥桥路往北骑行约 8 分钟</span>
+      <div class="route-divider-line"></div>
+    </div>
+
+    <div class="route-step">
+      <div class="route-line">
+        <div class="route-dot active"></div>
+        <div class="route-connector"></div>
+      </div>
+      <div class="route-content">
+        <div class="route-content-title">第2站 · 田林/漕河泾 <span style="color:var(--gold);font-size:11px;">（3家）</span></div>
+        <div class="route-content-desc">田林十村 → 漕东路 → 虹梅路 · 唐倪熊→恩贵→申晓磊</div>
+      </div>
+    </div>
+
+    <div class="route-divider">
+      <span>↓</span>
+      <span style="font-size:12px;flex:1;">沿虹梅路往南骑行约 5 分钟</span>
+      <div class="route-divider-line"></div>
+    </div>
+
+    <div class="route-step">
+      <div class="route-line">
+        <div class="route-dot active"></div>
+        <div class="route-connector"></div>
+      </div>
+      <div class="route-content">
+        <div class="route-content-title">第3站 · 龙华/南站 <span style="color:var(--gold);font-size:11px;">（3家）</span></div>
+        <div class="route-content-desc">老沪闵路 → 龙吴路 → 天等路 · 瑞幸→玉煌姬→细妹</div>
+      </div>
+    </div>
+
+    <div class="route-divider">
+      <span>↓</span>
+      <span style="font-size:12px;flex:1;">沿凯旋路往北回公司方向</span>
+      <div class="route-divider-line"></div>
+    </div>
+
+    <div class="route-step">
+      <div class="route-line">
+        <div class="route-dot finish"></div>
+      </div>
+      <div class="route-content">
+        <div class="route-content-title">第4站 · 凯旋路 <span style="color:var(--gold);font-size:11px;">（1家）</span> <span style="font-size:11px;color:var(--success);">🏁 顺路收尾回公司</span></div>
+        <div class="route-content-desc">凯旋路1671号 · 浅川餐饮</div>
+      </div>
+    </div>
+
+    <div class="route-summary">
+      <div class="route-summary-item">
+        <div class="route-summary-num">15-20</div>
+        <div class="route-summary-label">全程公里</div>
+      </div>
+      <div class="route-summary-item">
+        <div class="route-summary-num">11</div>
+        <div class="route-summary-label">目标商户</div>
+      </div>
+      <div class="route-summary-item">
+        <div class="route-summary-num">⚡</div>
+        <div class="route-summary-label">电动车够用</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 拜访优先级 ===== -->
+  <div class="priority-section">
+    <div class="priority-title">🎯 拜访优先级</div>
+    <div class="priority-list">
+      <div class="priority-item">
+        <div class="priority-icon high">🔥</div>
+        <div class="priority-info">
+          <div class="priority-name">瑞幸咖啡（徐汇老沪闵路二店）</div>
+          <div class="priority-desc">品牌连锁 · 收银系统需求明确 · 建议上午优先拜访</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-icon mid">⭐</div>
+        <div class="priority-info">
+          <div class="priority-name">库迪咖啡 · 置吉餐饮</div>
+          <div class="priority-desc">中大型连锁/投资规模较大 · 重点跟进</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-icon low">📍</div>
+        <div class="priority-info">
+          <div class="priority-name">其余 7 家个体工商户</div>
+          <div class="priority-desc">新开业有系统需求 · 沿途拜访</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer"></div>
+</div>
+
+<!-- ===== 底部进度条 ===== -->
+<div class="footer-progress" id="footerProgress">
+  <div class="progress-track">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-info">
+    <span>⬇ 滚动查看完整路线</span>
+    <span class="progress-percent" id="progressPercent">0%</span>
+  </div>
+</div>
+
+<script>
+// ===== 菜单控制 =====
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openMenu() {
+  menuBtn.classList.add('active');
+  sidebar.classList.add('open');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+  menuBtn.classList.remove('active');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+menuBtn.addEventListener('click', () => {
+  if (sidebar.classList.contains('open')) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
+});
+
+overlay.addEventListener('click', closeMenu);
+
+// ===== 板块折叠 =====
+function toggleZone(el) {
+  el.classList.toggle('expanded');
+}
+
+// ===== 导航栏滚动效果 =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// ===== 底部进度条 =====
+const progressBar = document.getElementById('progressBar');
+const progressPercent = document.getElementById('progressPercent');
+
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+  progressBar.style.width = progress + '%';
+  progressPercent.textContent = Math.round(progress) + '%';
+}
+
+window.addEventListener('scroll', updateProgress);
+window.addEventListener('resize', updateProgress);
+updateProgress();
+
+// ===== 页面加载动画 - 商家项默认展开状态 =====
+document.addEventListener('DOMContentLoaded', () => {
+  // 默认展开第一个板块
+  const firstZone = document.querySelector('.zone-card.expanded');
+  if (firstZone) {
+    firstZone.querySelector('.merchant-list').style.maxHeight = firstZone.querySelector('.merchant-list').scrollHeight + 'px';
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== 键盘支持 =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+    closeMenu();
+  }
+});
+</script>
+
+</body>
+</html>

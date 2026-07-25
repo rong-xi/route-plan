@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>闵行区 · 新店拜访路线规划</title>
+<style>
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    background: #0a0a0f;
+    color: #e8e8e8;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0a0a0f; }
+  ::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 4px; }
+
+  /* ===== Top Navbar ===== */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: 52px;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+  }
+  .navbar-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 600;
+    color: #c9a84c;
+    letter-spacing: 1px;
+  }
+  .navbar-logo .logo-icon {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, #c9a84c, #e17055);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: #0a0a0f; font-weight: 700;
+  }
+  .menu-btn {
+    width: 32px; height: 32px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .menu-btn:hover { background: rgba(201,168,76,0.2); border-color: #c9a84c; }
+  .menu-btn span {
+    display: block; width: 16px; height: 1.5px;
+    background: #c9a84c; border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===== Side Menu ===== */
+  .side-menu-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .side-menu-overlay.active { opacity: 1; pointer-events: auto; }
+  .side-menu {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 2001;
+    width: 280px; max-width: 80vw;
+    background: #0f0f18;
+    border-right: 1px solid rgba(201,168,76,0.15);
+    padding: 20px 0;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    overflow-y: auto;
+  }
+  .side-menu.active { transform: translateX(0); }
+  .side-menu-header {
+    padding: 0 20px 16px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    margin-bottom: 12px;
+  }
+  .side-menu-header h3 {
+    font-size: 16px; color: #c9a84c;
+    letter-spacing: 2px;
+  }
+  .side-menu-header p { font-size: 12px; color: #666; margin-top: 4px; }
+  .side-menu-item {
+    display: block;
+    padding: 10px 20px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+    border-left: 2px solid transparent;
+    transition: all 0.25s;
+  }
+  .side-menu-item:hover, .side-menu-item.active {
+    color: #c9a84c;
+    background: rgba(201,168,76,0.05);
+    border-left-color: #c9a84c;
+  }
+  .side-menu-item .station-badge {
+    display: inline-block;
+    width: 20px; height: 20px; line-height: 20px;
+    text-align: center; font-size: 10px;
+    background: rgba(201,168,76,0.15);
+    color: #c9a84c;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  /* ===== Main Content ===== */
+  .main-content { padding-top: 52px; }
+
+  /* ===== Cover Section ===== */
+  .cover {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 40px 20px 60px;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(225,112,85,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(10,10,15,0.9) 0%, transparent 100%);
+  }
+  .cover-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .cover-content { position: relative; z-index: 1; }
+  .cover-subtitle {
+    font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+    color: #c9a84c; margin-bottom: 12px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .cover-title {
+    font-size: clamp(32px, 7vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #f0e6c8 0%, #c9a84c 40%, #e17055 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .cover-desc {
+    font-size: 14px; color: #888; max-width: 500px;
+    line-height: 1.8; margin-bottom: 30px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+  .cover-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    max-width: 480px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .stat-number {
+    font-size: 26px; font-weight: 700;
+    background: linear-gradient(135deg, #c9a84c, #e17055);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 11px; color: #777; margin-top: 4px;
+    letter-spacing: 1px;
+  }
+  .scroll-indicator {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    color: #555; font-size: 11px; letter-spacing: 2px;
+    animation: bounce 2s infinite;
+    opacity: 0; animation: fadeUp 0.8s ease 1.2s forwards, bounce 2s ease 2s infinite;
+  }
+  .scroll-indicator .arrow { font-size: 18px; color: #c9a84c; }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== Route Overview ===== */
+  .route-overview {
+    padding: 40px 20px;
+    background: linear-gradient(180deg, rgba(201,168,76,0.03) 0%, transparent 100%);
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 3px;
+    color: #c9a84c;
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 3px 12px; border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 700;
+    color: #eee; margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 13px; color: #666; margin-bottom: 20px;
+  }
+  .route-chain {
+    display: flex; flex-direction: column; gap: 6px;
+    max-width: 600px; margin: 0 auto;
+  }
+  .chain-node {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+  .chain-node:hover {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(255,255,255,0.05);
+  }
+  .chain-node .num {
+    width: 26px; height: 26px; line-height: 26px;
+    text-align: center; font-size: 11px; font-weight: 700;
+    background: rgba(201,168,76,0.12);
+    color: #c9a84c; border-radius: 50%; flex-shrink: 0;
+  }
+  .chain-node .info { flex: 1; }
+  .chain-node .info .name {
+    font-size: 13px; font-weight: 600; color: #ddd;
+  }
+  .chain-node .info .count {
+    font-size: 11px; color: #e17055; margin-left: 6px;
+  }
+  .chain-node .info .addr {
+    font-size: 11px; color: #666; margin-top: 2px;
+  }
+  .chain-arrow {
+    text-align: center; color: #c9a84c; font-size: 16px;
+    opacity: 0.5; padding: 2px 0;
+  }
+  .chain-arrow-down {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 11px; color: #666; padding: 4px 0;
+  }
+  .chain-arrow-down span { color: #c9a84c; opacity: 0.4; }
+
+  /* ===== Station Cards ===== */
+  .stations { padding: 20px 16px 80px; }
+  .station-section {
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+  .station-section.visible { opacity: 1; transform: translateY(0); }
+  .station-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .station-badge-lg {
+    width: 36px; height: 36px; line-height: 36px;
+    text-align: center; font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(225,112,85,0.15));
+    color: #c9a84c;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px; flex-shrink: 0;
+  }
+  .station-title-group { flex: 1; }
+  .station-title {
+    font-size: 17px; font-weight: 700; color: #eee;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .station-title .count-badge {
+    font-size: 10px; font-weight: 600;
+    background: rgba(225,112,85,0.15);
+    color: #e17055;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .station-subtitle {
+    font-size: 12px; color: #555; margin-top: 2px;
+  }
+  .station-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 12px;
+    padding: 14px 14px 12px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+  }
+  .station-card:hover {
+    border-color: rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.05);
+  }
+  .card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 8px;
+  }
+  .card-name {
+    font-size: 13px; font-weight: 600; color: #ddd;
+    line-height: 1.4;
+  }
+  .card-date {
+    font-size: 10px; color: #c9a84c; white-space: nowrap;
+    padding: 2px 8px;
+    background: rgba(201,168,76,0.08);
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .card-addr {
+    font-size: 11px; color: #666; margin-top: 6px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .card-addr .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #c9a84c; flex-shrink: 0;
+  }
+  .card-tags {
+    display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;
+  }
+  .card-tag {
+    font-size: 10px; padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(201,168,76,0.06);
+    color: #999;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+  .card-tag.highlight {
+    color: #e17055;
+    border-color: rgba(225,112,85,0.2);
+    background: rgba(225,112,85,0.06);
+  }
+
+  /* ===== Tips Box ===== */
+  .tips-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(225,112,85,0.04));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .tips-box .icon { font-size: 16px; color: #c9a84c; flex-shrink: 0; margin-top: 1px; }
+  .tips-box .text { font-size: 12px; color: #aaa; line-height: 1.6; }
+  .tips-box .text strong { color: #c9a84c; }
+
+  /* ===== Bottom Progress Bar ===== */
+  .progress-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    height: 3px; background: rgba(255,255,255,0.05);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c9a84c, #e17055);
+    transition: width 0.15s ease;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ===== Suggestion Box ===== */
+  .suggestion-box {
+    margin: 10px 0 30px;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(225,112,85,0.04));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 14px;
+  }
+  .suggestion-box .s-title {
+    font-size: 14px; font-weight: 700; color: #c9a84c;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  .suggestion-box .s-body {
+    font-size: 12px; color: #aaa; line-height: 1.8;
+  }
+  .suggestion-box .s-body .day {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    color: #0a0a0f;
+    background: #c9a84c;
+    padding: 0 8px; border-radius: 4px; margin: 0 2px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #444;
+    border-top: 1px solid rgba(201,168,76,0.06);
+  }
+
+  /* ===== Responsive ===== */
+  @media (min-width: 600px) {
+    .stations { padding: 20px 40px 80px; }
+    .route-overview { padding: 60px 40px; }
+    .cover { padding: 40px 40px 60px; }
+    .cover-stats { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .stations { max-width: 800px; margin: 0 auto; }
+    .route-overview .route-chain { max-width: 700px; }
+  }
+
+  /* ===== Glow Effects ===== */
+  .glow-dot {
+    position: fixed; width: 200px; height: 200px;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(60px);
+    opacity: 0.08;
+    z-index: 0;
+  }
+  .glow-dot.g1 { top: -50px; right: -50px; background: #c9a84c; }
+  .glow-dot.g2 { bottom: -50px; left: -50px; background: #e17055; }
+</style>
+</head>
+<body>
+
+<!-- Glow Dots -->
+<div class="glow-dot g1"></div>
+<div class="glow-dot g2"></div>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-logo">
+    <div class="logo-icon">M</div>
+    <span>闵行 · 新店路线</span>
+  </div>
+  <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ===== Side Menu Overlay ===== -->
+<div class="side-menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+<!-- ===== Side Menu ===== -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <h3>📍 路线导航</h3>
+    <p>闵行区 · 6大板块 · 27家新店</p>
+  </div>
+  <a class="side-menu-item" href="#cover" onclick="toggleMenu()">
+    <span class="station-badge">🏠</span> 首页总览
+  </a>
+  <a class="side-menu-item" href="#route-overview" onclick="toggleMenu()">
+    <span class="station-badge">🗺</span> 推荐路线总览
+  </a>
+  <a class="side-menu-item" href="#station-1" onclick="toggleMenu()">
+    <span class="station-badge">1</span> 虹桥镇/龙柏 · 7家
+  </a>
+  <a class="side-menu-item" href="#station-2" onclick="toggleMenu()">
+    <span class="station-badge">2</span> 七宝镇 · 6家
+  </a>
+  <a class="side-menu-item" href="#station-3" onclick="toggleMenu()">
+    <span class="station-badge">3</span> 春申/梅陇 · 4家
+  </a>
+  <a class="side-menu-item" href="#station-4" onclick="toggleMenu()">
+    <span class="station-badge">4</span> 莘庄镇+古美 · 3家
+  </a>
+  <a class="side-menu-item" href="#station-5" onclick="toggleMenu()">
+    <span class="station-badge">5</span> 浦江镇 · 5家
+  </a>
+  <a class="side-menu-item" href="#station-6" onclick="toggleMenu()">
+    <span class="station-badge">6</span> 马桥镇+新虹 · 2家
+  </a>
+</div>
+
+<!-- ===== Main ===== -->
+<div class="main-content">
+
+  <!-- ===== Cover ===== -->
+  <section class="cover" id="cover">
+    <div class="cover-grid"></div>
+    <div class="cover-content">
+      <div class="cover-subtitle">📍 Minhang District · 2026</div>
+      <h1 class="cover-title">闵行区<br>新店拜访路线规划</h1>
+      <p class="cover-desc">
+        基于天眼查 · 2026年7月22日-23日新增餐饮企业数据，<br>
+        智能规划6大板块27家新店拜访路线，高效扫街。
+      </p>
+      <div class="cover-stats">
+        <div class="stat-card">
+          <div class="stat-number">27</div>
+          <div class="stat-label">餐饮新店</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0</div>
+          <div class="stat-label">非餐新店</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">6</div>
+          <div class="stat-label">覆盖板块</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">推荐天数</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>向下滚动</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- ===== Route Overview ===== -->
+  <section class="route-overview" id="route-overview">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div class="section-tag">ROUTE OVERVIEW</div>
+      <h2 class="section-title">🗺 推荐路线总览</h2>
+      <p class="section-sub">沿七莘路 · 虹梅南路 · 沪闵路 · 地铁8号线 串联6大板块</p>
+    </div>
+
+    <div class="route-chain">
+      <div class="chain-node">
+        <div class="num">1</div>
+        <div class="info">
+          <div class="name">虹桥镇/龙柏 <span class="count">7家</span></div>
+          <div class="addr">虹泉路→吴中路→虹井路→古北路→虹梅路</div>
+        </div>
+      </div>
+      <div class="chain-arrow-down"><span>━━━</span> 沿七莘路往南5分钟 <span>━━━</span></div>
+
+      <div class="chain-node">
+        <div class="num">2</div>
+        <div class="info">
+          <div class="name">七宝镇 <span class="count">6家</span></div>
+          <div class="addr">宜山路→沪星路→漕宝路→七莘路→中谊路</div>
+        </div>
+      </div>
+      <div class="chain-arrow-down"><span>━━━</span> 沿虹梅南路往南10分钟 <span>━━━</span></div>
+
+      <div class="chain-node">
+        <div class="num">3</div>
+        <div class="info">
+          <div class="name">春申/梅陇 <span class="count">4家</span></div>
+          <div class="addr">虹梅南路→景谷路</div>
+        </div>
+      </div>
+      <div class="chain-arrow-down"><span>━━━</span> 沿沪闵路往南10分钟 <span>━━━</span></div>
+
+      <div class="chain-node">
+        <div class="num">4</div>
+        <div class="info">
+          <div class="name">莘庄镇+古美 <span class="count">3家</span></div>
+          <div class="addr">西环路→莘浜路→古美路</div>
+        </div>
+      </div>
+      <div class="chain-arrow-down"><span>━━━</span> 地铁8号线往南30分钟 <span>━━━</span></div>
+
+      <div class="chain-node">
+        <div class="num">5</div>
+        <div class="info">
+          <div class="name">浦江镇 <span class="count">5家</span></div>
+          <div class="addr">康华路→汇雄路→三鲁公路→江月路</div>
+        </div>
+      </div>
+      <div class="chain-arrow-down"><span>━━━</span> ━━━</div>
+
+      <div class="chain-node">
+        <div class="num">6</div>
+        <div class="info">
+          <div class="name">马桥镇+新虹 <span class="count">2家</span></div>
+          <div class="addr">马桥→申滨路</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="suggestion-box" style="margin-top:24px;">
+      <div class="s-title">💡 拜访建议</div>
+      <div class="s-body">
+        推荐分 <strong style="color:#e17055;">2天</strong> 跑完：<br>
+        <span class="day">第1天</span> <strong style="color:#c9a84c;">虹桥+七宝+莘庄（16家）</strong> — 沿七莘路/虹梅南路纵向推进<br>
+        <span class="day">第2天</span> <strong style="color:#c9a84c;">春申+浦江+马桥（11家）</strong> — 地铁8号线+自驾
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Stations ===== -->
+  <div class="stations">
+
+    <!-- Station 1 -->
+    <div class="station-section" id="station-1">
+      <div class="station-header">
+        <div class="station-badge-lg">1</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            虹桥镇/龙柏板块
+            <span class="count-badge">7家 · 最密集</span>
+          </div>
+          <div class="station-subtitle">虹泉路 · 吴中路 · 虹井路 · 古北路 · 虹梅路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海蒋忠洞餐饮有限公司</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹泉路1000号2幢A座101F室</div>
+        <div class="card-tags">
+          <span class="card-tag highlight">📍 虹泉路韩国街</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海延咖餐饮有限公司</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹泉路1000号2幢A座101G室</div>
+        <div class="card-tags">
+          <span class="card-tag highlight">📍 虹泉路韩国街</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区长军餐厅(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹桥镇吴中路1050号5幢北楼128室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 吴中路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区绍康餐厅(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹桥镇虹井路120弄1号229室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 虹井路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区蒋东餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹桥镇古北路1699号地下二层B287-2室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 古北路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区新枚小吃店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹桥镇虹梅路3291号-1B</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 虹梅路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区金杰餐厅(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹桥镇虹梅路2818弄8号(虹桥市场)2层201-8室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 虹梅市场</span>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>韩国街2家可一起扫，吴中路+虹井路+古北路+虹梅路都在虹桥镇，骑行串联，建议<strong>上午集中攻坚</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Station 2 -->
+    <div class="station-section" id="station-2">
+      <div class="station-header">
+        <div class="station-badge-lg">2</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            七宝镇板块
+            <span class="count-badge">6家</span>
+          </div>
+          <div class="station-subtitle">宜山路 · 沪星路 · 漕宝路 · 七莘路 · 中谊路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区沛青餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 七宝镇宜山路2331号底层A室</div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区宜临餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 七宝镇宜山路2329号底层-1室</div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区金凯餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 七宝镇沪星路289弄2号1层B栋B105室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 沪星路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区茶米有言餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 七宝镇漕宝路3299弄17号一层102室M-S3-F1-002</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 漕宝路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海喜璟汇餐饮有限公司</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 七莘路1507号1幢地下1层B1-008</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 七莘路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海鼎鲜格餐饮有限公司</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 中谊路555弄5号201室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 中谊路</span>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>宜山路2家相邻先扫→沪星路→漕宝路→七莘路→中谊路，沿七莘路一路向南
+        </div>
+      </div>
+    </div>
+
+    <!-- Station 3 -->
+    <div class="station-section" id="station-3">
+      <div class="station-header">
+        <div class="station-badge-lg">3</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            春申/梅陇板块
+            <span class="count-badge">4家</span>
+          </div>
+          <div class="station-subtitle">虹梅南路 · 景谷路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区恺蓓餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹梅南路1789弄10号L1-32室</div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区符成餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹梅南路1789弄10号L1-33室</div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区季潮餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 虹梅南路1005号50幢一层A-117室</div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区贤亮餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 景谷路50号一层A-06</div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>虹梅南路1789弄有2家同楼可一起扫！→虹梅南路1005号→景谷路
+        </div>
+      </div>
+    </div>
+
+    <!-- Station 4 -->
+    <div class="station-section" id="station-4">
+      <div class="station-header">
+        <div class="station-badge-lg">4</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            莘庄镇+古美板块
+            <span class="count-badge">3家</span>
+          </div>
+          <div class="station-subtitle">西环路 · 莘浜路 · 古美路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区江水小吃店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 莘庄镇西环路301号24幢1层101室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 莘庄</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区江沪川餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 莘庄镇莘浜路532号13幢2层203</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 莘庄</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区高梦餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 古美路1006号302室-3</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 古美</span>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>莘庄2家+古美1家，莘庄是交通枢纽顺路经过可扫
+        </div>
+      </div>
+    </div>
+
+    <!-- Station 5 -->
+    <div class="station-section" id="station-5">
+      <div class="station-header">
+        <div class="station-badge-lg">5</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            浦江镇板块
+            <span class="count-badge">5家</span>
+          </div>
+          <div class="station-subtitle">康华路 · 汇雄路 · 三鲁公路 · 江月路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区浦江镇雅硕餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 浦江镇康华路86号5幢1层门面205室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 康华路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区浦江镇新榆餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 浦江镇汇雄路752号1层A01室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 汇雄路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区浦江镇联路餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 浦江镇汇雄路752号1层A04室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 汇雄路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区浦江镇建民金餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 浦江镇三鲁公路3003弄51号1层</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 三鲁公路</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海面面环金餐饮管理有限公司江月路分公司</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 江月路1850弄6号地下1层08-B06</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 江月路</span>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>汇雄路2家同一条街！浦江镇5家较分散，建议<strong>开车前往</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Station 6 -->
+    <div class="station-section" id="station-6">
+      <div class="station-header">
+        <div class="station-badge-lg">6</div>
+        <div class="station-title-group">
+          <div class="station-title">
+            马桥镇+新虹板块
+            <span class="count-badge">2家</span>
+          </div>
+          <div class="station-subtitle">马桥 · 申滨路</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区董妹餐饮店(个体工商户)</div>
+          <div class="card-date">7月23日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 马桥镇华宁路2500号二层C03、C04号</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 马桥</span>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="card-top">
+          <div class="card-name">上海市闵行区百晴餐饮店(个体工商户)</div>
+          <div class="card-date">7月22日</div>
+        </div>
+        <div class="card-addr"><span class="dot"></span> 新虹街道申滨路497号地下2层48-1-43室</div>
+        <div class="card-tags">
+          <span class="card-tag">📍 新虹</span>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>路线tips：</strong>这两家比较远，建议顺路或单独安排一天
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <div class="footer">
+      数据来源：天眼查 · 2026年7月22日-23日 &nbsp;|&nbsp; 闵行区新店拜访路线规划<br>
+      生成时间：2026-07-25 12:15:46
+    </div>
+  </div>
+</div>
+
+<!-- ===== Progress Bar ===== -->
+<div class="progress-bar">
+  <div class="progress-bar-fill" id="progressFill"></div>
+</div>
+
+<script>
+  // ===== Menu Toggle =====
+  function toggleMenu() {
+    document.getElementById('sideMenu').classList.toggle('active');
+    document.getElementById('menuOverlay').classList.toggle('active');
+  }
+
+  // ===== Scroll Animation (Intersection Observer) =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.station-section').forEach(el => observer.observe(el));
+
+  // ===== Progress Bar =====
+  const progressFill = document.getElementById('progressFill');
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressFill.style.width = progress + '%';
+  });
+
+  // ===== Smooth scroll for menu items =====
+  document.querySelectorAll('.side-menu-item[href^="#"]').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

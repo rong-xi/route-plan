@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>赣饭铺子 · 新店开业运营方案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;padding-top:52px}
+
+/* 导航 */
+.navbar{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:16px;font-weight:700;background:linear-gradient(135deg,#e17055,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu-btn{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;z-index:1002;background:none;border:none;padding:6px}
+.nav-menu-btn span{display:block;width:100%;height:2px;background:#e0e0e0;border-radius:2px;transition:all 0.3s}
+.nav-menu-btn.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-menu-btn.active span:nth-child(2){opacity:0}
+.nav-menu-btn.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+
+/* 侧边菜单 */
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:rgba(20,20,30,0.98);backdrop-filter:blur(20px);z-index:1001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);padding:80px 20px 30px;border-left:1px solid rgba(255,255,255,0.05)}
+.side-menu.open{right:0}
+.side-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:none;opacity:0;transition:opacity 0.35s}
+.side-overlay.show{display:block;opacity:1}
+.side-menu a{display:block;color:#b0b0b0;text-decoration:none;padding:14px 12px;border-radius:8px;margin-bottom:4px;font-size:15px;transition:all 0.2s;border-left:3px solid transparent}
+.side-menu a:hover,.side-menu a.active{color:#fff;background:rgba(225,112,85,0.1);border-left-color:#e17055}
+
+/* 进度条 */
+.progress-bar{position:fixed;top:52px;left:0;height:3px;background:linear-gradient(90deg,#e17055,#fdcb6e);z-index:999;transition:width 0.1s;width:0%}
+
+/* 封面 */
+.cover{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 30%,rgba(225,112,85,0.08),transparent 70%),radial-gradient(ellipse at 80% 60%,rgba(253,203,110,0.05),transparent 50%);pointer-events:none}
+.cover-badge{display:inline-block;padding:6px 18px;border:1px solid rgba(225,112,85,0.4);border-radius:20px;font-size:12px;color:#e17055;margin-bottom:20px;letter-spacing:2px;animation:fadeUp 0.8s ease}
+.cover h1{font-size:32px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#e17055 70%,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:fadeUp 1s ease 0.2s both;line-height:1.3}
+.cover p{color:#888;font-size:14px;animation:fadeUp 1s ease 0.4s both;line-height:1.8}
+.cover .stats{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;max-width:340px;animation:fadeUp 1s ease 0.6s both}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:24px;font-weight:700;background:linear-gradient(135deg,#e17055,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Georgia',serif}
+.stat-card .label{color:#888;font-size:12px;margin-top:4px}
+.scroll-arrow{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#555;font-size:24px;animation:bounce 2s infinite}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-8px)}60%{transform:translateX(-50%) translateY(-4px)}}
+
+/* 章节通用 */
+.chapter{padding:40px 20px;position:relative}
+.chapter-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.chapter-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+.chapter-num.i{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.chapter-num.ii{background:linear-gradient(135deg,#d63031,#ff7675);color:#fff}
+.chapter-num.iii{background:linear-gradient(135deg,#e17055,#fdcb6e);color:#fff}
+.chapter-num.iv{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.chapter-num.v{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff}
+.chapter-num.vi{background:linear-gradient(135deg,#fdcb6e,#f39c12);color:#fff}
+.chapter-title h2{font-size:20px;font-weight:700;color:#fff}
+.chapter .desc{color:#999;font-size:13px;margin-bottom:20px;line-height:1.7}
+
+/* 卡片 */
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;margin-bottom:12px;transition:all 0.3s}
+.card:hover{background:rgba(255,255,255,0.06);border-color:rgba(225,112,85,0.2)}
+.card h3{font-size:15px;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13px;color:#999;line-height:1.7}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;margin:2px}
+.tag-blue{background:rgba(9,132,227,0.15);color:#74b9ff}
+.tag-green{background:rgba(0,184,148,0.15);color:#55efc4}
+.tag-orange{background:rgba(225,112,85,0.15);color:#e17055}
+.tag-purple{background:rgba(108,92,231,0.15);color:#a29bfe}
+.tag-red{background:rgba(214,48,49,0.15);color:#ff7675}
+.tag-gold{background:rgba(253,203,110,0.15);color:#fdcb6e}
+
+/* 网格 */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;margin-bottom:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.05);padding:10px 12px;text-align:left;color:#ccc;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid rgba(255,255,255,0.04);color:#aaa}
+tr.highlight td{background:rgba(225,112,85,0.06);color:#e17055;font-weight:600}
+.highlight-row{background:rgba(225,112,85,0.08)!important}
+
+/* 价格卡片 */
+.price-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;text-align:center;position:relative}
+.price-card .badge{position:absolute;top:-6px;right:-6px;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:1px}
+.badge-hot{background:linear-gradient(135deg,#d63031,#e17055);color:#fff}
+.badge-popular{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.badge-profit{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.badge-saver{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff}
+.price-card .name{font-size:14px;color:#fff;margin:8px 0 4px}
+.price-card .price{font-size:22px;font-weight:700;background:linear-gradient(135deg,#e17055,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-card .old{font-size:12px;color:#666;text-decoration:line-through;margin-left:6px}
+.price-card .note{font-size:11px;color:#888;margin-top:6px}
+
+/* 区块颜色主题 */
+.chapter.theme-blue .chapter-title h2{color:#74b9ff}
+.chapter.theme-blue .card{border-left:3px solid rgba(9,132,227,0.4)}
+.chapter.theme-red .chapter-title h2{color:#ff7675}
+.chapter.theme-red .card{border-left:3px solid rgba(214,48,49,0.4)}
+.chapter.theme-orange .chapter-title h2{color:#fdcb6e}
+.chapter.theme-orange .card{border-left:3px solid rgba(225,112,85,0.4)}
+.chapter.theme-green .chapter-title h2{color:#55efc4}
+.chapter.theme-green .card{border-left:3px solid rgba(0,184,148,0.4)}
+.chapter.theme-purple .chapter-title h2{color:#a29bfe}
+.chapter.theme-purple .card{border-left:3px solid rgba(108,92,231,0.4)}
+.chapter.theme-gold .chapter-title h2{color:#f39c12}
+.chapter.theme-gold .card{border-left:3px solid rgba(243,156,18,0.4)}
+
+/* 时间线 */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(225,112,85,0.3)}
+.timeline-item{position:relative;padding:16px 0 16px 16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:20px;width:10px;height:10px;border-radius:50%;background:#e17055;border:2px solid #0a0a0f}
+.timeline-item .time{font-size:12px;color:#e17055;font-weight:600;margin-bottom:4px}
+.timeline-item .content{font-size:13px;color:#ccc;line-height:1.6}
+
+/* 底部 */
+.footer{margin-top:20px;padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.footer h3{font-size:18px;color:#fff;margin-bottom:12px}
+.footer .price-tier{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.price-tier .tier{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 16px;min-width:100px}
+.price-tier .tier .name{font-size:12px;color:#888}
+.price-tier .tier .price{font-size:18px;font-weight:700;color:#e17055;margin-top:4px}
+.price-tier .tier.recommend{border-color:#e17055;background:rgba(225,112,85,0.08)}
+
+@media(max-width:480px){
+  .cover h1{font-size:26px}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">赣饭铺子 · 运营方案</div>
+  <button class="nav-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="side-overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <a href="#ch1" onclick="toggleMenu()">Ⅰ 商圈数据篇</a>
+  <a href="#ch2" onclick="toggleMenu()">Ⅱ 竞品分析篇</a>
+  <a href="#ch3" onclick="toggleMenu()">Ⅲ 定价策略篇</a>
+  <a href="#ch4" onclick="toggleMenu()">Ⅳ 推广方案篇</a>
+  <a href="#ch5" onclick="toggleMenu()">Ⅴ 营收预估篇</a>
+  <a href="#ch6" onclick="toggleMenu()">Ⅵ 行动指南</a>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- 封面 -->
+<section class="cover">
+  <div class="cover-badge">🔥 江西菜 · 新店开业</div>
+  <h1>赣饭铺子<br>新店开业运营方案</h1>
+  <p>📍 九谊路526号 · 九亭商圈<br>🕐 预计开业：2026年8月10日 · 260㎡ · 人均20-50元<br>📊 70%堂食 · 10%外带 · 20%外卖</p>
+  <div class="stats">
+    <div class="stat-card"><div class="num">33万+</div><div class="label">九亭常住人口</div></div>
+    <div class="stat-card"><div class="num">↑115%</div><div class="label">江西菜上海增速</div></div>
+    <div class="stat-card"><div class="num">36.5岁</div><div class="label">九里亭平均年龄</div></div>
+    <div class="stat-card"><div class="num">55%</div><div class="label">本科以上占比</div></div>
+  </div>
+  <div class="scroll-arrow">▼</div>
+</section>
+
+<!-- 第一章：商圈数据篇 -->
+<section class="chapter theme-blue" id="ch1">
+  <div class="chapter-title">
+    <div class="chapter-num i">Ⅰ</div>
+    <h2>商圈数据篇 · 九亭商圈画像</h2>
+  </div>
+  <p class="desc">赣饭铺子位于九谊路526号，地处松江九亭北部九里亭街道，紧邻新虹桥企业天地，属产业园+居民区混合商圈。</p>
+  
+  <div class="card">
+    <h3>📍 区位优势</h3>
+    <p>九亭东与闵行七宝仅一河之隔，距虹桥机场6-7公里，地铁9号线九亭站1.5km，是上海中心城区辐射西南城郊的第一站。沪松公路快速化工程同步推进中。</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🏢 周边写字楼/产业园</h3>
+      <p><span class="tag tag-orange">主力客群</span></p>
+      <p>
+        • <strong>新虹桥企业天地</strong> — 步行200m，园区白领3,000+<br>
+        • 九亭中心 — 1.2km，商务办公+商业综合体<br>
+        • 金地广场写字楼 — 1.5km<br>
+        • 邦芯科技园 — 2km，高新技术企业集聚<br>
+        • G60卫星互联网产业基地 — 2.5km<br>
+        <span class="tag tag-blue">工作日午餐主力</span>
+      </p>
+    </div>
+    <div class="card">
+      <h3>🏘️ 周边住宅/公寓</h3>
+      <p><span class="tag tag-green">晚市周末主力</span></p>
+      <p>
+        • <strong>知雅汇</strong>（志成花苑）— 步行200m，2,000+户<br>
+        • <strong>绿庭尚城</strong> — 步行400m，1,500+户<br>
+        • <strong>九里亭小区</strong> — 步行500m，800+户<br>
+        • 贝尚湾 — 800m<br>
+        • 九久青年城 — 1km（公寓为主）<br>
+        • 九亭家园 — 1.5km
+      </p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🏨 酒店/其他</h3>
+      <p>
+        • <strong>希岸酒店</strong> — 步行100m，商务出差客源<br>
+        • 上海德法学校 — 步行300m<br>
+        • 蔡家湾天主堂<br>
+        <span class="tag tag-purple">零散增量客源</span>
+      </p>
+    </div>
+    <div class="card">
+      <h3>👥 商圈人口数据</h3>
+      <p>
+        九里亭街道常住 <strong>12.9万人</strong><br>
+        九亭镇常住 <strong>21万+人</strong><br>
+        三年净增人口 <strong>5万+人</strong><br>
+        平均年龄 <strong>36.5岁</strong>（上海最年轻街道）<br>
+        本科以上 <strong>55%</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📊 商圈消费水平占比</h3>
+    <p>
+      <span class="tag tag-blue">20-35元 占40%</span> 工薪日常简餐（最大市场）<br>
+      <span class="tag tag-orange">35-60元 占35%</span> 品质工作餐/朋友小聚<br>
+      <span class="tag tag-gold">60-100元 占18%</span> 聚餐宴请<br>
+      <span class="tag tag-purple">100元以上 占7%</span> 商务宴请
+    </p>
+    <p style="margin-top:8px;font-size:12px;color:#888">核心洞察：35-60元品质工作餐市场占比最大，与赣饭铺子人均20-50元高度契合</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid #e17055">
+    <h3>💡 商圈洞察</h3>
+    <p>九亭人口三年增长超5万，且新增人口以年轻高知群体为主（工程师、白领），消费能力持续升级。江西菜在上海增速↑115%，九亭尚无知名江西菜品牌，市场空白明显。</p>
+  </div>
+</section>
+
+<!-- 第二章：竞品分析篇 -->
+<section class="chapter theme-red" id="ch2">
+  <div class="chapter-title">
+    <div class="chapter-num ii">Ⅱ</div>
+    <h2>竞品分析 · 九亭辣味江湖</h2>
+  </div>
+  <p class="desc">九亭商圈周边以本帮菜、湘菜、江浙菜为主，江西菜专门店极度稀缺。以下是1.5km范围内的主要競品分析：</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>竞品</th><th>距离</th><th>人均</th><th>类型</th><th>优劣势</th></tr>
+    <tr class="highlight-row"><td>赣饭铺子</td><td>—</td><td>20-50元</td><td>江西菜</td><td>🏆 商圈唯一江西菜专门店</td></tr>
+    <tr><td>湘醉楼</td><td>1.2km</td><td>55元</td><td>湘菜</td><td>辣味直接竞品，口味偏重，价格偏高</td></tr>
+    <tr><td>新发现(金地店)</td><td>1.5km</td><td>65元</td><td>江浙菜</td><td>品牌大连锁，客单高，非辣味</td></tr>
+    <tr><td>甬沪港大酒店</td><td>2km</td><td>80元</td><td>本帮融合菜</td><td>宴请型，不适合日常快餐</td></tr>
+    <tr><td>酒亭宴</td><td>2km</td><td>70元</td><td>浙江菜</td><td>家常菜，无辣味差异</td></tr>
+    <tr><td>久富家宴</td><td>2.5km</td><td>60元</td><td>本帮菜</td><td>传统本帮，无辣味</td></tr>
+    <tr><td>府宴</td><td>2.5km</td><td>65元</td><td>淮扬菜</td><td>清淡为主</td></tr>
+    <tr><td>窝罐里(市区店)</td><td>15km+</td><td>50元</td><td>江西菜</td><td>必吃榜品牌，但距九亭远</td></tr>
+  </table>
+  </div>
+
+  <div class="card" style="border-left:3px solid #e17055">
+    <h3>🔥 核心发现</h3>
+    <p><strong>九亭1.5km内无江西菜专门店！</strong> 仅湘醉楼(湘菜)是辣味直接竞品，但人均55元偏高、定位偏宴请。赣饭铺子以20-50元覆盖日常快餐+品质工作餐，差异化明显。</p>
+  </div>
+
+  <div class="card">
+    <h3>📚 学习标杆</h3>
+    <p>
+      <strong>窝罐里·传统江西小炒</strong>（南昌必吃榜）<br>
+      主打"天然辣，更下饭"，单品价格20-40元，以南昌肉酱拌米粉、赣饭凤爪为招牌<br><br>
+      <strong>悦江瓷耕颂</strong>（前滩精致江西菜）<br>
+      以瓷文化为主题，人均100+，走精致路线<br><br>
+      <strong>可借鉴之处：</strong>窝罐里的"下饭"概念+平价策略，适合九亭商圈客群定位
+    </p>
+  </div>
+
+  <div class="card" style="border-left:3px solid #6c5ce7">
+    <h3>🎯 应对话术（SPIN风格）</h3>
+    <p>
+      <strong>vs 湘醉楼：</strong>"湘菜重辣油，江西菜鲜辣香醇更健康。同是辣味，赣饭铺子20元起就能吃饱吃好"<br><br>
+      <strong>vs 江浙菜馆：</strong>"九亭年轻人占比高，55%本科以上，爱吃辣的年轻人越来越多。江西菜增速全上海第一，差异化就是竞争力"<br><br>
+      <strong>vs 社区快餐：</strong>"260㎡大店，装修有调性，人均才20-50元，既能快速出餐又能朋友聚餐，客群覆盖率更高"
+    </p>
+  </div>
+</section>
+
+<!-- 第三章：定价策略篇 -->
+<section class="chapter theme-orange" id="ch3">
+  <div class="chapter-title">
+    <div class="chapter-num iii">Ⅲ</div>
+    <h2>定价策略 · 产品矩阵</h2>
+  </div>
+  <p class="desc">人均20-50元区间，覆盖工作日单人快餐+朋友聚餐双场景。</p>
+
+  <h3 style="font-size:15px;color:#fdcb6e;margin-bottom:12px">🍽️ 核心菜品定价</h3>
+  <div class="grid-2">
+    <div class="price-card">
+      <span class="badge badge-popular">引流款</span>
+      <div class="name">南昌肉酱拌米粉</div>
+      <div class="price">19.9元</div>
+      <div class="note">开业特价，快速获客</div>
+    </div>
+    <div class="price-card">
+      <span class="badge badge-hot">🔥 利润款</span>
+      <div class="name">赣饭凤爪（小份）</div>
+      <div class="price">28元</div>
+      <div class="note">招牌必点，毛利70%</div>
+    </div>
+    <div class="price-card">
+      <span class="badge badge-hot">🔥 利润款</span>
+      <div class="name">莲花鸭血</div>
+      <div class="price">32元</div>
+      <div class="note">江西特色，毛利75%</div>
+    </div>
+    <div class="price-card">
+      <span class="badge badge-profit">高毛利</span>
+      <div class="name">铁头小甲鱼</div>
+      <div class="price">48元</div>
+      <div class="note">宴请撑场面，毛利80%</div>
+    </div>
+    <div class="price-card">
+      <span class="badge badge-popular">引流款</span>
+      <div class="name">赣味辣椒炒肉</div>
+      <div class="price">26元</div>
+      <div class="note">家常下饭神器</div>
+    </div>
+    <div class="price-card">
+      <span class="badge badge-profit">高毛利</span>
+      <div class="name">广昌白莲烧仔排</div>
+      <div class="price">42元</div>
+      <div class="note">精致菜撑客单</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px;color:#fdcb6e;margin:20px 0 12px">📦 套餐组合设计</h3>
+  <div class="grid-2">
+    <div class="card">
+      <h3><span class="tag tag-blue">午市套餐</span></h3>
+      <p>
+        肉酱拌粉 + 小菜 + 饮品<br>
+        <strong>25元</strong> <span style="color:#666;text-decoration:line-through">原32元</span><br>
+        <span style="color:#55efc4">省7元 · 适合上班族快速午餐</span>
+      </p>
+    </div>
+    <div class="card">
+      <h3><span class="tag tag-orange">超值双人餐</span></h3>
+      <p>
+        辣椒炒肉 + 赣饭凤爪 + 青菜 + 米饭x2<br>
+        <strong>68元</strong> <span style="color:#666;text-decoration:line-through">原86元</span><br>
+        <span style="color:#55efc4">省18元 · 适合朋友小聚</span>
+      </p>
+    </div>
+    <div class="card">
+      <h3><span class="tag tag-gold">家庭聚餐（3-4人）</span></h3>
+      <p>
+        莲花鸭血 + 甲鱼 + 烧仔排 + 2素 + 米饭<br>
+        <strong>158元</strong> <span style="color:#666;text-decoration:line-through">原198元</span><br>
+        <span style="color:#55efc4">省40元 · 适合周末家庭</span>
+      </p>
+    </div>
+    <div class="card">
+      <h3><span class="tag tag-purple">四人宴请</span></h3>
+      <p>
+        甲鱼 + 仔排 + 鸭血 + 凤爪 + 米粉 + 4素<br>
+        <strong>198元</strong> <span style="color:#666;text-decoration:line-through">原258元</span><br>
+        <span style="color:#55efc4">省60元 · 适合朋友聚餐</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #e17055">
+    <h3>💰 提客单策略</h3>
+    <p>
+      <strong>加料区（高毛利）：</strong><br>
+      • 加一份赣味腊肉 +12元（毛利75%）<br>
+      • 加一份井冈山豆皮 +8元（毛利80%）<br>
+      • 加一碗瓦罐汤 +10元（毛利78%）<br>
+      • 自制酸梅汤/绿豆汤 +6元（毛利85%🔥）<br><br>
+      <strong>组合话术：</strong>"加个腊肉才12块，配上米饭能吃两大碗"<br>
+      <strong>目标客单价：</strong>从25元→提升至38-45元
+    </p>
+  </div>
+</section>
+
+<!-- 第四章：推广方案篇 -->
+<section class="chapter theme-green" id="ch4">
+  <div class="chapter-title">
+    <div class="chapter-num iv">Ⅳ</div>
+    <h2>推广方案 · 5大渠道覆盖</h2>
+  </div>
+  <p class="desc">总预算约<strong>¥8,000-10,000元/月</strong>，杜绝盲目价格战，精准触达九亭商圈核心客群。</p>
+
+  <div class="card">
+    <h3>📍 线下地推 <span style="font-size:12px;color:#888;font-weight:400">预算约¥1,500</span></h3>
+    <p>
+      • 新虹桥企业天地发传单+试吃（工作日11:00-12:00，连续7天）<br>
+      • 知雅汇/绿庭尚城电梯广告+门缝卡（投放2周）<br>
+      • 希岸酒店前台放优惠卡（住客凭卡享9折）<br>
+      • 上海德法学校放学时段发亲子套餐券<br>
+      <span class="tag tag-green">预估触达5,000+人</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🍜 美团外卖新店方案 <span style="font-size:12px;color:#888;font-weight:400">预算约¥1,500</span></h3>
+    <p>
+      <strong>新店冲量（前7天）：</strong><br>
+      • 满减：满20减3 + 满35减6 + 满50减10<br>
+      • 折扣菜品：19.9元肉酱拌粉（限量100份/天）<br>
+      • 点金推广：日预算60元（10:00-13:00+17:00-19:00）<br><br>
+      <strong>菜品命名优化：</strong><br>
+      加"赣饭"、"江西"、"鲜辣"等关键词<br>
+      头图用实拍：金汤鸭血 + 肉酱拌粉特写
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🥟 饿了么新店方案 <span style="font-size:12px;color:#888;font-weight:400">预算约¥1,000</span></h3>
+    <p>
+      • 新店7天排名卡（¥300）<br>
+      • 满减：满20减2 + 满35减5 + 满50减8<br>
+      • 推广日预算40元<br>
+      • 设置"新客立减5元"<br>
+      <span class="tag tag-blue">预估日均订单25-40单</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>⭐ 大众点评推广 <span style="font-size:12px;color:#888;font-weight:400">预算约¥3,000</span></h3>
+    <p>
+      <strong>开业团购套餐：</strong><br>
+      • 19.9元肉酱拌粉（限量200份冲销量）🔥<br>
+      • 68元超值双人餐（原价86元）<br>
+      • 158元家庭3-4人餐（原价198元）<br><br>
+      <strong>推广通投放：</strong><br>
+      • 日预算80元，定向九亭1.5km<br>
+      • 时间段：10:30-13:00 / 17:00-20:00<br><br>
+      <strong>快速上榜策略：</strong><br>
+      • 7天内冲刺50条好评 → 进入九亭快餐榜前10<br>
+      • 好评激励：返现3元/条+赠送小菜<br>
+      • 邀请5位美食达人免费体验（每人免单100元）<br>
+      <span class="tag tag-purple">上榜目标：7天进区域TOP 10</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🎬 抖音推广 <span style="font-size:12px;color:#888;font-weight:400">预算约¥2,000</span></h3>
+    <p>
+      • 开业探店视频（找松江本地美食达人，预算¥800）<br>
+      • 抖音团购：19.9元拌粉 / 68元双人餐<br>
+      • 同城feed流：日预算50元，定向九亭+七宝（10天）<br>
+      • 话题：#上海江西菜 #九亭美食<br>
+      <span class="tag tag-orange">预估曝光10万+</span>
+    </p>
+  </div>
+
+  <div class="card" style="border-left:3px solid #e17055">
+    <h3>📊 推流总预算汇总</h3>
+    <p>
+      线下地推 ¥1,500 + 美团外卖 ¥1,500 + 饿了么 ¥1,000<br>
+      + 大众点评 ¥3,000 + 抖音 ¥2,000<br>
+      <strong>= ¥9,000/月</strong><br>
+      开业首月预算，次月根据ROI数据优化调整
+    </p>
+  </div>
+</section>
+
+<!-- 第五章：营收预估篇 -->
+<section class="chapter theme-purple" id="ch5">
+  <div class="chapter-title">
+    <div class="chapter-num v">Ⅴ</div>
+    <h2>营收预估 · 财务模型</h2>
+  </div>
+  <p class="desc">基于260㎡面积、10-14桌（约40-56座位）、人均消费28-35元估算：</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🏪 堂食预估</h3>
+      <p>
+        座位数：40-56位（10-14桌）<br>
+        翻台率：午市2次 + 晚市1.5次<br>
+        日均客流：<strong>140-200人</strong><br>
+        人均消费：28-32元<br>
+        <strong>日均流水：¥4,000-6,000元</strong><br>
+        <strong>月流水：¥12-18万</strong>
+      </p>
+    </div>
+    <div class="card">
+      <h3>📱 外卖预估</h3>
+      <p>
+        日均订单量：40-60单<br>
+        客单价：32-38元<br>
+        平台扣点后：约75%<br>
+        <strong>日均流水：¥960-1,700元</strong><br>
+        <strong>月流水：¥3-5万</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #e17055">
+    <h3>💰 月度营收汇总</h3>
+    <p style="font-size:20px;font-weight:700;color:#e17055">
+      堂食 ¥12-18万 + 外卖 ¥3-5万<br>
+      = 合计月流水约 <strong>¥15-23万</strong>
+    </p>
+    <p style="margin-top:8px;color:#888;font-size:13px">
+      成本预估：食材成本30-35% · 人工成本20-25% · 房租水电15-18% · 推广费用5-8%<br>
+      预计净利润率：<strong>15-22%</strong><br>
+      预计月净利润：<strong>¥2.3-5万</strong>
+    </p>
+  </div>
+</section>
+
+<!-- 第六章：行动指南 -->
+<section class="chapter theme-gold" id="ch6">
+  <div class="chapter-title">
+    <div class="chapter-num vi">Ⅵ</div>
+    <h2>行动指南 · 5步执行时间表</h2>
+  </div>
+  <p class="desc">从开业前1周到开业第30天，分5步推进：</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="time">第1步 · 开业前1周</div>
+      <div class="content">
+        ✅ 完成装修收尾+设备调试<br>
+        ✅ 菜单定稿+厨房动线确认<br>
+        ✅ 员工培训（服务流程+菜品知识）<br>
+        ✅ 美团/饿了么/大众点评后台搭建
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">第2步 · 开业前3天</div>
+      <div class="content">
+        ✅ 新虹桥企业天地发传单+试吃活动<br>
+        ✅ 知雅汇/绿庭尚城电梯广告上刊<br>
+        ✅ 抖音探店视频拍摄<br>
+        ✅ 邀请5-10位亲友试菜（积累首批评价）
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">第3步 · 开业第1-3天</div>
+      <div class="content">
+        ✅ 美团/饿了么上线 + 点金推广开启<br>
+        ✅ 大众点评团购上线 + 推广通开启<br>
+        ✅ 开业活动：进店送酸梅汤/瓦罐汤<br>
+        ✅ 抖音同城feed流开始投放
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">第4步 · 开业第4-14天</div>
+      <div class="content">
+        ✅ 冲刺大众点评50条好评（进入区域榜）<br>
+        ✅ 美团外卖冲量期（点金推广持续）<br>
+        ✅ 复盘首批数据，调整菜品/定价<br>
+        ✅ 二次地推：覆盖九亭中心+金地广场
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">第5步 · 开业第15-30天</div>
+      <div class="content">
+        ✅ 全渠道数据大盘点（各渠道ROI分析）<br>
+        ✅ 优化产品结构（保留爆款+淘汰滞销）<br>
+        ✅ 推出会员储值活动（充200送30）<br>
+        ✅ 稳定运营节奏，培养回头客
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 尾部 -->
+<section class="footer">
+  <h3>🚀 美团餐饮系统 · 助力门店降本增效</h3>
+  <p style="color:#888;font-size:13px;margin-bottom:16px">智能收银 · 数字营销 · 数据分析 · 全链路管理</p>
+  <div class="price-tier">
+    <div class="tier">
+      <div class="name">基础版</div>
+      <div class="price">¥3,680</div>
+      <div style="font-size:11px;color:#888;margin-top:4px">收银+基础报表</div>
+    </div>
+    <div class="tier recommend">
+      <div class="name">🔥 标准版</div>
+      <div class="price">¥5,680</div>
+      <div style="font-size:11px;color:#888;margin-top:4px">收银+营销+外卖管理</div>
+    </div>
+    <div class="tier">
+      <div class="name">尊享版</div>
+      <div class="price">¥7,980</div>
+      <div style="font-size:11px;color:#888;margin-top:4px">全功能+督导+BI分析</div>
+    </div>
+  </div>
+  <p style="color:#444;font-size:12px;margin-top:20px">赣饭铺子 · 新店开业运营方案 | 深色科技风 | 2026.07</p>
+</section>
+
+<script>
+function toggleMenu(){
+  const menu=document.getElementById('sideMenu');
+  const btn=document.querySelector('.nav-menu-btn');
+  const overlay=document.querySelector('.side-overlay');
+  menu.classList.toggle('open');
+  btn.classList.toggle('active');
+  overlay.classList.toggle('show');
+}
+
+// 滚动进度条
+window.addEventListener('scroll',function(){
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  const p=(window.scrollY/h)*100;
+  document.getElementById('progressBar').style.width=p+'%';
+  
+  // 侧边菜单高亮
+  const sections=document.querySelectorAll('.chapter');
+  const links=document.querySelectorAll('.side-menu a');
+  sections.forEach((sec,i)=>{
+    const rect=sec.getBoundingClientRect();
+    if(rect.top<=200&&rect.bottom>=200){
+      links.forEach(l=>l.classList.remove('active'));
+      if(links[i])links[i].classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>

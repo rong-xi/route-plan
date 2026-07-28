@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>景和家宴 · 新店开业运营方案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;padding-top:52px}
+.navbar{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:16px;font-weight:700;background:linear-gradient(135deg,#6c5ce7,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu-btn{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;z-index:1002;background:none;border:none;padding:6px}
+.nav-menu-btn span{display:block;width:100%;height:2px;background:#e0e0e0;border-radius:2px;transition:all 0.3s}
+.nav-menu-btn.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-menu-btn.active span:nth-child(2){opacity:0}
+.nav-menu-btn.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:rgba(20,20,30,0.98);backdrop-filter:blur(20px);z-index:1001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);padding:80px 20px 30px;border-left:1px solid rgba(255,255,255,0.05)}
+.side-menu.open{right:0}
+.side-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:none;opacity:0;transition:opacity 0.35s}
+.side-overlay.show{display:block;opacity:1}
+.side-menu a{display:block;color:#b0b0b0;text-decoration:none;padding:14px 12px;border-radius:8px;margin-bottom:4px;font-size:15px;transition:all 0.2s;border-left:3px solid transparent}
+.side-menu a:hover,.side-menu a.active{color:#fff;background:rgba(108,92,231,0.1);border-left-color:#6c5ce7}
+.progress-bar{position:fixed;top:52px;left:0;height:3px;background:linear-gradient(90deg,#6c5ce7,#fd79a8);z-index:999;transition:width 0.1s;width:0%}
+.cover{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 30%,rgba(108,92,231,0.1),transparent 70%),radial-gradient(ellipse at 80% 60%,rgba(253,121,168,0.05),transparent 50%);pointer-events:none}
+.cover-badge{display:inline-block;padding:6px 18px;border:1px solid rgba(108,92,231,0.4);border-radius:20px;font-size:12px;color:#a29bfe;margin-bottom:20px;letter-spacing:2px;animation:fadeUp 0.8s ease}
+.cover h1{font-size:34px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#6c5ce7 60%,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:fadeUp 1s ease 0.2s both;line-height:1.3}
+.cover p{color:#888;font-size:14px;animation:fadeUp 1s ease 0.4s both;line-height:1.8}
+.cover .stats{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;max-width:340px;animation:fadeUp 1s ease 0.6s both}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:24px;font-weight:700;background:linear-gradient(135deg,#6c5ce7,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Georgia',serif}
+.stat-card .label{color:#888;font-size:12px;margin-top:4px}
+.scroll-arrow{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#555;font-size:24px;animation:bounce 2s infinite}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-8px)}60%{transform:translateX(-50%) translateY(-4px)}}
+.chapter{padding:40px 20px;position:relative}
+.chapter-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.chapter-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+.chapter-num.i{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.chapter-num.ii{background:linear-gradient(135deg,#d63031,#ff7675);color:#fff}
+.chapter-num.iii{background:linear-gradient(135deg,#e17055,#fdcb6e);color:#fff}
+.chapter-num.iv{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.chapter-num.v{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff}
+.chapter-num.vi{background:linear-gradient(135deg,#fd79a8,#e84393);color:#fff}
+.chapter-title h2{font-size:20px;font-weight:700;color:#fff}
+.chapter .desc{color:#999;font-size:13px;margin-bottom:20px;line-height:1.7}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;margin-bottom:12px;transition:all 0.3s}
+.card:hover{background:rgba(255,255,255,0.06)}
+.card h3{font-size:15px;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13px;color:#999;line-height:1.7}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;margin:2px}
+.tag-blue{background:rgba(9,132,227,0.15);color:#74b9ff}
+.tag-green{background:rgba(0,184,148,0.15);color:#55efc4}
+.tag-orange{background:rgba(225,112,85,0.15);color:#e17055}
+.tag-purple{background:rgba(108,92,231,0.15);color:#a29bfe}
+.tag-red{background:rgba(214,48,49,0.15);color:#ff7675}
+.tag-gold{background:rgba(253,203,110,0.15);color:#fdcb6e}
+.tag-pink{background:rgba(253,121,168,0.15);color:#fd79a8}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.table-wrap{overflow-x:auto;margin-bottom:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.05);padding:10px 12px;text-align:left;color:#ccc;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid rgba(255,255,255,0.04);color:#aaa}
+tr.highlight td{background:rgba(108,92,231,0.06);color:#a29bfe;font-weight:600}
+.price-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;text-align:center;position:relative}
+.price-card .badge{position:absolute;top:-6px;right:-6px;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:1px}
+.badge-hot{background:linear-gradient(135deg,#d63031,#e17055);color:#fff}
+.badge-popular{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.badge-profit{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.badge-vip{background:linear-gradient(135deg,#6c5ce7,#fd79a8);color:#fff}
+.price-card .name{font-size:14px;color:#fff;margin:8px 0 4px}
+.price-card .price{font-size:22px;font-weight:700;background:linear-gradient(135deg,#6c5ce7,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-card .note{font-size:11px;color:#888;margin-top:6px}
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(108,92,231,0.3)}
+.timeline-item{position:relative;padding:16px 0 16px 16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:20px;width:10px;height:10px;border-radius:50%;background:#6c5ce7;border:2px solid #0a0a0f}
+.timeline-item .time{font-size:12px;color:#6c5ce7;font-weight:600;margin-bottom:4px}
+.timeline-item .content{font-size:13px;color:#ccc;line-height:1.6}
+.chapter.theme-blue .chapter-title h2{color:#74b9ff}
+.chapter.theme-blue .card{border-left:3px solid rgba(9,132,227,0.4)}
+.chapter.theme-red .chapter-title h2{color:#ff7675}
+.chapter.theme-red .card{border-left:3px solid rgba(214,48,49,0.4)}
+.chapter.theme-gold .chapter-title h2{color:#fdcb6e}
+.chapter.theme-gold .card{border-left:3px solid rgba(253,203,110,0.4)}
+.chapter.theme-green .chapter-title h2{color:#55efc4}
+.chapter.theme-green .card{border-left:3px solid rgba(0,184,148,0.4)}
+.chapter.theme-purple .chapter-title h2{color:#a29bfe}
+.chapter.theme-purple .card{border-left:3px solid rgba(108,92,231,0.4)}
+.chapter.theme-pink .chapter-title h2{color:#fd79a8}
+.chapter.theme-pink .card{border-left:3px solid rgba(253,121,168,0.4)}
+.footer{margin-top:20px;padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.footer h3{font-size:18px;color:#fff;margin-bottom:12px}
+.footer .price-tier{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.price-tier .tier{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 16px;min-width:100px}
+.price-tier .tier .name{font-size:12px;color:#888}
+.price-tier .tier .price{font-size:18px;font-weight:700;color:#6c5ce7;margin-top:4px}
+.price-tier .tier.recommend{border-color:#6c5ce7;background:rgba(108,92,231,0.08)}
+@media(max-width:480px){.cover h1{font-size:28px}.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="nav-logo">景和家宴 · 运营方案</div><button class="nav-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav>
+<div class="side-overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <a href="#ch1" onclick="toggleMenu()">Ⅰ 商圈数据篇</a>
+  <a href="#ch2" onclick="toggleMenu()">Ⅱ 竞品分析篇</a>
+  <a href="#ch3" onclick="toggleMenu()">Ⅲ 定价策略篇</a>
+  <a href="#ch4" onclick="toggleMenu()">Ⅳ 推广方案篇</a>
+  <a href="#ch5" onclick="toggleMenu()">Ⅴ 营收预估篇</a>
+  <a href="#ch6" onclick="toggleMenu()">Ⅵ 行动指南</a>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+
+<section class="cover">
+  <div class="cover-badge">🏮 浙菜·地方菜·新店开业</div>
+  <h1>景和家宴<br>新店开业运营方案</h1>
+  <p>📍 老沪闵路1388号 · 舒也时代广场 · 梅陇春申<br>🕐 预计开业：2026年8月15日 · 200㎡ · 人均80-100元<br>📊 70%堂食 · 10%外带 · 20%外卖</p>
+  <div class="stats">
+    <div class="stat-card"><div class="num">15万+</div><div class="label">春申片区常住人口</div></div>
+    <div class="stat-card"><div class="num">80-100</div><div class="label">人均定位(元)</div></div>
+    <div class="stat-card"><div class="num">15号线</div><div class="label">地铁直达</div></div>
+    <div class="stat-card"><div class="num">200㎡</div><div class="label">中大型门店</div></div>
+  </div>
+  <div class="scroll-arrow">▼</div>
+</section>
+
+<section class="chapter theme-blue" id="ch1">
+  <div class="chapter-title"><div class="chapter-num i">Ⅰ</div><h2>商圈数据篇 · 春申梅陇画像</h2></div>
+  <p class="desc">舒也时代广场位于闵行梅陇春申核心区，老沪闵路1388号，15号线地铁旁，属成熟住宅+产业混合商圈。</p>
+  <div class="grid-2">
+    <div class="card"><h3>📍 区位优势</h3><p>梅陇镇地处闵行区中部，春申板块是人口密集成熟居住区。15号线朱梅路站步行可达，直达漕河泾/紫竹高新区。周边沪闵高架、虹梅高架环绕，交通便利。</p></div>
+    <div class="card"><h3>👥 商圈人口</h3><p>春申板块常住人口约15万+<br>梅陇镇常住人口约32万+<br>片区人口密度高，家庭客群为主<br>中产家庭占比约45%</p></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3>🏘️ 周边住宅</h3><p><span class="tag tag-green">家庭客群为主</span><br>• 舒兴小区 — 步行100m<br>• 舒乐小区 — 步行300m<br>• 嘉和花苑 — 步行500m<br>• 上海春城 — 1km<br>• 万科假日风景 — 1.5km<br>• 春申景城 — 1.5km</p></div>
+    <div class="card"><h3>🏢 周边办公/商业</h3><p><span class="tag tag-orange">商务宴请客</span><br>• 舒也时代广场自带办公<br>• 梅陇·博鑫中心 — 1km<br>• 力波产业园 — 1.5km<br>• 梅陇城商务楼 — 2km<br>• 华东理工大学 — 2km</p></div>
+  </div>
+  <div class="card"><h3>📊 商圈消费水平占比</h3><p>
+    <span class="tag tag-blue">50元以下 占30%</span> 日常简餐<br>
+    <span class="tag tag-gold">80-100元 占35%</span> 品质聚餐（主力市场）🔥<br>
+    <span class="tag tag-purple">100-150元 占22%</span> 宴请招待<br>
+    <span class="tag tag-pink">150元以上 占13%</span> 商务宴请<br>
+    <span style="font-size:12px;color:#888">核心洞察：80-100元品质聚餐市场占比最大，与景和家宴定位高度吻合</span>
+  </p></div>
+  <div class="card" style="border-left:3px solid #6c5ce7"><h3>💡 商圈洞察</h3><p>春申梅陇片区成熟家庭聚居区，消费力稳定。舒也时代广场自带社区商业流量，15号线打通漕河泾白领客群。周边缺乏人均80-100元的中高端浙菜/地方菜，市场空间大。</p></div>
+</section>
+
+<section class="chapter theme-red" id="ch2">
+  <div class="chapter-title"><div class="chapter-num ii">Ⅱ</div><h2>竞品分析 · 春申品质餐饮格局</h2></div>
+  <p class="desc">舒也时代广场周边2km范围内，人均80-100元的品质中餐竞品分析：</p>
+  <div class="table-wrap"><table>
+    <tr><th>竞品</th><th>距离</th><th>人均</th><th>类型</th><th>优劣势</th></tr>
+    <tr class="highlight"><td>景和家宴</td><td>—</td><td>80-100</td><td>地方菜·浙菜</td><td>🏆 舒也时代广场唯一品质中餐</td></tr>
+    <tr><td>沪食客饭堂(舒也店)</td><td>同楼</td><td>29</td><td>小吃快餐</td><td>人均低，不构成直接竞争，可互补引流</td></tr>
+    <tr><td>久富家宴(九亭)</td><td>3km</td><td>60</td><td>本帮菜</td><td>人均偏低，距离远</td></tr>
+    <tr><td>府宴(虹桥自贸城)</td><td>4km</td><td>65</td><td>淮扬菜</td><td>距离远，不属于春申商圈</td></tr>
+    <tr><td>云亭湾(新桥)</td><td>5km+</td><td>115</td><td>江浙菜</td><td>远、价格更高</td></tr>
+    <tr><td>新发现(金地)</td><td>3km+</td><td>65</td><td>江浙菜</td><td>连锁品牌，但距春申远</td></tr>
+    <tr><td>梅陇本帮老店(散落)</td><td>1-2km</td><td>50-70</td><td>本帮菜</td><td>多为老店小馆，环境一般</td></tr>
+  </table></div>
+  <div class="card" style="border-left:3px solid #6c5ce7"><h3>🔥 核心发现</h3><p>舒也时代广场2km内缺乏人均80-100元的品质浙菜/地方菜餐厅！现有竞品要么人均过低（快餐），要么距离过远。景和家宴填补了春申片区"家庭品质聚餐"的精准空白。</p></div>
+  <div class="card"><h3>📚 学习标杆</h3><p><strong>新发现(连锁江浙菜)：</strong> 蛋黄鸡翅+石锅海鲜豆腐是招牌，人均65元，走性价比路线<br><strong>云亭湾(新桥)：</strong> 主打中式歌舞表演+江浙菜，人均115元，体验式餐饮<br><strong>可借鉴：</strong> 新发现的爆品策略+云亭湾的体验感，融合成景和家宴的"家庭宴请"定位</p></div>
+</section>
+
+<section class="chapter theme-gold" id="ch3">
+  <div class="chapter-title"><div class="chapter-num iii">Ⅲ</div><h2>定价策略 · 精品浙菜产品矩阵</h2></div>
+  <p class="desc">人均80-100元定位，覆盖家庭聚餐+朋友聚会+商务简餐三场景。</p>
+  <h3 style="font-size:15px;color:#fdcb6e;margin-bottom:12px">🍽️ 核心菜品定价</h3>
+  <div class="grid-2">
+    <div class="price-card"><span class="badge badge-popular">引流款</span><div class="name">杭式叫花鸡</div><div class="price">58元</div><div class="note">开业特价，每桌限一份</div></div>
+    <div class="price-card"><span class="badge badge-hot">🔥 招牌</span><div class="name">西湖醋鱼</div><div class="price">88元</div><div class="note">杭州经典，毛利65%</div></div>
+    <div class="price-card"><span class="badge badge-hot">🔥 招牌</span><div class="name">东坡肉(位)</div><div class="price">38元/位</div><div class="note">位上精品，毛利70%</div></div>
+    <div class="price-card"><span class="badge badge-profit">高毛利</span><div class="name">龙井虾仁</div><div class="price">98元</div><div class="note">精致菜品，毛利75%</div></div>
+    <div class="price-card"><span class="badge badge-popular">引流款</span><div class="name">宋嫂鱼羹</div><div class="price">48元</div><div class="note">汤品引流，毛利65%</div></div>
+    <div class="price-card"><span class="badge badge-vip">🔥 利润款</span><div class="name">葱油黄鱼</div><div class="price">128元</div><div class="note">宴请硬菜，毛利72%</div></div>
+    <div class="price-card"><span class="badge badge-profit">高毛利</span><div class="name">桂花糖藕</div><div class="price">32元</div><div class="note">冷菜，毛利80%</div></div>
+    <div class="price-card"><span class="badge badge-profit">高毛利</span><div class="name">酒酿圆子</div><div class="price">28元</div><div class="note">甜品，毛利82%</div></div>
+  </div>
+  <h3 style="font-size:15px;color:#fdcb6e;margin:20px 0 12px">📦 套餐设计</h3>
+  <div class="grid-2">
+    <div class="card"><h3><span class="tag tag-blue">双人精选</span></h3><p>宋嫂鱼羹+东坡肉x2+桂花糖藕+米饭=168元<br><span style="color:#55efc4">省32元 · 适合情侣/朋友</span></p></div>
+    <div class="card"><h3><span class="tag tag-gold">家庭3-4人</span></h3><p>叫花鸡+西湖醋鱼+东坡肉x3+糖藕+酒酿+米饭=328元<br><span style="color:#55efc4">省70元 · 周末家庭聚餐</span></p></div>
+    <div class="card"><h3><span class="tag tag-purple">6人宴请</span></h3><p>醋鱼+龙井虾仁+东坡肉+黄鱼+鱼羹+藕+圆子+4素=668元<br><span style="color:#55efc4">省130元 · 朋友聚会</span></p></div>
+    <div class="card"><h3><span class="tag tag-pink">8-10人宴</span></h3><p>全鱼席+虾仁+东坡肉x8+叫花鸡+黄鱼+鱼羹+冷盘+8素=1188元<br><span style="color:#55efc4">省260元 · 家庭大聚餐</span></p></div>
+  </div>
+  <div class="card" style="border-left:3px solid #6c5ce7"><h3>💰 提客单策略</h3><p>
+    <strong>加料区（高毛利）：</strong><br>
+    • 加一份醉蟹 +38元（毛利70%）<br>
+    • 加一份清炒时蔬 +22元（毛利78%）<br>
+    • 加一壶绍兴黄酒 +48元（毛利80%🔥）<br>
+    • 加一份定胜糕 +18元（毛利82%）<br><br>
+    <strong>目标客单价：</strong>从80元→提升至95-110元
+  </p></div>
+</section>
+
+<section class="chapter theme-green" id="ch4">
+  <div class="chapter-title"><div class="chapter-num iv">Ⅳ</div><h2>推广方案 · 5大渠道</h2></div>
+  <p class="desc">总预算约<strong>¥10,000-12,000元/月</strong>，聚焦家庭客群与品质聚餐场景。</p>
+  <div class="card"><h3>📍 线下地推 <span style="font-size:12px;color:#888;font-weight:400">预算¥2,000</span></h3><p>• 舒兴/舒乐小区电梯广告+门缝卡（2周）<br>• 舒也时代广场内派单+立牌（商场主动线）<br>• 华东理工大学教师宿舍区派送午市套餐卡<br>• 与力波产业园企业合作企业团餐</p></div>
+  <div class="card"><h3>⭐ 大众点评核心推广 <span style="font-size:12px;color:#888;font-weight:400">预算¥4,000</span></h3><p>
+    <strong>团购三档：</strong><br>
+    • 58元叫花鸡（原88，限500份）🔥<br>
+    • 168元双人精选（原200元）<br>
+    • 328元家庭3-4人餐（原398元）<br><br>
+    <strong>推广通：日预算100元，定向春申2km</strong><br>
+    时间段：10:00-13:00 / 16:30-20:30<br><br>
+    <strong>上榜策略：</strong>14天冲刺80条好评→区域本帮江浙菜榜前5<br>
+    邀请15位美食达人体验（每单免100元）<br>
+    <span class="tag tag-purple">上榜目标：14天进春申地区TOP 5</span>
+  </p></div>
+  <div class="card"><h3>🍜 美团外卖 <span style="font-size:12px;color:#888;font-weight:400">预算¥1,500</span></h3><p>满减：满80减8+满150减15+满300减30<br>折扣：58元叫花鸡（限50份/天）<br>点金推广日预算60元（11:00-13:30）</p></div>
+  <div class="card"><h3>🥟 饿了么 <span style="font-size:12px;color:#888;font-weight:400">预算¥1,000</span></h3><p>新店排名卡+满80减5+满150减10<br>日预算40元<br>新客立减8元</p></div>
+  <div class="card"><h3>🎬 抖音推广 <span style="font-size:12px;color:#888;font-weight:400">预算¥2,500</span></h3><p>• 梅陇本地美食达人探店（预算¥1,000）<br>• 抖音团购：双人168元/家庭328元<br>• 同城feed流日预算50元（14天）<br>• 话题：#上海浙菜 #春申美食<br><span class="tag tag-orange">预估曝光15万+</span></p></div>
+  <div class="card" style="border-left:3px solid #6c5ce7"><h3>📊 总预算</h3><p>线下¥2,000 + 点评¥4,000 + 美团¥1,500 + 饿了么¥1,000 + 抖音¥2,500 = <strong>¥11,000/月</strong></p></div>
+</section>
+
+<section class="chapter theme-purple" id="ch5">
+  <div class="chapter-title"><div class="chapter-num v">Ⅴ</div><h2>营收预估</h2></div>
+  <p class="desc">200㎡面积，12-16桌（约50-70位），人均85-95元估算：</p>
+  <div class="grid-2">
+    <div class="card"><h3>🏪 堂食</h3><p>座位：50-70位<br>翻台：午1.5次 + 晚1.5次<br>日均客流：75-105人<br>人均：85-95元<br><strong>日均：¥6,400-10,000</strong><br><strong>月流水：¥19-30万</strong></p></div>
+    <div class="card"><h3>📱 外卖</h3><p>日均：25-40单<br>客单：80-95元<br>扣点后约75%<br><strong>日均：¥1,500-2,800</strong><br><strong>月流水：¥4-8万</strong></p></div>
+  </div>
+  <div class="card" style="border-left:3px solid #6c5ce7"><h3>💰 合计</h3><p style="font-size:20px;font-weight:700;color:#a29bfe">堂食¥19-30万 + 外卖¥4-8万 = <strong>月流水¥23-38万</strong></p><p style="margin-top:8px;color:#888;font-size:13px">食材30-35% · 人工22-28% · 房租12-15% · 推广5-8% · 净利率预期<strong>15-22%</strong> · 月净利<strong>¥3.5-8万</strong></p></div>
+</section>
+
+<section class="chapter theme-pink" id="ch6">
+  <div class="chapter-title"><div class="chapter-num vi">Ⅵ</div><h2>行动指南</h2></div>
+  <div class="timeline">
+    <div class="timeline-item"><div class="time">第1步 · 开业前10天</div><div class="content">✅ 装修收尾+包厢布置（设2个8-10人包间）<br>✅ 菜单定稿+厨师团队磨合<br>✅ 大众点评后台搭建+团购页面设计</div></div>
+    <div class="timeline-item"><div class="time">第2步 · 开业前5天</div><div class="content">✅ 舒兴/舒乐小区电梯广告上刊<br>✅ 舒也时代广场内立牌+赠品准备<br>✅ 抖音探店达人邀约拍摄</div></div>
+    <div class="timeline-item"><div class="time">第3步 · 开业第1-3天</div><div class="content">✅ 美团/饿了么+点评团购+推广通全开<br>✅ 开业活动：送定胜糕/桂花藕粉<br>✅ 邀请亲友试菜，首批20条好评上线</div></div>
+    <div class="timeline-item"><div class="time">第4步 · 开业第4-14天</div><div class="content">✅ 冲刺60条好评，进入区域榜单前10<br>✅ 复盘菜品数据，调整出品<br>✅ 二次地推：覆盖春申景城/万科假日</div></div>
+    <div class="timeline-item"><div class="time">第5步 · 开业第15-30天</div><div class="content">✅ 全渠道数据盘点+ROI分析<br>✅ 推会员储值（充500送80）<br>✅ 抖音直播首秀+周末家庭套餐上线</div></div>
+  </div>
+</section>
+
+<section class="footer">
+  <h3>🚀 美团餐饮系统 · 助力高效运营</h3>
+  <p style="color:#888;font-size:13px;margin-bottom:16px">智能收银 · 数字营销 · 数据分析 · 全链路管理</p>
+  <div class="price-tier">
+    <div class="tier"><div class="name">基础版</div><div class="price">¥3,680</div><div style="font-size:11px;color:#888;margin-top:4px">收银+报表</div></div>
+    <div class="tier recommend"><div class="name">🔥 标准版</div><div class="price">¥5,680</div><div style="font-size:11px;color:#888;margin-top:4px">收银+营销+外卖管理</div></div>
+    <div class="tier"><div class="name">尊享版</div><div class="price">¥7,980</div><div style="font-size:11px;color:#888;margin-top:4px">全功能+督导+BI</div></div>
+  </div>
+  <p style="color:#444;font-size:12px;margin-top:20px">景和家宴 · 新店开业运营方案 | 紫金风 | 2026.07</p>
+</section>
+
+<script>
+function toggleMenu(){const menu=document.getElementById('sideMenu');const btn=document.querySelector('.nav-menu-btn');const overlay=document.querySelector('.side-overlay');menu.classList.toggle('open');btn.classList.toggle('active');overlay.classList.toggle('show')}
+window.addEventListener('scroll',function(){const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;const p=(window.scrollY/h)*100;document.getElementById('progressBar').style.width=p+'%';const sections=document.querySelectorAll('.chapter');const links=document.querySelectorAll('.side-menu a');sections.forEach((sec,i)=>{const rect=sec.getBoundingClientRect();if(rect.top<=200&&rect.bottom>=200){links.forEach(l=>l.classList.remove('active'));if(links[i])links[i].classList.add('active')}})})
+</script>
+</body>
+</html>

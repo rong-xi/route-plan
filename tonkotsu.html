@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>豚骨拉面 · 新店开业运营方案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;padding-top:52px}
+.navbar{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:16px;font-weight:700;background:linear-gradient(135deg,#d63031,#ff7675);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu-btn{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;z-index:1002;background:none;border:none;padding:6px}
+.nav-menu-btn span{display:block;width:100%;height:2px;background:#e0e0e0;border-radius:2px;transition:all 0.3s}
+.nav-menu-btn.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-menu-btn.active span:nth-child(2){opacity:0}
+.nav-menu-btn.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:rgba(20,20,30,0.98);backdrop-filter:blur(20px);z-index:1001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);padding:80px 20px 30px;border-left:1px solid rgba(255,255,255,0.05)}
+.side-menu.open{right:0}
+.side-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:none;opacity:0;transition:opacity 0.35s}
+.side-overlay.show{display:block;opacity:1}
+.side-menu a{display:block;color:#b0b0b0;text-decoration:none;padding:14px 12px;border-radius:8px;margin-bottom:4px;font-size:15px;transition:all 0.2s;border-left:3px solid transparent}
+.side-menu a:hover,.side-menu a.active{color:#fff;background:rgba(214,48,49,0.1);border-left-color:#d63031}
+.progress-bar{position:fixed;top:52px;left:0;height:3px;background:linear-gradient(90deg,#d63031,#ff7675);z-index:999;transition:width 0.1s;width:0%}
+.cover{min-height:85vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 30%,rgba(214,48,49,0.1),transparent 70%);pointer-events:none}
+.cover-badge{display:inline-block;padding:6px 18px;border:1px solid rgba(214,48,49,0.4);border-radius:20px;font-size:12px;color:#ff7675;margin-bottom:20px;letter-spacing:2px;animation:fadeUp 0.8s ease}
+.cover h1{font-size:34px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#d63031 60%,#ff7675);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:fadeUp 1s ease 0.2s both;line-height:1.3}
+.cover p{color:#888;font-size:14px;animation:fadeUp 1s ease 0.4s both;line-height:1.8}
+.cover .stats{margin-top:36px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;max-width:320px;animation:fadeUp 1s ease 0.6s both}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:24px;font-weight:700;background:linear-gradient(135deg,#d63031,#ff7675);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .label{color:#888;font-size:12px;margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.chapter{padding:36px 20px;position:relative}
+.chapter-title{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.chapter-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.c1{background:linear-gradient(135deg,#d63031,#ff7675);color:#fff}
+.c2{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.c3{background:linear-gradient(135deg,#e17055,#fdcb6e);color:#fff}
+.c4{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.c5{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff}
+.c6{background:linear-gradient(135deg,#fd79a8,#e84393);color:#fff}
+.chapter-title h2{font-size:18px;font-weight:700;color:#fff}
+.chapter .desc{color:#888;font-size:12px;margin-bottom:14px;line-height:1.7}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;margin-bottom:10px;transition:all 0.3s}
+.card:hover{background:rgba(255,255,255,0.06);border-color:rgba(214,48,49,0.15)}
+.card h3{font-size:14px;color:#fff;margin-bottom:6px}
+.card p{font-size:12px;color:#999;line-height:1.7}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;margin:2px}
+.t-red{background:rgba(214,48,49,0.15);color:#ff7675}
+.t-blue{background:rgba(9,132,227,0.15);color:#74b9ff}
+.t-green{background:rgba(0,184,148,0.15);color:#55efc4}
+.t-gold{background:rgba(253,203,110,0.15);color:#fdcb6e}
+.t-purple{background:rgba(108,92,231,0.15);color:#a29bfe}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.table-wrap{overflow-x:auto;margin-bottom:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:rgba(255,255,255,0.05);padding:8px 10px;text-align:left;color:#ccc;font-weight:600;white-space:nowrap}
+td{padding:8px 10px;border-top:1px solid rgba(255,255,255,0.04);color:#aaa}
+tr.highlight td{background:rgba(214,48,49,0.06);color:#ff7675;font-weight:600}
+.price-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;text-align:center;position:relative}
+.price-card .badge{position:absolute;top:-6px;right:-6px;padding:3px 8px;border-radius:8px;font-size:10px;font-weight:600}
+.b-hot{background:linear-gradient(135deg,#d63031,#e17055);color:#fff}
+.b-pop{background:linear-gradient(135deg,#0984e3,#74b9ff);color:#fff}
+.b-profit{background:linear-gradient(135deg,#00b894,#55efc4);color:#fff}
+.price-card .name{font-size:13px;color:#fff;margin:6px 0 3px}
+.price-card .price{font-size:20px;font-weight:700;background:linear-gradient(135deg,#d63031,#ff7675);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-card .note{font-size:11px;color:#888;margin-top:4px}
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(214,48,49,0.3)}
+.timeline-item{position:relative;padding:14px 0 14px 16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:18px;width:10px;height:10px;border-radius:50%;background:#d63031;border:2px solid #0a0a0f}
+.timeline-item .time{font-size:12px;color:#ff7675;font-weight:600;margin-bottom:4px}
+.timeline-item .content{font-size:12px;color:#ccc;line-height:1.6}
+.footer{margin-top:10px;padding:24px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.footer h3{font-size:16px;color:#fff;margin-bottom:10px}
+.footer .price-tier{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.price-tier .tier{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;min-width:90px}
+.price-tier .tier .name{font-size:11px;color:#888}
+.price-tier .tier .price{font-size:16px;font-weight:700;color:#d63031;margin-top:4px}
+.price-tier .tier.rec{border-color:#d63031;background:rgba(214,48,49,0.08)}
+.chapter.t1 .chapter-title h2{color:#ff7675}
+.chapter.t1 .card{border-left:3px solid rgba(214,48,49,0.4)}
+.chapter.t2 .chapter-title h2{color:#74b9ff}
+.chapter.t2 .card{border-left:3px solid rgba(9,132,227,0.4)}
+.chapter.t3 .chapter-title h2{color:#fdcb6e}
+.chapter.t3 .card{border-left:3px solid rgba(253,203,110,0.4)}
+.chapter.t4 .chapter-title h2{color:#55efc4}
+.chapter.t4 .card{border-left:3px solid rgba(0,184,148,0.4)}
+@media(max-width:480px){.cover h1{font-size:28px}.grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="nav-logo">豚骨拉面 · 运营方案</div><button class="nav-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav>
+<div class="side-overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <a href="#c1" onclick="toggleMenu()">Ⅰ 商圈数据</a>
+  <a href="#c2" onclick="toggleMenu()">Ⅱ 竞品分析</a>
+  <a href="#c3" onclick="toggleMenu()">Ⅲ 定价策略</a>
+  <a href="#c4" onclick="toggleMenu()">Ⅳ 推广方案</a>
+  <a href="#c5" onclick="toggleMenu()">Ⅴ 营收预估</a>
+  <a href="#c6" onclick="toggleMenu()">Ⅵ 行动指南</a>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+
+<section class="cover">
+  <div class="cover-badge">🍜 日式拉面 · 新店开业</div>
+  <h1>豚骨拉面<br>新店开业运营方案</h1>
+  <p>📍 泗泾镇泗滨路393号 · 松江洞泾商圈<br>🕐 预计开业：2026年8月10日 · 80㎡ · 人均30-40元<br>📊 70%堂食 · 10%外带 · 20%外卖</p>
+  <div class="stats">
+    <div class="stat-card"><div class="num">30-40</div><div class="label">人均定位(元)</div></div>
+    <div class="stat-card"><div class="num">80㎡</div><div class="label">精致小店</div></div>
+    <div class="stat-card"><div class="num">8-10</div><div class="label">座位数(桌)</div></div>
+    <div class="stat-card"><div class="num">8月10日</div><div class="label">开业时间</div></div>
+  </div>
+</section>
+
+<section class="chapter t1" id="c1">
+<div class="chapter-title"><div class="chapter-num c1">Ⅰ</div><h2>商圈数据 · 洞泾泗泾画像</h2></div>
+<p class="desc">泗滨路393号位于泗泾镇中心区域，近泗泾古镇，周边居民区密集，地铁9号线泗泾站约1.5km。</p>
+<div class="grid-2">
+<div class="card"><h3>📍 区位特色</h3><p>泗泾镇地处松江区东北部，紧邻九亭，9号线泗泾站直达漕河泾/徐家汇。泗泾古镇是松江热门文旅地标，周末客流可观。泗滨路沿线以居民区为主，底商密集。</p></div>
+<div class="card"><h3>👥 商圈人口</h3><p>泗泾镇常住人口约15万+<br>洞泾镇常住约7万+<br>片区家庭客群为主<br>年轻白领租房群体占比约35%</p></div>
+</div>
+<div class="grid-2">
+<div class="card"><h3>🏘️ 周边住宅</h3><p><span class="tag t-green">家庭+租客</span><br>• 泗泾古镇周边小区<br>• 金港花园 — 300m<br>• 泗泾新苑 — 500m<br>• 润江花苑 — 800m<br>• 同润菲诗艾伦 — 1km</p></div>
+<div class="card"><h3>🏪 周边配套</h3><p><span class="tag t-blue">流量入口</span><br>• 泗泾古镇 — 步行500m<br>• 保利悦活汇 — 1km<br>• 如家酒店(泗泾店) — 300m<br>• 泗泾小学/幼儿园 — 500m</p></div>
+</div>
+<div class="card"><h3>📊 商圈消费水平</h3><p><span class="tag t-red">20-30元 占40%</span> 日常简餐<br><span class="tag t-gold">30-50元 占38%</span> 品质快餐🔥<br><span class="tag t-blue">50-80元 占15%</span> 聚餐<br><span class="tag t-purple">80元+ 占7%</span> 宴请<br><span style="font-size:11px;color:#888">核心洞察：30-40元品价拉面完美契合市场最大区间</span></p></div>
+<div class="card" style="border-left:3px solid #d63031"><h3>💡 商圈洞察</h3><p>泗泾以居住功能为主，9号线通勤白领+本地家庭构成主力客群。日式拉面在泗泾属于差异化品类，现有拉面店多为传统中式拉面，正宗豚骨拉面有市场空白。</p></div>
+</section>
+
+<section class="chapter t2" id="c2">
+<div class="chapter-title"><div class="chapter-num c2">Ⅱ</div><h2>竞品分析 · 泗泾面食格局</h2></div>
+<p class="desc">周边2km范围内，人均30-40元面食/快餐竞品：</p>
+<div class="table-wrap"><table>
+<tr><th>竞品</th><th>距离</th><th>人均</th><th>类型</th><th>优劣势</th></tr>
+<tr class="highlight"><td>豚骨拉面</td><td>—</td><td>30-40</td><td>日式拉面</td><td>🏆 商圈唯一日式豚骨拉面</td></tr>
+<tr><td>泗泾面馆(散落)</td><td>0.3-1km</td><td>20-25</td><td>中式汤面</td><td>价格低但无日式体验</td></tr>
+<tr><td>松江老面馆</td><td>1km</td><td>25</td><td>本帮面</td><td>传统浇头面，口味差异化大</td></tr>
+<tr><td>豚骨花香·木泗製麺</td><td>4km+</td><td>45</td><td>日式拉面</td><td>距离远，价格更高</td></tr>
+<tr><td>萨莉亚(泗泾)</td><td>1.5km</td><td>35</td><td>意式简餐</td><td>价格接近但品类不同</td></tr>
+<tr><td>各类快餐(老乡鸡等)</td><td>1-2km</td><td>28-35</td><td>中式快餐</td><td>品类差异大，不构成直接竞争</td></tr>
+</table></div>
+<div class="card" style="border-left:3px solid #d63031"><h3>🔥 核心发现</h3><p><strong>泗泾1.5km内无日式豚骨拉面专门店！</strong> 唯一日式拉面豚骨花香在4km外且人均45元更高。豚骨拉面以30-40元平价日式定位，差异化入局时机极佳。</p></div>
+<div class="card"><h3>📚 学习标杆</h3><p><strong>一澜拉面(上海各店)：</strong> 浓汤豚骨+厚切叉烧+溏心蛋是标配，人均45-55元<br><strong>满吉拉面：</strong> 浓厚汤底+明厨现做，人均48元，品质感强<br><strong>可借鉴：</strong> 明厨展示熬汤过程+现场拉面制作，提升体验感和品质认知</p></div>
+</section>
+
+<section class="chapter t3" id="c3">
+<div class="chapter-title"><div class="chapter-num c3">Ⅲ</div><h2>定价策略</h2></div>
+<p class="desc">人均30-40元，覆盖工作日午餐+晚餐场景。</p>
+<h3 style="font-size:14px;color:#fdcb6e;margin-bottom:10px">🫕 产品定位</h3>
+<div class="grid-2">
+<div class="price-card"><span class="badge b-pop">引流</span><div class="name">招牌豚骨拉面</div><div class="price">32元</div><div class="note">开业特价28元</div></div>
+<div class="price-card"><span class="badge b-hot">🔥 利润</span><div class="name">叉烧豚骨拉面</div><div class="price">42元</div><div class="note">厚切叉烧，毛利68%</div></div>
+<div class="price-card"><span class="badge b-pop">引流</span><div class="name">味噌拉面</div><div class="price">35元</div><div class="note">差异化口味</div></div>
+<div class="price-card"><span class="badge b-profit">高毛利</span><div class="name">唐扬鸡块</div><div class="price">18元</div><div class="note">毛利78%🔥</div></div>
+<div class="price-card"><span class="badge b-profit">高毛利</span><div class="name">可乐饼/章鱼小丸子</div><div class="price">12-15元</div><div class="note">毛利80%🔥</div></div>
+<div class="price-card"><span class="badge b-profit">高毛利</span><div class="name">日式饮品(波子汽水/乌龙茶)</div><div class="price">8-12元</div><div class="note">毛利85%🔥🔥</div></div>
+</div>
+<h3 style="font-size:14px;color:#fdcb6e;margin:16px 0 10px">📦 套餐设计</h3>
+<div class="grid-2">
+<div class="card"><h3><span class="tag t-blue">🌙 午市套餐</span></h3><p>招牌拉面+唐扬鸡块+饮品=38元<br><span style="color:#55efc4">省10元 · 打工人工作餐</span></p></div>
+<div class="card"><h3><span class="tag t-gold">🌟 超值套餐</span></h3><p>叉烧拉面+小食(任选)+饮品=52元<br><span style="color:#55efc4">省15元 · 晚餐推荐</span></p></div>
+<div class="card"><h3><span class="tag t-red">👫 双人套餐</span></h3><p>2碗招牌拉面+唐扬+可乐饼+2饮品=78元><br><span style="color:#55efc4">省24元 · 朋友同行</span></p></div>
+<div class="card"><h3><span class="tag t-purple">👨 亲子套餐</span></h3><p>1叉烧拉面+1味噌拉面+可乐饼+饮品=68元><br><span style="color:#55efc4">省18元 · 家庭客群</span></p></div>
+</div>
+<div class="card" style="border-left:3px solid #d63031"><h3>💰 提客单策略</h3><p><strong>加料区（高毛利）：</strong><br>• 加叉烧 +10元 → 3片变6片（毛利70%）<br>• 加溏心蛋 +4元（毛利80%）<br>• 加海苔 +3元（毛利85%🔥）<br>• 加一份日式饺孖 +15元（毛利72%）<br><strong>目标客单：</strong>从32元→提升至40-48元</p></div>
+</section>
+
+<section class="chapter t4" id="c4">
+<div class="chapter-title"><div class="chapter-num c4">Ⅳ</div><h2>推广方案 · 5大渠道</h2></div>
+<p class="desc">总预算约<strong>¥7,000-8,500元/月</strong>，聚焦泗泾本地客群+9号线通勤白领。</p>
+<div class="card"><h3>📍 线下地推 <span style="font-size:11px;color:#888;font-weight:400"> 预算¥1,200</span></h3><p>• 泗泾古镇入口设试吃摊（周末2天）<br>• 金港花园/润江花苑门缝卡（2周）<br>• 如家酒店前台放优惠卡<br>• 周边幼儿园/小学放学发亲子套餐券</p><div>
+<div class="card"><h3>🍜 美团外卖 <span style="font-size:11px;color:#888;font-weight:400"> 预算¥1,500</span></h3><p>新店7天：满28减4+满38减7+满58减12<br>折扣：28元招牌拉面(限100份/天)<br>点金推广日预算60元（10:30-13:00+17:30-19:30）<br>菜品命名：加"日式""豚骨"等关键词，头图实拍浓汤特写</p></div>
+<div class="card"><h3>🥟 饿了么 <span style="font-size:11px;color:#888;font-weight:400"> 预算¥800</span></h3><p>新店排名卡+满28减3+满38减6<br>日预算30元<br>新客立减4元</p></div>
+<div class="card"><h3>⭐ 大众点评 <span style="font-size:11px;color:#888;font-weight:400"> 预算¥2,500</span></h3><p><strong>团购三档：</strong><br>• 28元招牌拉面（原价32，限300份）🔥<br>• 38元午市套餐（原48）<br>• 78元双人套餐（原102）<hr><strong>推广通：</strong>日预算70元，定向泗泾2km<br>10:30-13:30 / 17:00-20:00<br><strong>上榜策咯：</strrong>10天冲50条好评→进入区域快餐榜前10<br>邀请8位达人体验(免单50元/人)</p><div>
+<div class="card"><h3>🎬 抖音 <span style="font-size:11px;color:#888;font-weight:400"> 预算¥1,500</span></h3><p>• 松江本地美食达人探店（预算¥600）<br>• 抖音团购：28元招牌拉面<br>• 同城feed流日预算40元（10天）<br>• 话题：#松江美食 #泗泾拉面</p></div>
+<div class="card" style="border-left:3px solid #d63031"><h3>📊 总预算：¥7,500/月</h3></div>
+</sectin>
+
+<section class="chapter t1" id="c5">
+<div class="chapter-title"><div class="chapter-num c5">Ⅴ</div><h2>营收预估</h2></div>
+<p class="desc">80㎡，8-10桌（约24-30位），人均32-38元：</p>
+<div class="grid-2">
+<div class="card"><h3>🏪 堂食</h3><p>座位：24-30位<br>翻台：午2.5次+晚2次<br>日均客流：60-75人<br>人均：32-38元<br><strong>日均：¥1,920-2,850</strong><br><strong>月流水：¥5.8-8.5万</strong></p></div>
+<div class="card"><h3>📱 外卖</h3><p>日均：30-50单<br>客单：32-38元<br>扣点后约75%<br><strong>日均：¥720-1,420</strong><br><strong>月流水：¥2.2-4.3万</strong></p></div>
+</div>
+<div class="card" style="border-left:3px solid #d63031"><h3>💰 合计</h3><p style="font-size:18px;font-weight:700;color:#ff7675">堂食¥5.8-8.5万 + 外卖¥2.2-4.3万 = <strong>月流水¥8-12.8万</strong></p><p style="margin-top:6px;color:#888;font-size:12px">食材30-35% · 人工20-25% · 房租12-15% · 推广5-8% · 净利率预期<strong>18-25%</strong> · 月净利<strong>¥1.5-3万</strong></p></div>
+</section>
+
+<section class="chapter t2" id="c6">
+<div class="chapter-title"><div class="chapter-num c6">Ⅵ</div><h2>行动指南</h2></div>
+<div class="timeline">
+<div class="timeline-item"><div class="time">第1步 · 开业前1周</div><div class="content">✅ 装修收尾+厨房动线确认<br>✅ 汤底配方定稿+员工培训<br>✅ 大众点评/美团后台搭建</div></div>
+<div class="timeline-item"><div class="time">第2步 · 开业前3天</div><div class="content">✅ 古镇入口试吃+小区发放传单<br>✅ 抖音探店视频拍摄<br>✅ 亲友试菜→首批10条评价</div></div>
+<div class="timeline-item"><div class="time">第3步 · 开业第1-3天</div><div class="content">✅ 美团/饿了么/点评/抖音全上线<br>✅ 开业活动：进店送日式饮品<br>✅ 堂食打卡送溏心蛋</div></div>
+<div class="timeline-item"><div class="time">第4步 · 开业第4-10天</div><div class="content">✅ 冲刺50条大众点评好评<br>✅ 推广通持续投放+数据复盘<br>✅ 调整菜品/定价优化</div></div>
+<div class="timeline-item"><div class="time">第5步 · 开业第11-30天</div><div class="content">✅ 全渠道ROI分析<br>✅ 推储值卡（充100送15）<br>✅ 周末亲子套餐+古镇游客引流</div></div>
+</div>
+</section>
+
+<section class="footer">
+<h3>🚀 美团餐饮系统 · 小餐饮大能量</h3>
+<p style="color:#888;font-size:12px;margin-bottom:14px">智能收银 · 数字营销 · 数据分析</p>
+<div class="price-tier">
+<div class="tier"><div class="name">基础版</div><div class="price">¥3,680</div></div>
+<div class="tier rec"><div class="name">🔥 标准版</div><div class="price">¥5,680</div></div>
+<div class="tier"><div class="name">尊享版</div><div class="price">¥7,980</div></div>
+</div>
+<p style="color:#444;font-size:11px;margin-top:16px">豚骨拉面 · 新店开业运营方案 | 赤红风 | 2026.07</p>
+</section>
+
+<script>
+function toggleMenu(){const m=document.getElementById('sideMenu');const b=document.querySeletor('.nav-menu-btn');const o=document.querySeletor('.side-verlay');m.classList.toggle('open');b.clssList.toggle('active');o.classList.toggle('show')}
+window.addEventListener('scroll',function(){const h=document.documetElement.srollHeight-docment.documentElement.clientHeight;const p=(window.scrollY/h)*100;document.getElementById('progressBar').style.width=p+'%';const s=document.querySelectorAll('.hapter');const l=document.querySeletorAll('.ide-menu a');s.forEach((sec,i)=>{const r=sec.getBoundingCientRect();if(r.top<=200&&r.botrom>=200){l.forEach(x=>x.classList.remove('active'));if(l[i])l[i].classList.add('active')}})})
+</script>
+</body>
+</html>

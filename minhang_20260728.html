@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>闵行区 · 新店拜访路线规划</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;padding-top:52px}
+.navbar{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:16px;font-weight:700;background:linear-gradient(135deg,#e17055,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu-btn{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;z-index:1002;background:none;border:none;padding:6px}
+.nav-menu-btn span{display:block;width:100%;height:2px;background:#e0e0e0;border-radius:2px;transition:all 0.3s}
+.nav-menu-btn.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-menu-btn.active span:nth-child(2){opacity:0}
+.nav-menu-btn.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:rgba(20,20,30,0.98);backdrop-filter:blur(20px);z-index:1001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);padding:80px 20px 30px;border-left:1px solid rgba(255,255,255,0.05)}
+.side-menu.open{right:0}
+.side-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:none;opacity:0;transition:opacity 0.35s}
+.side-overlay.show{display:block;opacity:1}
+.side-menu a{display:block;color:#b0b0b0;text-decoration:none;padding:14px 12px;border-radius:8px;margin-bottom:4px;font-size:15px;transition:all 0.2s;border-left:3px solid transparent}
+.side-menu a:hover,.side-menu a.active{color:#fff;background:rgba(225,112,85,0.1);border-left-color:#e17055}
+.progress-bar{position:fixed;top:52px;left:0;height:3px;background:linear-gradient(90deg,#e17055,#fdcb6e);z-index:999;transition:width 0.1s;width:0%}
+.cover{min-height:85vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 30%,rgba(225,112,85,0.08),transparent 70%);pointer-events:none}
+.cover h1{font-size:32px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#e17055 70%,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:fadeUp 1s ease 0.2s both;line-height:1.3}
+.cover p{color:#888;font-size:14px;animation:fadeUp 1s ease 0.4s both;line-height:1.8}
+.cover .stats{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:360px;animation:fadeUp 1s ease 0.6s both}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:26px;font-weight:700;background:linear-gradient(135deg,#e17055,#fdcb6e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .label{color:#888;font-size:12px;margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.chapter{padding:36px 20px}
+.chapter-title{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.chapter-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.zn1{background:linear-gradient(135deg,#0984e3,#74b9ff)}
+.zn2{background:linear-gradient(135deg,#00b894,#55efc4)}
+.zn3{background:linear-gradient(135deg,#d63031,#ff7675)}
+.zn4{background:linear-gradient(135deg,#6c5ce7,#a29bfe)}
+.zn5{background:linear-gradient(135deg,#e17055,#fdcb6e)}
+.zn6{background:linear-gradient(135deg,#fd79a8,#e84393)}
+.chapter-title h2{font-size:18px;font-weight:700;color:#fff}
+.chapter .desc{color:#888;font-size:12px;margin-bottom:14px}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;margin-bottom:10px;transition:all 0.3s}
+.card:hover{background:rgba(255,255,255,0.06)}
+.card .store-name{font-size:14px;color:#fff;font-weight:600;margin-bottom:4px}
+.card .store-info{font-size:12px;color:#999;line-height:1.6}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;margin:2px}
+.tag-date{background:rgba(9,132,227,0.15);color:#74b9ff}
+.tag-hot{background:rgba(214,48,49,0.15);color:#ff7675}
+.tag-tip{background:rgba(225,112,85,0.15);color:#e17055}
+.station-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:8px 14px;background:rgba(255,255,255,0.03);border-radius:10px}
+.station-header .name{font-size:16px;font-weight:700;color:#fff}
+.station-header .count{font-size:12px;color:#888}
+.route-line{position:relative;padding:20px 0 20px 30px;margin:10px 0 20px}
+.route-line::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:rgba(225,112,85,0.3)}
+.route-dot{position:absolute;left:4px;width:14px;height:14px;border-radius:50%;background:#e17055;border:2px solid #0a0a0f}
+.route-line .stop{padding:6px 0 12px;font-size:13px;color:#ccc;position:relative}
+.route-arrow{color:#e17055;font-size:12px;padding:4px 0 4px 30px}
+.footer{margin-top:10px;padding:24px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);color:#666;font-size:12px}
+@media(max-width:480px){.cover h1{font-size:26px}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="nav-logo">闵行区 · 新店拜访路线</div><button class="nav-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav>
+<div class="side-overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <a href="#z1" onclick="toggleMenu()">1 七宝板块</a>
+  <a href="#z2" onclick="toggleMenu()">2 浦江·浦锦板块</a>
+  <a href="#z3" onclick="toggleMenu()">3 虹桥·龙柏板块</a>
+  <a href="#z4" onclick="toggleMenu()">4 梅陇·春申板块</a>
+  <a href="#z5" onclick="toggleMenu()">5 马桥·颛桥板块</a>
+  <a href="#z6" onclick="toggleMenu()">6 其他区域</a>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+
+<section class="cover">
+  <h1>闵行区 · 新店拜访路线规划</h1>
+  <p>📊 7月24日-28日新增餐饮新店 · 企查查数据<br>🕐 数据日期：2026年7月28日</p>
+  <div class="stats">
+    <div class="stat-card"><div class="num">30</div><div class="label">餐饮新店</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">非餐门店</div></div>
+    <div class="stat-card"><div class="num">6</div><div class="label">覆盖板块</div></div>
+  </div>
+</section>
+
+<section class="chapter" id="z1">
+<div class="chapter-title"><div class="chapter-num zn1">1</div><h2>七宝板块 · 9家</h2></div>
+<p class="desc">七宝镇+七莘路沿线，餐饮密集区，建议集中攻坚</p>
+<div class="station-header"><div class="name">七宝镇核心区</div><div class="count">7月24-28日 9家</div></div>
+<div class="card"><div class="store-name">上海市闵行区赣禾居餐饮店（个体工商户）</div><div class="store-info">📍 七宝镇新龙路1333弄103号1层<br><span class="tag tag-date">07-28</span> 新开业</div></div>
+<div class="card"><div class="store-name">上海市闵行区烤场怪兽餐饮店（个体工商户）</div><div class="store-info">📍 七宝镇中谊路555弄1号103室<br><span class="tag tag-date">07-27</span> <span class="tag tag-hot">烧烤</span></div></div>
+<div class="card"><div class="store-name">上海盈宝裕餐饮有限公司</div><div class="store-info">📍 七莘路1809弄1、4、5号2层L2-116<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区后晌餐饮店（个体工商户）</div><div class="store-info">📍 七宝镇沪松公路878号1层<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">上海宝龙城好面小屋餐饮管理有限公司</div><div class="store-info">📍 漕宝路3299弄20号地下1层64室<br><span class="tag tag-date">07-24</span> <span class="tag tag-hot">面馆</span></div></div>
+<div class="card"><div class="store-name">生根餐饮管理（上海）有限公司漕宝路第二分公司</div><div class="store-info">📍 漕宝路3366号B1层B1K113B号<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海喜之煲餐饮管理有限责任公司七莘路分公司</div><div class="store-info">📍 七莘路1507号1幢地下1层B1-K06<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海乔府稻食餐饮有限公司江月路分公司</div><div class="store-info">📍 江月路1850弄4号1F-D01-3室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海金悦楼餐饮有限公司</div><div class="store-info">📍 老沪闵路1388号B栋1层B107-2室 · 舒也时代广场<br><span class="tag tag-date">07-24</span> <span class="tag tag-hot">🌟同楼有景和家宴</span></div></div>
+<div class="card" style="border-left:3px solid #e17055"><div class="store-info"><span class="tag tag-tip">💡 路线建议</span> 漕宝路2家+七莘路2家可一起扫！金悦楼在舒也时代广场（景和家宴同楼），建议七宝→漕宝路→七莘路→老沪闵路沿线串联</div></div>
+</section>
+
+<section class="chapter" id="z2">
+<div class="chapter-title"><div class="chapter-num zn2">2</div><h2>浦江·浦锦板块 · 7家</h2></div>
+<p class="desc">浦江镇+浦锦街道，建议开车前往</p>
+<div class="station-header"><div class="name">浦江/浦锦</div><div class="count">7月24-28日 7家</div></div>
+<div class="card"><div class="store-name">上海市闵行区浦江镇元硕餐饮店（个体工商户）</div><div class="store-info">📍 浦江镇苏召路1699号10幢1008室<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区浦江镇桂丰餐饮店（个体工商户）</div><div class="store-info">📍 浦江镇汇雄路746号1层-2<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区浦江镇轩扬餐饮店（个体工商户）</div><div class="store-info">📍 浦江镇三鲁公路3003弄76号203室<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区浦江镇玲华餐饮店（个体工商户）</div><div class="store-info">📍 浦江镇浦连路396号104室-D<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海黄锦湾餐饮管理有限公司浦江分公司</div><div class="store-info">📍 沈杜公路4459号-32<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区浦江镇睦香餐饮店（个体工商户）</div><div class="store-info">📍 浦江镇江文路421号1层101室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区沁福餐饮店（个体工商户）</div><div class="store-info">📍 浦锦街道浦驰路554号-1室<br><span class="tag tag-date">07-28</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区意趣餐饮店（个体工商户）</div><div class="store-info">📍 浦锦街道浦星公路800-17号137室<br><span class="tag tag-date">07-28</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区两兄餐饮店（个体工商户）</div><div class="store-info">📍 浦锦街道浦驰路420号-3室<br><span class="tag tag-date">07-27</span> <span class="tag tag-hot">同街浦驰路</span></div></div>
+<div class="card" style="border-left:3px solid #00b894"><div class="store-info"><span class="tag tag-tip">💡 路线建议</span> 浦驰路2家可一起扫！建议浦江镇→浦锦街道方向，开车约30分钟串联，安排半天</div></div>
+</section>
+
+<section class="chapter" id="z3">
+<div class="chapter-title"><div class="chapter-num zn3">3</div><h2>虹桥·龙柏板块 · 4家</h2></div>
+<p class="desc">虹泉路韩国街+虹井路，餐饮活跃商圈</p>
+<div class="station-header"><div class="name">虹桥/龙柏</div><div class="count">7月24-28日 4家</div></div>
+<div class="card"><div class="store-name">上海润溪沁餐饮有限公司</div><div class="store-info">📍 虹井路530号底层B室<br><span class="tag tag-date">07-27</span></div></div>
+<div class="card"><div class="store-name">家禾鲜（上海）餐饮有限公司</div><div class="store-info">📍 虹泉路1000号2幢B座1层101E室<br><span class="tag tag-date">07-24</span> <span class="tag tag-hot">韩国街</span></div></div>
+<div class="card"><div class="store-name">上海懒小山虹新餐饮管理有限公司</div><div class="store-info">📍 绍虹路99号104A室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海青干酒店管理有限公司</div><div class="store-info">📍 上中西路1280号1幢2层<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card" style="border-left:3px solid #d63031"><div class="store-info"><span class="tag tag-tip">💡 路线建议</span> 虹泉路→虹井路→绍虹路→上中西路，骑行串联，建议上午集中攻坚</div></div>
+</section>
+
+<section class="chapter" id="z4">
+<div class="chapter-title"><div class="chapter-num zn4">4</div><h2>梅陇·春申板块 · 3家</h2></div>
+<p class="desc">虹梅南路沿线，靠近舒也时代广场</p>
+<div class="station-header"><div class="name">梅陇/春申</div><div class="count">7月24-28日 3家</div></div>
+<div class="card"><div class="store-name">上海市闵行区桠威餐饮店（个体工商户）</div><div class="store-info">📍 虹梅南路1005号50幢一层1131室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区壹焰餐饮店（个体工商户）</div><div class="store-info">📍 虹梅南路379弄36号104室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海市闵行区洪屿餐饮店（个体工商户）</div><div class="store-info">📍 澄江路1290号5号楼1层103室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card" style="border-left:3px solid #6c5ce7"><div class="store-info"><span class="tag tag-tip">💡 路线建议</span> 虹梅南路2家可串联，金悦楼也在老沪闵路上，可并入七宝线一起扫</div></div>
+</section>
+
+<section class="chapter" id="z5">
+<div class="chapter-title"><div class="chapter-num zn5">5</div><h2>马桥·颛桥板块 · 2家</h2></div>
+<p class="desc">马桥镇+颛桥都庄路</p>
+<div class="card"><div class="store-name">上海市闵行区夏薇餐饮店（个体工商户）</div><div class="store-info">📍 马桥镇北松路1501号16幢101、102室<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">瑞幸咖啡（上海）有限公司闵行都庄路一店</div><div class="store-info">📍 都庄路2899号1层105室<br><span class="tag tag-date">07-24</span> <span class="tag tag-hot">品牌连锁</span></div></div>
+</section>
+
+<section class="chapter" id="z6">
+<div class="chapter-title"><div class="chapter-num zn6">6</div><h2>其他区域 · 5家</h2></div>
+<p class="desc">分散各区域的独立门店，顺路拜访</p>
+<div class="card"><div class="store-name">上海市闵行区湾沚餐饮店（个体工商户）</div><div class="store-info">📍 新虹街道西华美路31号<br><span class="tag tag-date">07-28</span></div></div>
+<div class="card"><div class="store-name">上海沃歌斯餐饮有限公司万源南路店</div><div class="store-info">📍 万源南路99弄4号楼1层107号<br><span class="tag tag-date">07-24</span> <span class="tag tag-hot">品牌连锁</span></div></div>
+<div class="card"><div class="store-name">上海乡笨味餐饮有限公司</div><div class="store-info">📍 龙蟠桥路39弄3号-1（101部位）<br><span class="tag tag-date">07-24</span></div></div>
+<div class="card"><div class="store-name">上海懒小山虹新餐饮管理有限公司</div><div class="store-info">📍 绍虹路99号104A室（虹桥商务区）<br><span class="tag tag-date">07-24</span></div></div>
+</section>
+
+<div class="footer">📊 数据来源：企查查 · 2026年7月28日 ｜ 闵行区餐饮新店30家</div>
+
+<script>
+function toggleMenu(){const m=document.getElementById('sideMenu');const b=document.querySelector('.nav-menu-btn');const o=document.querySelector('.side-overlay');m.classList.toggle('open');b.classList.toggle('active');o.classList.toggle('show')}
+window.addEventListener('scroll',function(){const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;const p=(window.scrollY/h)*100;document.getElementById('progressBar').style.width=p+'%';const s=document.querySelectorAll('.chapter');const l=document.querySelectorAll('.side-menu a');s.forEach((sec,i)=>{const r=sec.getBoundingClientRect();if(r.top<=200&&r.bottom>=200){l.forEach(x=>x.classList.remove('active'));if(l[i])l[i].classList.add('active')}})})
+</script>
+</body>
+</html>

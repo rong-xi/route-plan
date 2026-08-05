@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>闵行区 · 新店拜访路线规划</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;padding-top:52px}
+.navbar{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:15px;font-weight:700;background:linear-gradient(135deg,#f6c445,#f9e07f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu-btn{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;z-index:1002;background:none;border:none;padding:6px}
+.nav-menu-btn span{display:block;width:100%;height:2px;background:#e0e0e0;border-radius:2px;transition:all 0.3s}
+.nav-menu-btn.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-menu-btn.active span:nth-child(2){opacity:0}
+.nav-menu-btn.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:rgba(20,20,30,0.98);backdrop-filter:blur(20px);z-index:1001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);padding:80px 20px 30px;border-left:1px solid rgba(255,255,255,0.05)}
+.side-menu.open{right:0}
+.side-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:none;opacity:0;transition:opacity 0.35s}
+.side-overlay.show{display:block;opacity:1}
+.side-menu a{display:block;color:#b0b0b0;text-decoration:none;padding:12px 12px;border-radius:8px;margin-bottom:2px;font-size:14px;transition:all 0.2s;border-left:3px solid transparent}
+.side-menu a:hover,.side-menu a.active{color:#fff;background:rgba(246,196,69,0.1);border-left-color:#f6c445}
+.progress-bar{position:fixed;top:52px;left:0;height:3px;background:linear-gradient(90deg,#f6c445,#f9e07f);z-index:999;transition:width 0.1s;width:0%}
+.cover{min-height:85vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 30%,rgba(246,196,69,0.08),transparent 70%);pointer-events:none}
+.cover-badge{display:inline-block;padding:6px 18px;border:1px solid rgba(246,196,69,0.4);border-radius:20px;font-size:12px;color:#f9e07f;margin-bottom:20px;letter-spacing:2px;animation:fadeUp 0.8s ease}
+.cover h1{font-size:32px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#f6c445 60%,#f9e07f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:fadeUp 1s ease 0.2s both;line-height:1.3}
+.cover p{color:#888;font-size:13px;animation:fadeUp 1s ease 0.4s both;line-height:1.8}
+.cover .stats{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:360px;animation:fadeUp 1s ease 0.6s both}
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px 10px;text-align:center}
+.stat-card .num{font-size:22px;font-weight:700;background:linear-gradient(135deg,#f6c445,#f9e07f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .label{color:#888;font-size:11px;margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.chapter{padding:30px 16px;position:relative}
+.chapter-title{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.chapter-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.chapter-title h2{font-size:16px;font-weight:700;color:#fff}
+.chapter .day-badge{display:inline-block;padding:3px 12px;border-radius:12px;font-size:11px;margin-left:8px;vertical-align:middle}
+.chapter .desc{color:#888;font-size:12px;margin-bottom:12px;line-height:1.7}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;margin-bottom:8px}
+.card .sname{font-size:13px;color:#fff;font-weight:600;margin-bottom:3px}
+.card .sinfo{font-size:11px;color:#999;line-height:1.6}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;margin-right:4px}
+.footer{padding:24px 16px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.footer p{color:#666;font-size:11px;line-height:1.8}
+@media(max-width:480px){.cover h1{font-size:26px}}</style>
+</head>
+<body>
+<nav class="navbar"><div class="nav-logo">闵行区 · 新店路线</div><button class="nav-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav>
+<div class="side-overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu"><a href="#c1" onclick="toggleMenu()">1. 虹桥·龙柏·金汇·吴中路 (13)</a><a href="#c2" onclick="toggleMenu()">2. 新虹·华漕 (7)</a><a href="#c3" onclick="toggleMenu()">3. 七宝·航华 (4)</a><a href="#c4" onclick="toggleMenu()">4. 莘庄·颛桥·梅陇 (10)</a><a href="#c5" onclick="toggleMenu()">5. 吴泾 (6)</a><a href="#c6" onclick="toggleMenu()">6. 马桥·北桥·金平 (4)</a><a href="#c7" onclick="toggleMenu()">7. 浦江·浦锦 (10)</a></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<section class="cover">
+<div class="cover-badge">📋 闵行区 · 新店拜访路线</div>
+<h1>闵行区<br>新店拜访路线规划</h1>
+<p>📊 数据来源：企查查 · 2026年7月29日-8月5日注册<br>📍 54家餐饮新店 · 7大板块 · 推荐3天跑完</p>
+<div class="stats">
+<div class="stat-card"><div class="num">54</div><div class="label">新店总数</div></div>
+<div class="stat-card"><div class="num">7</div><div class="label">板块分区</div></div>
+<div class="stat-card"><div class="num">3天</div><div class="label">推荐跑完</div></div>
+</div>
+</section>
+
+<section class="chapter" id="c1">
+<div class="chapter-title"><div class="chapter-num" style="background:#f6c445;color:#0a0a0f">1</div><h2>虹桥·龙柏·金汇·吴中路<span class="day-badge" style="background:#f6c44520;color:#f6c445">第1天 · 13家</span></h2></div>
+<div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">宇新兄弟</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-03</span>吴中路1050号5幢东楼126室（吴中路沿线）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">黔滩·吴中路</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-07-29</span>吴中路1599号1层L109c（万象城）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">槿吴酒店管理</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-07-30</span>吴中路1128号4幢一层104-1室（吴中路沿线）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">御和盛</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-07-29</span>虹泉路1078号8幢3层3F-08~11单元（韩国街）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">夸桑来泊瑞</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-07-29</span>虹泉路1000号2幢A座101D室（韩国街）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">一扎鲜</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-03</span>虹泉路1000号2幢B座1层101M室（韩国街）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">万叶·闵行</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-03</span>红松路212号/214号/虹井路618弄17号（龙柏）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">渝匠</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-04</span>虹桥镇虹井路120弄2号156室（龙柏）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">渝礼</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-03</span>虹井路120弄1号176、177室（龙柏）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">欣雅辰</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-04</span>虹梅路2962号临1A室（虹梅路）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">兴顺吉汇</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-04</span>虹梅路2962号临1B室（虹梅路）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">帅李餐厅</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-08-04</span>虹桥镇古北路1699号地下二层B286-1室（古北）</div>
+</div><div class="card" style="border-left:3px solid #f6c44540">
+  <div class="sname">如若初见民宿</div>
+  <div class="sinfo"><span class="tag" style="background:#f6c44520;color:#f6c445">📅 2026-07-31</span>金汇南路225号二层（金汇）</div>
+</div>
+</section><section class="chapter" id="c2">
+<div class="chapter-title"><div class="chapter-num" style="background:#0984e3;color:#0a0a0f">2</div><h2>新虹·华漕<span class="day-badge" style="background:#0984e320;color:#0984e3">第1天接续 · 7家</span></h2></div>
+<div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">奈叙饮品店</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-08-03</span>新虹街道申滨路497号地下2层48-1-36室（虹桥天地）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">石叶波</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-08-03</span>新虹街道申滨路960号5幢2层960号2F-29（虹桥天街）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">鲜燕</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-07-31</span>新虹街道申长路1209弄2号107室一层-2（虹桥绿谷）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">屯里一锅</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-07-31</span>申长路1209弄1号108室（虹桥绿谷）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">苗鹏水果店</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-07-31</span>新虹街道申长路1245号一层（虹桥绿谷）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">智灶</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-07-30</span>新虹街道申贵路2103号-2室（虹桥商务区）</div>
+</div><div class="card" style="border-left:3px solid #0984e340">
+  <div class="sname">禾卤</div>
+  <div class="sinfo"><span class="tag" style="background:#0984e320;color:#0984e3">📅 2026-07-30</span>新虹街道天山西路4086/4096号地下1层15号（爱博）</div>
+</div>
+</section><section class="chapter" id="c3">
+<div class="chapter-title"><div class="chapter-num" style="background:#00b894;color:#0a0a0f">3</div><h2>七宝·航华<span class="day-badge" style="background:#00b89420;color:#00b894">第1天接续 · 4家</span></h2></div>
+<div class="card" style="border-left:3px solid #00b89440">
+  <div class="sname">韩磊</div>
+  <div class="sinfo"><span class="tag" style="background:#00b89420;color:#00b894">📅 2026-07-29</span>七宝镇漕宝路3299弄20号地下1层154室（七宝万科）</div>
+</div><div class="card" style="border-left:3px solid #00b89440">
+  <div class="sname">喜文</div>
+  <div class="sinfo"><span class="tag" style="background:#00b89420;color:#00b894">📅 2026-07-29</span>七宝镇漕宝路3299弄20号地下1层114室（七宝万科）</div>
+</div><div class="card" style="border-left:3px solid #00b89440">
+  <div class="sname">新派·漕宝路</div>
+  <div class="sinfo"><span class="tag" style="background:#00b89420;color:#00b894">📅 2026-07-30</span>漕宝路3299弄18号M-S4b-F1-002（七宝万科）</div>
+</div><div class="card" style="border-left:3px solid #00b89440">
+  <div class="sname">迪拉</div>
+  <div class="sinfo"><span class="tag" style="background:#00b89420;color:#00b894">📅 2026-07-30</span>七宝镇航华二村284号（航华）</div>
+</div>
+</section><section class="chapter" id="c4">
+<div class="chapter-title"><div class="chapter-num" style="background:#e17055;color:#0a0a0f">4</div><h2>莘庄·颛桥·梅陇<span class="day-badge" style="background:#e1705520;color:#e17055">第2天上午 · 10家</span></h2></div>
+<div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">粤味泓</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-08-03</span>莘庄镇秀文路800号-3幢（6幢）106室（莘庄）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">粒粒饭香</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-29</span>秀文路800号-3幢101部位110-111室（莘庄）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">东北一家人</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-30</span>莘庄镇秀涟路38号一层（莘庄）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">森瑞鸿</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-29</span>七莘路3599弄5号148A室（莘庄）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">颜姐</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-31</span>莘庄工业区颛兴路726号（莘庄工业区）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">泽慧</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-29</span>颛桥镇颛兴路355号底层（颛桥）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">温程</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-08-04</span>颛桥镇老沪闵路2460弄2号101室C1区（颛桥）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">麦聚坊顾戴路</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-29</span>顾戴路667号底层（梅陇）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">王品·漕宝路第二</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-31</span>漕宝路3366号第L5层L518号商铺（南方商圈）</div>
+</div><div class="card" style="border-left:3px solid #e1705540">
+  <div class="sname">王品·漕宝路第一</div>
+  <div class="sinfo"><span class="tag" style="background:#e1705520;color:#e17055">📅 2026-07-31</span>漕宝路3366号第L5层L521B号商铺（南方商圈）</div>
+</div>
+</section><section class="chapter" id="c5">
+<div class="chapter-title"><div class="chapter-num" style="background:#6c5ce7;color:#0a0a0f">5</div><h2>吴泾<span class="day-badge" style="background:#6c5ce720;color:#6c5ce7">第2天下午 · 6家</span></h2></div>
+<div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">鹰鹏</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-08-04</span>吴泾镇尚义路39弄3号2层122-2C室（吴泾宝龙广场）</div>
+</div><div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">骨肉香</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-08-04</span>吴泾镇尚义路39弄3号2层122-2A室（吴泾宝龙广场）</div>
+</div><div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">赤兔撕</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-08-04</span>吴泾镇尚义路39弄3号2层122-2B室（吴泾宝龙广场）</div>
+</div><div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">桂禾</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-07-31</span>吴泾镇尚义路39弄3号106室（吴泾宝龙广场）</div>
+</div><div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">益明饮品</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-07-31</span>吴泾镇剑川路438弄3号107-2室（吴泾）</div>
+</div><div class="card" style="border-left:3px solid #6c5ce740">
+  <div class="sname">一库</div>
+  <div class="sinfo"><span class="tag" style="background:#6c5ce720;color:#6c5ce7">📅 2026-07-31</span>吴泾镇龙吴路5859号101室1层108-2铺位（吴泾）</div>
+</div>
+</section><section class="chapter" id="c6">
+<div class="chapter-title"><div class="chapter-num" style="background:#e84393;color:#0a0a0f">6</div><h2>马桥·北桥·金平<span class="day-badge" style="background:#e8439320;color:#e84393">第2天接续 · 4家</span></h2></div>
+<div class="card" style="border-left:3px solid #e8439340">
+  <div class="sname">卉隅甜品</div>
+  <div class="sinfo"><span class="tag" style="background:#e8439320;color:#e84393">📅 2026-08-04</span>马桥镇银春路1955弄269号（马桥万达）</div>
+</div><div class="card" style="border-left:3px solid #e8439340">
+  <div class="sname">辉嘉莉</div>
+  <div class="sinfo"><span class="tag" style="background:#e8439320;color:#e84393">📅 2026-07-30</span>双柏路1391号5幢109室（双柏路）</div>
+</div><div class="card" style="border-left:3px solid #e8439340">
+  <div class="sname">赵哥</div>
+  <div class="sinfo"><span class="tag" style="background:#e8439320;color:#e84393">📅 2026-07-29</span>金平路465号一层B室（金平路/老闵行）</div>
+</div><div class="card" style="border-left:3px solid #e8439340">
+  <div class="sname">意家</div>
+  <div class="sinfo"><span class="tag" style="background:#e8439320;color:#e84393">📅 2026-07-29</span>北松路1501号24幢104室（北桥）</div>
+</div>
+</section><section class="chapter" id="c7">
+<div class="chapter-title"><div class="chapter-num" style="background:#d63031;color:#0a0a0f">7</div><h2>浦江·浦锦<span class="day-badge" style="background:#d6303120;color:#d63031">第3天 · 10家</span></h2></div>
+<div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">城烁</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-08-03</span>浦锦街道芦恒路472号（浦锦/芦恒路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">航宇</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-30</span>浦锦街道浦锦路371/373号1层（浦锦/世博家园）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">应清</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-29</span>浦锦街道浦驰路420号-1室（浦锦）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">大富贵·江月路</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-30</span>江月路1800号1幢1层A1-42（浦江/江月路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">晨禾</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-30</span>浦江镇江文路306号1层102室-A（浦江/江文路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">洁瑜</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-30</span>浦江镇永跃路410号1层104-1A室（浦江/永跃路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">辰睦</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-31</span>浦江镇永跃路380号地下1层B1038室（浦江/永跃路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">庆球</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-29</span>浦江镇浦连路396号104室E2（浦江/浦连路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">智源</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-29</span>浦江镇立跃路519号16幢A108室（浦江/立跃路）</div>
+</div><div class="card" style="border-left:3px solid #d6303140">
+  <div class="sname">泽猛</div>
+  <div class="sinfo"><span class="tag" style="background:#d6303120;color:#d63031">📅 2026-07-30</span>浦江镇鲁南路538号13幢2层208-1（浦江/鲁南路）</div>
+</div>
+</section>
+
+<div class="footer">
+<h3 style="font-size:14px;color:#fff;margin-bottom:10px">📋 数据说明</h3>
+<p>基于企查查新增企业数据，筛选闵行区2026年7月29日至8月5日注册的餐饮品类门店<br>
+共计54家，按地理位置分7大板块，推荐3天跑完<br>
+具体路线可根据实际情况灵活调整<br><br>
+<span style="color:#444">生成时间：2026.08.05</span></p>
+</div>
+
+<script>
+function toggleMenu(){var m=document.getElementById('sideMenu');var b=document.querySelector('.nav-menu-btn');var o=document.querySelector('.side-overlay');m.classList.toggle('open');b.classList.toggle('active');o.classList.toggle('show')}
+window.addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;var p=(window.scrollY/h)*100;document.getElementById('progressBar').style.width=p+'%';var s=document.querySelectorAll('section.chapter');var l=document.querySelectorAll('.side-menu a');s.forEach(function(sec,i){var r=sec.getBoundingClientRect();if(r.top<=200&&r.bottom>=200){l.forEach(function(x){x.classList.remove('active')});if(l[i])l[i].classList.add('active')}})})
+</script>
+</body>
+</html>

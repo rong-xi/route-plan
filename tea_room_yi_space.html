@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>溢空间·元亨茶室 运营方案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a0f;
+  color: #e8e0d4;
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* 滚动进度条 */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; width: 0; height: 3px;
+  background: linear-gradient(90deg, #d4a853, #f0d68a, #d4a853);
+  z-index: 9999; transition: width 0.1s;
+}
+
+/* 粒子背景 */
+.particles {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(212, 168, 83, 0.03) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(212, 168, 83, 0.02) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 80%, rgba(212, 168, 83, 0.02) 0%, transparent 50%);
+}
+
+/* 顶部导航 */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+}
+.top-nav .logo {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 700;
+  color: #d4a853;
+  letter-spacing: 2px;
+}
+.top-nav .logo span { color: #f0d68a; }
+.top-nav .badge {
+  font-size: 12px; color: rgba(232, 224, 212, 0.6);
+  letter-spacing: 1px;
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  padding: 4px 14px; border-radius: 20px;
+}
+
+/* 封面 */
+.cover {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 120px 40px 60px;
+  background: linear-gradient(135deg, #0a0a0f 0%, #141420 40%, #1a1520 70%, #0a0a0f 100%);
+}
+.cover::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(212, 168, 83, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-subtitle {
+  font-size: 14px; letter-spacing: 6px;
+  color: rgba(212, 168, 83, 0.6);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.cover-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  background: linear-gradient(135deg, #f0d68a 0%, #d4a853 40%, #b8923a 70%, #f0d68a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.cover-sub {
+  font-size: 18px; color: rgba(232, 224, 212, 0.5);
+  margin-bottom: 40px;
+  letter-spacing: 4px;
+}
+.cover-meta {
+  display: flex; gap: 40px; flex-wrap: wrap; justify-content: center;
+  font-size: 14px; color: rgba(232, 224, 212, 0.4);
+}
+.cover-meta span { display: flex; align-items: center; gap: 8px; }
+.cover-meta .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #d4a853; }
+.cover-score {
+  margin-top: 40px;
+  display: flex; align-items: center; gap: 12px;
+}
+.cover-score .stars { color: #d4a853; font-size: 24px; letter-spacing: 4px; }
+.cover-score .num { font-size: 36px; font-weight: 700; color: #f0d68a; }
+.cover-score .label { font-size: 13px; color: rgba(232, 224, 212, 0.4); }
+
+.scroll-hint {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(212, 168, 83, 0.3);
+  font-size: 12px; letter-spacing: 2px;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* 主体容器 */
+.container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+/* 章节标题 */
+.section-header {
+  text-align: center; margin-bottom: 60px;
+  padding-top: 40px;
+}
+.section-header .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; color: #d4a853; letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+.section-header h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: #f0d68a;
+  margin-bottom: 12px;
+}
+.section-header .line {
+  width: 60px; height: 2px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, #d4a853, transparent);
+}
+.section-header p {
+  color: rgba(232, 224, 212, 0.5);
+  font-size: 14px; margin-top: 12px;
+}
+
+/* 区块 */
+.section {
+  padding: 80px 0;
+  position: relative;
+}
+
+/* 四色分区 */
+.section-green {
+  background: linear-gradient(180deg, rgba(34, 139, 34, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(34, 139, 34, 0.08);
+  border-bottom: 1px solid rgba(34, 139, 34, 0.08);
+}
+.section-green .section-header h2 { color: #6bb86b; }
+.section-green .section-header .num { color: #6bb86b; }
+
+.section-gold {
+  background: linear-gradient(180deg, rgba(212, 168, 83, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.08);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.08);
+}
+.section-gold .section-header h2 { color: #d4a853; }
+.section-gold .section-header .num { color: #d4a853; }
+
+.section-blue {
+  background: linear-gradient(180deg, rgba(70, 130, 180, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(70, 130, 180, 0.08);
+  border-bottom: 1px solid rgba(70, 130, 180, 0.08);
+}
+.section-blue .section-header h2 { color: #6ba3d6; }
+.section-blue .section-header .num { color: #6ba3d6; }
+
+.section-purple {
+  background: linear-gradient(180deg, rgba(147, 112, 219, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(147, 112, 219, 0.08);
+  border-bottom: 1px solid rgba(147, 112, 219, 0.08);
+}
+.section-purple .section-header h2 { color: #b892d4; }
+.section-purple .section-header .num { color: #b892d4; }
+
+/* 卡片 */
+.card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, border-color 0.3s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 168, 83, 0.2);
+}
+.card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px; color: #f0d68a;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.card h3 .icon { font-size: 24px; }
+.card p, .card li {
+  color: rgba(232, 224, 212, 0.75);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.card ul { list-style: none; padding: 0; }
+.card ul li::before {
+  content: '✦ ';
+  color: #d4a853;
+  font-size: 12px;
+}
+.card .highlight {
+  color: #f0d68a;
+  font-weight: 500;
+}
+
+/* 网格布局 */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
+  .top-nav { padding: 12px 20px; }
+}
+
+/* 数据卡片 */
+.stat-card {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.06) 0%, rgba(212, 168, 83, 0.02) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.1);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+}
+.stat-card .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px; font-weight: 700;
+  color: #f0d68a;
+  margin-bottom: 4px;
+}
+.stat-card .label {
+  font-size: 13px; color: rgba(232, 224, 212, 0.5);
+}
+
+/* 竞品表 */
+.competitor-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.competitor-table th {
+  background: rgba(212, 168, 83, 0.1);
+  color: #d4a853;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(212, 168, 83, 0.15);
+}
+.competitor-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px;
+  color: rgba(232, 224, 212, 0.7);
+}
+.competitor-table tr:hover td {
+  background: rgba(212, 168, 83, 0.03);
+}
+.competitor-table .name {
+  color: #f0d68a;
+  font-weight: 500;
+}
+
+/* 报价清单 */
+.price-list {
+  display: grid; gap: 16px;
+}
+.price-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 12px;
+}
+.price-item .item-name { color: rgba(232, 224, 212, 0.8); font-size: 15px; }
+.price-item .item-price { color: #f0d68a; font-weight: 600; font-size: 16px; }
+.price-item .item-desc { color: rgba(232, 224, 212, 0.4); font-size: 12px; margin-top: 2px; }
+
+/* 步骤列表 */
+.steps { counter-reset: step; }
+.step-item {
+  counter-increment: step;
+  display: flex; gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.step-item:last-child { border-bottom: none; }
+.step-item .step-num {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.15), rgba(212, 168, 83, 0.05));
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; color: #d4a853;
+  font-size: 16px;
+}
+.step-item .step-content h4 {
+  color: #f0d68a;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.step-item .step-content p {
+  color: rgba(232, 224, 212, 0.6);
+  font-size: 14px;
+}
+
+/* 底部 */
+.footer {
+  text-align: center;
+  padding: 60px 40px;
+  border-top: 1px solid rgba(212, 168, 83, 0.1);
+  color: rgba(232, 224, 212, 0.3);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.footer .brand {
+  font-family: 'Noto Serif SC', serif;
+  color: #d4a853;
+  font-size: 16px;
+  margin-bottom: 8px;
+  letter-spacing: 3px;
+}
+
+/* 提示框 */
+.tip-box {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.08) 0%, rgba(212, 168, 83, 0.02) 100%);
+  border-left: 3px solid #d4a853;
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.tip-box p { color: rgba(232, 224, 212, 0.7); font-size: 14px; }
+.tip-box strong { color: #f0d68a; }
+
+/* 装饰分割线 */
+.divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.2), transparent);
+  margin: 20px 0;
+}
+
+/* 茶室特色标签 */
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin: 2px;
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  color: rgba(212, 168, 83, 0.7);
+}
+.tag-gold { border-color: rgba(212, 168, 83, 0.3); color: #d4a853; }
+.tag-green { border-color: rgba(107, 184, 107, 0.3); color: #6bb86b; }
+.tag-blue { border-color: rgba(107, 163, 214, 0.3); color: #6ba3d6; }
+.tag-purple { border-color: rgba(184, 146, 212, 0.3); color: #b892d4; }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progressBar"></div>
+<div class="particles"></div>
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <div class="logo">溢空间 · <span>元亨茶室</span></div>
+  <div class="badge">运营方案 · 2026.08</div>
+</nav>
+
+<!-- ====== 封面 ====== -->
+<section class="cover">
+  <div class="cover-subtitle">— 运营诊断与提升方案 —</div>
+  <h1 class="cover-title">溢空间·元亨茶室</h1>
+  <p class="cover-sub">梅陇镇 · 南方商城商圈</p>
+  <div class="cover-meta">
+    <span><span class="dot"></span>饮品 · 茶空间</span>
+    <span><span class="dot"></span>莲花路/南方商城</span>
+    <span><span class="dot"></span>沪闵路7580弄111支弄</span>
+  </div>
+  <div class="cover-score">
+    <span class="stars">★★★</span>
+    <span class="num">3.8</span>
+    <span class="label">大众点评评分</span>
+  </div>
+  <div class="scroll-hint">向下滚动</div>
+</section>
+
+<!-- ====== 第一部分：商圈分析 ====== -->
+<div class="section section-green" id="part1">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">01</div>
+      <h2>商圈洞察</h2>
+      <div class="line"></div>
+      <p>南方商城商圈 · 梅陇镇消费生态全景</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="num">30-35万</div>
+        <div class="label">商圈3km辐射人口</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">35亿+</div>
+        <div class="label">商圈年销售额</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">1号线</div>
+        <div class="label">莲花路站 · 地铁直达</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">4大</div>
+        <div class="label">商业综合体环绕</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🏙️</span> 商圈概况</h3>
+        <p>南方商城商圈是闵行区重点商圈，2021年非中心城区商圈销售排名第一，年销售额超<strong class="highlight">35亿元</span>。商圈由百联南方购物中心、中庚漫游城、莲花国际广场、LaLa station四大商业综合体构成"商圈矩阵"，覆盖餐饮、购物、娱乐、办公全业态。</p>
+        <p style="margin-top: 12px;">该商圈是上海西南片区最大的消费聚集地之一，辐射闵行、松江、奉贤等区域，日均客流量超<strong class="highlight">10万人次</strong>。</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🚇</span> 交通与区位</h3>
+        <p>📍 位于梅陇镇沪闵路7580弄，毗邻地铁1号线<strong class="highlight">莲花路站</strong>，步行约5-8分钟可达。</p>
+        <p style="margin-top: 8px;">🚌 周边27条公交线路，沪闵高架快速连接外环、中环、内环。</p>
+        <p style="margin-top: 8px;">🚗 商圈配套停车位充足（南方商城、莲花国际广场等均有大型停车场）。</p>
+        <p style="margin-top: 8px;">🏢 周边有力波中心、梅美商务园区、梅夏商务园区等产业园区，办公人群密集。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🏠</span> 周边住宅与人群</h3>
+        <ul>
+          <li><strong>核心住宅区：</strong>华一新城、华二新城、古美小区、望族苑、上海花园、罗阳新村等</li>
+          <li><strong>高端社区：</strong>中庚·府邸、万源城、莲花公寓等</li>
+          <li><strong>公寓/租客：</strong>周边多个青年公寓、人才公寓，年轻白领集中</li>
+          <li><strong>学校：</strong>华东理工大学（梅陇校区）、上海中学、闵行区实验小学等</li>
+          <li style="margin-top: 12px;"><strong class="highlight">消费画像：</strong>以中产家庭、白领上班族为主，25-45岁为主力客群，消费力中等偏上</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🏢</span> 周边办公楼与产业</h3>
+        <ul>
+          <li><strong>力波中心：</strong>建面约28万㎡，含标准办公、花园独栋办公、服务式公寓</li>
+          <li><strong>梅美商务园区：</strong>入驻企业170余家，员工1000余人</li>
+          <li><strong>梅夏商务园区：</strong>企业119家，年产税4000余万元</li>
+          <li><strong>漕河泾开发区：</strong>毗邻，大量科技企业、跨国公司</li>
+          <li><strong>酒店：</strong>周边有全季、汉庭、亚朵等商务酒店，商旅客人较多</li>
+          <li style="margin-top: 12px;"><strong class="highlight">商务客流：</strong>工作日白领+商务客群是茶室核心消费力</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3><span class="icon">📊</span> 消费水平分层</h3>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div class="stat-card">
+          <div class="num" style="font-size: 28px;">约35%</div>
+          <div class="label">高消费人群（人均100+）<br>商务人士、中产家庭</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" style="font-size: 28px;">约45%</div>
+          <div class="label">中消费人群（人均50-100）<br>白领、年轻客群</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" style="font-size: 28px;">约20%</div>
+          <div class="label">基础消费人群（人均50以下）<br>学生、周边居民</div>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top: 16px;">
+        <p><strong>💡 茶室定位建议：</strong>茶室业态天然适合中高消费人群。南方商圈商业成熟、消费力强，茶室客单价可定位在<strong>人均60-120元</strong>，主攻商务洽谈、闺蜜聚会、独处放空三大场景。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第二部分：竞品分析 ====== -->
+<div class="section section-gold" id="part2">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">02</div>
+      <h2>竞品对标</h2>
+      <div class="line"></div>
+      <p>周边茶室/饮品空间竞品格局</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🏆</span> 上海茶室市场标杆品牌</h3>
+      <p>上海茶室赛道近年持续升温，以下为值得参考的成熟品牌：</p>
+      <div style="margin-top: 12px;">
+        <span class="tag tag-gold">黄庭茶馆 · 沪上15+店</span>
+        <span class="tag tag-gold">隐溪茶馆 · 全市连锁</span>
+        <span class="tag tag-gold">元古雲境 · 中式美学</span>
+        <span class="tag tag-gold">开吉茶馆 · 市井茶风</span>
+        <span class="tag tag-gold">锦鲤茶室 · 梦幻空间</span>
+        <span class="tag tag-gold">清和茶室 · 曲水流觞</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🔍</span> 南方商圈茶室/饮品竞品</h3>
+      <table class="competitor-table">
+        <thead>
+          <tr>
+            <th>门店名称</th>
+            <th>类型</th>
+            <th>人均</th>
+            <th>评分</th>
+            <th>优势</th>
+            <th>可借鉴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Peet's Coffee皮爷咖啡</td>
+            <td>咖啡</td>
+            <td>¥39</td>
+            <td>4.5</td>
+            <td>品牌连锁、品质稳定</td>
+            <td>会员体系、出品标准化</td>
+          </tr>
+          <tr>
+            <td class="name">一尺花园(大零号湾店)</td>
+            <td>咖啡+餐</td>
+            <td>¥102</td>
+            <td>4.6</td>
+            <td>空间大、环境好、书店文化</td>
+            <td>空间场景化、复合业态</td>
+          </tr>
+          <tr>
+            <td class="name">虫二·Zen</td>
+            <td>禅意茶咖</td>
+            <td>¥35</td>
+            <td>4.5</td>
+            <td>禅意风格、性价比高</td>
+            <td>禅茶文化体验</td>
+          </tr>
+          <tr>
+            <td class="name">b3coffee必三咖啡</td>
+            <td>精品咖啡</td>
+            <td>¥26</td>
+            <td>4.7</td>
+            <td>高评分、特色出品</td>
+            <td>产品差异化</td>
+          </tr>
+          <tr>
+            <td class="name">力波·九坊茶空间</td>
+            <td>茶/酒空间</td>
+            <td>¥80-150</td>
+            <td>-</td>
+            <td>啤酒文化主题、微醺社交</td>
+            <td>主题化运营</td>
+          </tr>
+          <tr>
+            <td class="name">黄庭茶馆(古北/奉贤)</td>
+            <td>专业茶室</td>
+            <td>¥120-200</td>
+            <td>4.6</td>
+            <td>独立包间、商务会客</td>
+            <td>包间设计、商务场景</td>
+          </tr>
+          <tr>
+            <td class="name">野空间·森林咖啡</td>
+            <td>森林咖啡</td>
+            <td>¥58</td>
+            <td>4.5</td>
+            <td>自然氛围、拍照打卡</td>
+            <td>场景差异化</td>
+          </tr>
+          <tr>
+            <td class="name">福利咖啡院FULLYCAFE</td>
+            <td>DIY咖啡</td>
+            <td>¥33</td>
+            <td>4.6</td>
+            <td>体验互动、性价比</td>
+            <td>互动体验式消费</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top: 16px;">
+        <p><strong>💡 竞品洞察：</strong>南方商圈咖啡品牌密集（人均26-60元），但<strong>专业茶室/茶空间</strong>存在明显市场空白！目前商圈内缺乏真正有品质的中式茶室，这是溢空间·元亨茶室的核心机会点。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">⚡</span> 优势分析</h3>
+        <ul>
+          <li><strong class="highlight">品类蓝海：</strong>南方商圈缺乏专业茶室/茶空间，竞争压力小</li>
+          <li><strong class="highlight">区位优势：</strong>位于南方商圈核心区，交通便利，客流基础好</li>
+          <li><strong class="highlight">商务属性：</strong>周边办公楼密集，商务茶歇需求旺盛</li>
+          <li><strong class="highlight">"溢空间"品牌概念：</strong>名字自带"溢出"的松弛感，有记忆点</li>
+          <li><strong class="highlight">茶文化复兴：</strong>年轻人群"围炉煮茶""新中式茶饮"热度持续</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">⚠️</span> 劣势与挑战</h3>
+        <ul>
+          <li><strong class="highlight">评分偏低：</strong>当前3.8分，需快速提升至4.2+</li>
+          <li><strong class="highlight">二楼位置：</strong>非沿街店铺，自然流量获取难</li>
+          <li><strong class="highlight">知名度不足：</strong>新店需建立品牌认知</li>
+          <li><strong class="highlight">茶室品类教育成本：</strong>南方商圈以咖啡消费为主</li>
+          <li><strong class="highlight">空间规模：</strong>2层212-213室，面积有限，需精打细算</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第三部分：产品与定价 ====== -->
+<div class="section section-blue" id="part3">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">03</div>
+      <h2>产品与空间策略</h2>
+      <div class="line"></div>
+      <p>打造南方商圈的"第三空间"标杆</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🍵</span> 产品矩阵建议</h3>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🍵 经典原叶茶</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">安溪铁观音</span>
+            <span class="item-price">¥58</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">武夷山大红袍</span>
+            <span class="item-price">¥68</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">福鼎白茶（老白茶）</span>
+            <span class="item-price">¥78</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">云南古树普洱</span>
+            <span class="item-price">¥88-128</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">恩施玉露（蒸青绿茶）</span>
+            <span class="item-price">¥68</span>
+          </div>
+        </div>
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🧊 创新茶饮</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">冰极萃纯茶（冷泡）</span>
+            <span class="item-price">¥38</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">陈皮普洱拿铁</span>
+            <span class="item-price">¥42</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">桂花乌龙奶盖</span>
+            <span class="item-price">¥38</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">玫瑰冰茶</span>
+            <span class="item-price">¥35</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">围炉煮茶（2-3人）</span>
+            <span class="item-price">¥168</span>
+          </div>
+        </div>
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🍰 茶点轻食</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">中式茶点拼盘</span>
+            <span class="item-price">¥48</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">季节限定甜品</span>
+            <span class="item-price">¥38-58</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">手工坚果/干果</span>
+            <span class="item-price">¥28</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">日式茶泡饭（午市）</span>
+            <span class="item-price">¥42</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">轻食沙拉（午市）</span>
+            <span class="item-price">¥38</span>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top: 16px;">
+        <p><strong>💡 人均客单价建议：</strong>日常消费<strong class="highlight">¥60-80</strong>（一壶茶+茶点），商务包间<strong class="highlight">¥120-200/人</strong>（含茶+茶点+空间使用费），围炉煮茶套餐<strong class="highlight">¥168-268</strong>（2-4人份）。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🏠</span> 空间场景设计</h3>
+        <ul>
+          <li><strong class="highlight">中式禅意风：</strong>原木色+竹编+水墨元素，打造"大隐于市"的静谧感</li>
+          <li><strong class="highlight">分区布局：</strong>① 静品区（单人/双人，看书放空）② 商务包间（2-4人，独立私密）③ 社交区（4-6人，闺蜜聚会）④ 外摆区（如有）</li>
+          <li><strong class="highlight">拍照打卡点：</strong>设置1-2个"出片点"（茶墙、光影装置、书法墙等），小红书传播利器</li>
+          <li><strong class="highlight">氛围营造：</strong>暖光+舒缓国风音乐+淡雅茶香，用五感打造沉浸式体验</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🎯</span> 场景化运营</h3>
+        <ul>
+          <li><strong class="highlight">商务场景：</strong>推出"商务茶歇套餐"（茶+点心+水果，¥68/位），对接周边企业</li>
+          <li><strong class="highlight">独处场景：</strong>"一人一席"概念（¥38-58），含一壶茶+一本书，适合自由职业者</li>
+          <li><strong class="highlight">社交场景：</strong>"闺蜜下午茶"套餐（双人¥128），含茶+甜品+拍照道具</li>
+          <li><strong class="highlight">文化体验：</strong>周末茶艺课/香道体验（¥98/人），打造文化IP</li>
+          <li><strong class="highlight">夜茶场景：</strong>晚间时段（19:00-22:00）推出"茶+微醺"特调，吸引年轻客群</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第四部分：推广引流 ====== -->
+<div class="section section-purple" id="part4">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">04</div>
+      <h2>推广与引流方案</h2>
+      <div class="line"></div>
+      <p>线上+线下全渠道精准获客</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">📱</span> 大众点评运营策略</h3>
+      <div class="grid-2" style="margin-top: 16px;">
+        <div>
+          <h4 style="color: #f0d68a; margin-bottom: 12px; font-size: 15px;">📋 团购套餐建议</h4>
+          <ul>
+            <li><strong>引流款：</strong>"一人静心茶" ¥29.9（原价¥58），快速积累销量</li>
+            <li><strong>主推款：</strong>"双人雅集套餐" ¥99（原价¥168），闺蜜/情侣首选</li>
+            <li><strong>利润款：</strong>"商务茶叙包间" ¥198（含2壶茶+茶点），商务场景</li>
+            <li><strong>体验款：</strong>"围炉煮茶体验" ¥128（2-3人），季节性爆款</li>
+            <li><strong>次卡：</strong>"5次卡" ¥199（每次¥39.8），锁定复购</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: #f0d68a; margin-bottom: 12px; font-size: 15px;">📈 流量推广计划</h4>
+          <ul>
+            <li><strong>新店推广期（第1-2周）：</strong>推广通日预算¥200-300，投放"莲花路/南方商城"地域标签</li>
+            <li><strong>冲量期（第3-4周）：</strong>推广通日预算¥300-500，追加"茶室/茶馆/下午茶"品类标签</li>
+            <li><strong>稳定期（第2个月起）：</strong>推广通日预算¥100-200，精细化投放</li>
+            <li><strong>冲榜策略：</strong>主攻"莲花路/南方商城"区域饮品好评榜，目标TOP5</li>
+            <li><strong>月度推广预算：</strong>约¥6,000-10,000（含推广通+团购让利）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📕</span> 小红书内容营销</h3>
+        <ul>
+          <li><strong>人设定位：</strong>"南方商圈的隐秘茶室""藏在办公楼里的避世空间"</li>
+          <li><strong>爆款选题：</strong>
+            <br>📌 "上海梅陇｜我发现了一家藏在楼上的神仙茶室"
+            <br>📌 "南方商圈打工人摸鱼圣地｜一壶茶一下午"
+            <br>📌 "上海新中式茶室｜围炉煮茶氛围感拉满"</li>
+          <li><strong>KOC合作：</strong>邀请5-10位本地探店博主（粉丝1-5万），置换套餐体验</li>
+          <li><strong>打卡点设计：</strong>设置"茶墙""光影帘""书法墙"等拍照打卡点</li>
+          <li><strong>月更频率：</strong>每周2-3篇笔记，稳定更新</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🏪</span> 线下地推策略</h3>
+        <ul>
+          <li><strong>写字楼扫楼：</strong>印制精美茶单，覆盖力波中心、梅美园区等周边办公楼</li>
+          <li><strong>企业合作：</strong>推出"企业茶歇月卡"（¥500/月，含4次商务茶叙），对接企业行政</li>
+          <li><strong>异业合作：</strong>与周边花店、书店、手作工作室互推，联合举办活动</li>
+          <li><strong>社区渗透：</strong>在华一新城、古美小区等小区电梯投放广告</li>
+          <li><strong>开业活动：</strong>"开业前3天，全场茶饮买一送一"快速引流</li>
+          <li><strong>首单优惠：</strong>进店扫码关注公众号，送茶点一份</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📱</span> 抖音团购与短视频</h3>
+        <ul>
+          <li><strong>抖音团购上架：</strong>与大众点评团购差异化，主推"围炉煮茶""茶艺体验课"等体验型产品</li>
+          <li><strong>短视频内容：</strong>拍摄茶艺表演、空间环境、茶点制作过程，展示氛围感</li>
+          <li><strong>同城投流：</strong>抖音同城页投放，定向"上海-闵行-梅陇"区域</li>
+          <li><strong>达人探店：</strong>合作闵行本地生活类达人（5-10位），以置换/低佣形式合作</li>
+          <li><strong>预算：</strong>抖音推广月预算¥3,000-5,000</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">💎</span> 会员体系与复购</h3>
+        <ul>
+          <li><strong>储值卡：</strong>充500送80、充1000送200，锁定高价值客户</li>
+          <li><strong>积分体系：</strong>消费1元=1积分，100积分可兑换茶点/饮品</li>
+          <li><strong>生日特权：</strong>生日月免费赠一壶茶+茶点</li>
+          <li><strong>社群运营：</strong>建立微信社群，每周发布"本周特供茶品"，增强粘性</li>
+          <li><strong>老客带新：</strong>老客带新客，双方各得一张"免费茶饮券"</li>
+          <li><strong>会员日：</strong>每月8号会员日，全场8折</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第五部分：营收预估 ====== -->
+<div class="section section-green" id="part5">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">05</div>
+      <h2>营收预估</h2>
+      <div class="line"></div>
+      <p>保守经营测算</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">25-35人</div>
+        <div class="label">日均客流量（工作日）</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">45-60人</div>
+        <div class="label">日均客流量（周末/节假日）</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">¥65-85</div>
+        <div class="label">平均客单价</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📆</span> 月营收估算</h3>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">工作日（22天×30人×¥70）</span>
+          <span class="item-price">¥46,200</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">周末（8天×50人×¥80）</span>
+          <span class="item-price">¥32,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">商务包间/企业茶歇</span>
+          <span class="item-price">¥8,000-15,000</span>
+        </div>
+        <div style="border-top: 1px solid rgba(212,168,83,0.2); padding-top: 12px; margin-top: 12px;">
+          <div class="price-item" style="padding: 8px 0; border: none;">
+            <span class="item-name" style="color: #f0d68a; font-weight: 600;">📊 月营收合计</span>
+            <span class="item-price" style="font-size: 22px;">¥86,200-93,200</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">💰</span> 成本结构估算</h3>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">房租（含物业）</span>
+          <span class="item-price">约¥25,000-35,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">人工（2-3人）</span>
+          <span class="item-price">约¥18,000-24,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">茶叶/食材成本</span>
+          <span class="item-price">约¥12,000-15,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">推广费用</span>
+          <span class="item-price">约¥6,000-10,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">水电杂费</span>
+          <span class="item-price">约¥3,000-5,000</span>
+        </div>
+        <div style="border-top: 1px solid rgba(212,168,83,0.2); padding-top: 12px; margin-top: 12px;">
+          <div class="price-item" style="padding: 8px 0; border: none;">
+            <span class="item-name" style="color: #f0d68a; font-weight: 600;">📊 月成本合计</span>
+            <span class="item-price" style="font-size: 18px;">约¥64,000-89,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">📈</span> 盈利预估</h3>
+        <div class="stat-card" style="margin: 12px 0;">
+          <div class="num" style="font-size: 32px;">¥5,000-28,000</div>
+          <div class="label">月净利润（保守-乐观）</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" style="font-size: 24px;">6-30%</div>
+          <div class="label">净利率</div>
+        </div>
+        <div class="tip-box" style="margin-top: 12px;">
+          <p><strong>💡 提升利润关键：</strong>①提高包间利用率（毛利最高）②增加茶点/轻食销售③发展会员储值提前回笼资金④控制茶叶成本（批量采购）</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第六部分：行动指南 ====== -->
+<div class="section section-gold" id="part6">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">06</div>
+      <h2>30天行动指南</h2>
+      <div class="line"></div>
+      <p>从0到1的落地执行计划</p>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>第1-3天 · 基础搭建</h4>
+          <p>完成大众点评店铺装修（上传实拍图片、完善品类标签、设置营业时间）<br>
+          搭建小红书账号，发布3-5篇探店预告笔记<br>
+          设计印刷茶单/宣传单页，准备开业物料</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>第4-7天 · 开业预热</h4>
+          <p>上架大众点评团购套餐（引流款¥29.9+主推款¥99+利润款¥198）<br>
+          启动推广通日预算¥200，投放核心地域标签<br>
+          联系5-10位本地探店博主，安排体验邀约<br>
+          周边写字楼扫楼派发传单</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>第8-14天 · 开业爆发</h4>
+          <p>"开业前3天买一送一"活动，快速积累销量和评价<br>
+          邀请博主到店体验，产出一波图文/视频内容<br>
+          推广通日预算提升至¥300-500，扩大曝光<br>
+          收集顾客反馈，优化产品和空间体验</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>第15-30天 · 稳定运营</h4>
+          <p>推广通调至日预算¥100-200，精细化运营<br>
+          启动会员储值体系，锁定核心客户<br>
+          每周更新小红书2-3篇，持续输出内容<br>
+          对接3-5家企业，推进商务茶歇合作<br>
+          目标：大众点评评分提升至4.0+，冲区域好评榜</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 底部 ====== -->
+<div class="footer">
+  <div class="brand">溢空间 · 元亨茶室</div>
+  <p>以上方案基于大众点评大数据与美团平台数据综合分析</p>
+  <p style="margin-top: 8px;">具体运营事项请根据实际情况调整</p>
+  <p style="margin-top: 20px; font-size: 11px;">— 方案生成时间 2026.08.17 —</p>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / scrollHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+</script>
+
+</body>
+</html>

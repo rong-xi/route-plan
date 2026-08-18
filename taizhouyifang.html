@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台州亿方海鲜面 · 连锁运营方案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a0f;
+  color: #e8e0d4;
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+.scroll-progress {
+  position: fixed; top: 0; left: 0; width: 0; height: 3px;
+  background: linear-gradient(90deg, #d4a853, #f0d68a, #d4a853);
+  z-index: 9999; transition: width 0.1s;
+}
+
+.particles {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(212, 168, 83, 0.03) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(212, 168, 83, 0.02) 0%, transparent 50%);
+}
+
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+}
+.top-nav .logo {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px; font-weight: 700;
+  color: #d4a853;
+  letter-spacing: 2px;
+}
+.top-nav .logo span { color: #f0d68a; }
+.top-nav .badge {
+  font-size: 12px; color: rgba(232, 224, 212, 0.6);
+  letter-spacing: 1px;
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  padding: 4px 14px; border-radius: 20px;
+}
+
+/* 封面 */
+.cover {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 120px 40px 60px;
+  background: linear-gradient(135deg, #0a0a0f 0%, #141420 40%, #1a1520 70%, #0a0a0f 100%);
+}
+.cover::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(212, 168, 83, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-badge {
+  display: inline-flex; gap: 12px; margin-bottom: 24px;
+}
+.cover-badge span {
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 12px; letter-spacing: 2px;
+}
+.cover-badge .new { background: rgba(212, 168, 83, 0.12); color: #f0d68a; border: 1px solid rgba(212, 168, 83, 0.2); }
+.cover-badge .old { background: rgba(107, 184, 107, 0.12); color: #6bb86b; border: 1px solid rgba(107, 184, 107, 0.2); }
+.cover-subtitle {
+  font-size: 14px; letter-spacing: 6px;
+  color: rgba(212, 168, 83, 0.6);
+  margin-bottom: 16px;
+}
+.cover-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(42px, 7vw, 80px);
+  font-weight: 900;
+  background: linear-gradient(135deg, #f0d68a 0%, #d4a853 40%, #b8923a 70%, #f0d68a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.cover-sub {
+  font-size: 16px; color: rgba(232, 224, 212, 0.5);
+  margin-bottom: 32px;
+  letter-spacing: 3px;
+}
+.cover-meta {
+  display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;
+  font-size: 14px; color: rgba(232, 224, 212, 0.4);
+}
+.cover-meta span { display: flex; align-items: center; gap: 8px; }
+.cover-meta .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; }
+.cover-meta .dot.gold { background: #d4a853; }
+.cover-meta .dot.green { background: #6bb86b; }
+.cover-chain {
+  margin-top: 36px;
+  display: flex; align-items: center; gap: 20px;
+  padding: 16px 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(212,168,83,0.1);
+  border-radius: 16px;
+}
+.cover-chain .store { text-align: center; }
+.cover-chain .store .name { font-size: 13px; color: #f0d68a; }
+.cover-chain .store .score { font-size: 20px; font-weight: 700; color: #6bb86b; }
+.cover-chain .store .loc { font-size: 11px; color: rgba(232,224,212,0.4); }
+.cover-chain .arrow { color: #d4a853; font-size: 24px; }
+
+.scroll-hint {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(212, 168, 83, 0.3);
+  font-size: 12px; letter-spacing: 2px;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+.container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+.section-header {
+  text-align: center; margin-bottom: 50px;
+  padding-top: 40px;
+}
+.section-header .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; color: #d4a853; letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+.section-header h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: #f0d68a;
+  margin-bottom: 12px;
+}
+.section-header .line {
+  width: 60px; height: 2px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, #d4a853, transparent);
+}
+.section-header p {
+  color: rgba(232, 224, 212, 0.5);
+  font-size: 14px; margin-top: 12px;
+}
+
+.section { padding: 80px 0; position: relative; }
+
+/* 四色分区 */
+.section-green {
+  background: linear-gradient(180deg, rgba(34, 139, 34, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(34, 139, 34, 0.08);
+  border-bottom: 1px solid rgba(34, 139, 34, 0.08);
+}
+.section-green .section-header h2 { color: #6bb86b; }
+.section-green .section-header .num { color: #6bb86b; }
+
+.section-gold {
+  background: linear-gradient(180deg, rgba(212, 168, 83, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(212, 168, 83, 0.08);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.08);
+}
+.section-gold .section-header h2 { color: #d4a853; }
+.section-gold .section-header .num { color: #d4a853; }
+
+.section-blue {
+  background: linear-gradient(180deg, rgba(70, 130, 180, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(70, 130, 180, 0.08);
+  border-bottom: 1px solid rgba(70, 130, 180, 0.08);
+}
+.section-blue .section-header h2 { color: #6ba3d6; }
+.section-blue .section-header .num { color: #6ba3d6; }
+
+.section-purple {
+  background: linear-gradient(180deg, rgba(147, 112, 219, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(147, 112, 219, 0.08);
+  border-bottom: 1px solid rgba(147, 112, 219, 0.08);
+}
+.section-purple .section-header h2 { color: #b892d4; }
+.section-purple .section-header .num { color: #b892d4; }
+
+.section-orange {
+  background: linear-gradient(180deg, rgba(255, 165, 0, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(255, 165, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 165, 0, 0.08);
+}
+.section-orange .section-header h2 { color: #e8a84a; }
+.section-orange .section-header .num { color: #e8a84a; }
+
+.section-red {
+  background: linear-gradient(180deg, rgba(220, 50, 50, 0.04) 0%, transparent 100%);
+  border-top: 1px solid rgba(220, 50, 50, 0.08);
+  border-bottom: 1px solid rgba(220, 50, 50, 0.08);
+}
+.section-red .section-header h2 { color: #d46b6b; }
+.section-red .section-header .num { color: #d46b6b; }
+
+.card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, border-color 0.3s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212, 168, 83, 0.2);
+}
+.card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px; color: #f0d68a;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.card h3 .icon { font-size: 24px; }
+.card p, .card li {
+  color: rgba(232, 224, 212, 0.75);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.card ul { list-style: none; padding: 0; }
+.card ul li::before { content: '✦ '; color: #d4a853; font-size: 12px; }
+.card .highlight { color: #f0d68a; font-weight: 500; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
+  .top-nav { padding: 12px 20px; }
+  .cover-chain { flex-direction: column; gap: 12px; }
+  .cover-chain .arrow { transform: rotate(90deg); }
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.06) 0%, rgba(212, 168, 83, 0.02) 100%);
+  border: 1px solid rgba(212, 168, 83, 0.1);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+}
+.stat-card .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px; font-weight: 700;
+  color: #f0d68a;
+  margin-bottom: 4px;
+}
+.stat-card .label {
+  font-size: 13px; color: rgba(232, 224, 212, 0.5);
+}
+
+.competitor-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.competitor-table th {
+  background: rgba(212, 168, 83, 0.1);
+  color: #d4a853;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(212, 168, 83, 0.15);
+}
+.competitor-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px;
+  color: rgba(232, 224, 212, 0.7);
+}
+.competitor-table tr:hover td { background: rgba(212, 168, 83, 0.03); }
+.competitor-table .name { color: #f0d68a; font-weight: 500; }
+
+.price-list { display: grid; gap: 16px; }
+.price-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 12px;
+}
+.price-item .item-name { color: rgba(232, 224, 212, 0.8); font-size: 15px; }
+.price-item .item-price { color: #f0d68a; font-weight: 600; font-size: 16px; }
+.price-item .item-desc { color: rgba(232, 224, 212, 0.4); font-size: 12px; margin-top: 2px; }
+
+.steps { counter-reset: step; }
+.step-item {
+  counter-increment: step;
+  display: flex; gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.step-item:last-child { border-bottom: none; }
+.step-item .step-num {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.15), rgba(212, 168, 83, 0.05));
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; color: #d4a853;
+  font-size: 16px;
+}
+.step-item .step-content h4 { color: #f0d68a; font-size: 16px; margin-bottom: 6px; }
+.step-item .step-content p { color: rgba(232, 224, 212, 0.6); font-size: 14px; }
+
+.footer {
+  text-align: center;
+  padding: 60px 40px;
+  border-top: 1px solid rgba(212, 168, 83, 0.1);
+  color: rgba(232, 224, 212, 0.3);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.footer .brand {
+  font-family: 'Noto Serif SC', serif;
+  color: #d4a853;
+  font-size: 16px;
+  margin-bottom: 8px;
+  letter-spacing: 3px;
+}
+
+.tip-box {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.08) 0%, rgba(212, 168, 83, 0.02) 100%);
+  border-left: 3px solid #d4a853;
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.tip-box p { color: rgba(232, 224, 212, 0.7); font-size: 14px; }
+.tip-box strong { color: #f0d68a; }
+
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin: 2px;
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  color: rgba(212, 168, 83, 0.7);
+}
+.tag-gold { border-color: rgba(212, 168, 83, 0.3); color: #d4a853; }
+.tag-green { border-color: rgba(107, 184, 107, 0.3); color: #6bb86b; }
+.tag-blue { border-color: rgba(107, 163, 214, 0.3); color: #6ba3d6; }
+
+.divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.2), transparent);
+  margin: 20px 0;
+}
+
+/* 连锁时间线 */
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 18px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #d4a853, rgba(212,168,83,0.1));
+}
+.timeline-item {
+  position: relative; padding: 20px 0 20px 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-item .dot {
+  position: absolute; left: -29px; top: 24px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #d4a853;
+  border: 3px solid #0a0a0f;
+}
+.timeline-item .phase { font-size: 12px; color: #d4a853; letter-spacing: 2px; }
+.timeline-item h4 { color: #f0d68a; font-size: 16px; margin: 4px 0 8px; }
+.timeline-item p { color: rgba(232,224,212,0.6); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progressBar"></div>
+<div class="particles"></div>
+
+<nav class="top-nav">
+  <div class="logo">台州亿方海鲜面 · <span>连锁运营方案</span></div>
+  <div class="badge">2026.08</div>
+</nav>
+
+<!-- ====== 封面 ====== -->
+<section class="cover">
+  <div class="cover-badge">
+    <span class="new">🆕 二店 · 新店开业</span>
+    <span class="old">🏆 一店 · 评分4.3</span>
+  </div>
+  <div class="cover-subtitle">— 连锁化运营 · 双店同频 —</div>
+  <h1 class="cover-title">台州亿方海鲜面</h1>
+  <p class="cover-sub">从颛桥到莘庄 · 一碗台州味的连锁之路</p>
+  <div class="cover-meta">
+    <span><span class="dot gold"></span>莘庄镇 · 衡园莘光里</span>
+    <span><span class="dot green"></span>一店颛桥 · ★4.3 · ¥52/人</span>
+    <span><span class="dot gold"></span>台州海鲜面 · 面馆</span>
+  </div>
+  <div class="cover-chain">
+    <div class="store">
+      <div class="name">🏪 一店 · 颛桥</div>
+      <div class="score">★★★★☆ 4.3</div>
+      <div class="loc">光中路255号1号楼2层204</div>
+    </div>
+    <div class="arrow">⟶</div>
+    <div class="store">
+      <div class="name">🏪 二店 · 莘庄</div>
+      <div class="score" style="color:#d4a853;">新店开业</div>
+      <div class="loc">衡园莘光里-5号楼</div>
+    </div>
+    <div class="arrow">⟶</div>
+    <div class="store">
+      <div class="name">🏪 连锁品牌</div>
+      <div class="score" style="color:#d4a853;">目标3-5店</div>
+      <div class="loc">标准化 · 可复制</div>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动</div>
+</section>
+
+<!-- ====== 第一部分：品牌传承 ====== -->
+<div class="section section-green" id="part1">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">01</div>
+      <h2>品牌传承 · 一店基因</h2>
+      <div class="line"></div>
+      <p>老店4.3分的核心优势与二店可复用的成功经验</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3><span class="icon">🏆</span> 一店 · 台州亿方海鲜面（颛桥）</h3>
+        <ul>
+          <li><strong class="highlight">评分：</strong>★★★★☆ 4.3 — 颛桥/北桥区域苏浙菜品类高分店</li>
+          <li><strong class="highlight">人均：</strong>¥52/人 — 定价合理，性价比高</li>
+          <li><strong class="highlight">地址：</strong>颛桥镇光中路255号1号楼2层204</li>
+          <li><strong class="highlight">年限：</strong>已运营一段时间，积累稳定客群</li>
+          <li style="margin-top: 12px;"><strong class="highlight">核心优势：</strong>台州海鲜面口味正宗、食材新鲜、老客口碑好</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🔁</span> 一店 → 二店 可复用经验</h3>
+        <ul>
+          <li><strong class="highlight">产品配方：</strong>汤底熬制工艺、海鲜供应链可直接复用</li>
+          <li><strong class="highlight">运营SOP：</strong>已跑通的出餐流程、服务标准</li>
+          <li><strong class="highlight">品牌认知：</strong>"台州亿方"已有一定口碑基础</li>
+          <li><strong class="highlight">客群重叠：</strong>莘庄与颛桥同属闵行，客群可相互导流</li>
+          <li style="margin-top: 12px;"><strong class="highlight">注意差异：</strong>莘庄商圈消费力更强，人均可适当上浮</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第二部分：新店商圈分析 ====== -->
+<div class="section section-gold" id="part2">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">02</div>
+      <h2>新店商圈洞察</h2>
+      <div class="line"></div>
+      <p>莘庄镇 · 衡园莘光里 · 社区商业生态</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">莘庄</div>
+        <div class="label">上海四大城市副中心</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">2万㎡</div>
+        <div class="label">衡园莘光里总面积</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">1/5号线</div>
+        <div class="label">双轨交覆盖</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">超15万</div>
+        <div class="label">周边2km常住人口</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🏙️</span> 衡园·莘光里概况</h3>
+        <p>位于龙茗路与报春路交叉口，总建筑面积约<strong class="highlight">2万㎡</strong>，是莘庄镇重点打造的产商融合社区商业体。</p>
+        <p style="margin-top: 12px;">已入驻品牌：<strong class="highlight">星巴克、肯德基、小杨生煎</strong>、弄堂咪道等知名餐饮，以及办公、教育、娱乐等多元业态。</p>
+        <p style="margin-top: 12px;">园区每年为村集体带来超<strong class="highlight">1200万元</strong>租金收入，是莘庄镇城市更新的标杆项目。</p>
+        <p style="margin-top: 12px;">石库门风格建筑，开放式街区，自带网红打卡属性。</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🏠</span> 周边社区与人群</h3>
+        <ul>
+          <li><strong>核心住宅区：</strong>绿世界、佳佳花园、新梅广场、江南星城、龙茗公寓等</li>
+          <li><strong>学校：</strong>周边有多所中小学及幼儿园，带来家庭客群</li>
+          <li><strong>办公楼：</strong>园区内自带办公人群，周边商务楼宇密集</li>
+          <li><strong>消费画像：</strong>以家庭客群为主，辅助周边上班族</li>
+          <li style="margin-top: 12px;"><strong class="highlight">核心优势：</strong>2公里范围内唯一综合商业体，社区餐饮刚需旺盛</li>
+          <li><strong class="highlight">交通：</strong>龙茗路主干道，多条公交线，停车位260+</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3><span class="icon">🔍</span> 莘庄商圈整体背景</h3>
+      <div class="grid-2">
+        <div>
+          <p>莘庄是上海2035规划确定的<strong class="highlight">四大城市副中心</strong>之一，坐拥地铁1号线、5号线，在建嘉闵线、机场联络线，四轨交汇。</p>
+          <p style="margin-top: 8px;">2024年上半年财政总收入<strong class="highlight">27.56亿元</strong>，同比增长4.6%；商品销售总额<strong class="highlight">316.32亿元</strong>，消费力强劲。</p>
+        </div>
+        <div>
+          <p>莘庄商业正在升级：TODTOWN天荟广场（14万㎡商业）即将亮相，仲盛世界商城正在进行15个月的不停业改造。</p>
+          <p style="margin-top: 8px;">莘庄消费升级趋势明显，从"配套满足"向"品质引领"跨越，为品质餐饮店提供发展机遇。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第三部分：竞品分析 ====== -->
+<div class="section section-blue" id="part3">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">03</div>
+      <h2>竞品分析</h2>
+      <div class="line"></div>
+      <p>莘庄面馆市场与台州海鲜面赛道</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🏪</span> 衡园莘光里场内竞品</h3>
+      <table class="competitor-table">
+        <thead>
+          <tr>
+            <th>门店</th>
+            <th>品类</th>
+            <th>人均</th>
+            <th>优势</th>
+            <th>对台州亿方的参考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">小杨生煎</td>
+            <td>生煎/简餐</td>
+            <td>¥25-35</td>
+            <td>品牌连锁、高翻台率</td>
+            <td>快餐模式可借鉴</td>
+          </tr>
+          <tr>
+            <td class="name">肯德基</td>
+            <td>西式快餐</td>
+            <td>¥35-50</td>
+            <td>品牌强势、稳定客流</td>
+            <td>标准化流程参考</td>
+          </tr>
+          <tr>
+            <td class="name">星巴克</td>
+            <td>咖啡饮品</td>
+            <td>¥35-45</td>
+            <td>商务社交场景</td>
+            <td>非直接竞品</td>
+          </tr>
+          <tr>
+            <td class="name">弄堂咪道</td>
+            <td>中式面点</td>
+            <td>¥20-35</td>
+            <td>早餐场景、社区亲民</td>
+            <td>早餐时段可补充</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top: 16px;">
+        <p><strong>💡 竞品洞察：</strong>莘光里场内目前<strong>没有海鲜面/台州面馆</strong>品类，台州亿方海鲜面可填补品类空白，形成差异化竞争！同时借助小杨生煎、肯德基等品牌带来的稳定客流，共享商圈流量红利。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🌊</span> 上海台州海鲜面竞品参考</h3>
+        <ul>
+          <li><strong class="highlight">浙鲜面馆（古美）</strong> — 13年老店，人均¥28-42，主打海鲜面系列，口碑稳定</li>
+          <li><strong class="highlight">明呈黄鱼面馆（斜土路）</strong> — 沪上知名，人均¥60，以"奇葩标语"出圈</li>
+          <li><strong class="highlight">清江佬海鲜面（丰庄）</strong> — 人均¥45，偏僻位置但驱车打卡者众多</li>
+          <li style="margin-top: 12px;"><strong class="highlight">台州亿方（一店）</strong> — 评分4.3，品质已获市场验证，是二店最可靠的背书</li>
+          <li style="margin-top: 8px;">台州海鲜面在上海已形成稳定的消费群体，但<strong class="highlight">连锁品牌化尚处于蓝海</strong>，暂无强势连锁品牌</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">⚡</span> SWOT分析</h3>
+        <ul>
+          <li><strong>S优势：</strong>一店4.3分口碑背书、台州海鲜面品类差异化、社区餐饮刚需</li>
+          <li><strong>W劣势：</strong>新店知名度待建立、需重新培养商圈客群</li>
+          <li><strong>O机会：</strong>莘光里社区商业上升期、莘庄消费升级、台州海鲜面赛道无强连锁品牌</li>
+          <li><strong>T威胁：</strong>场内其他快餐品牌分流、租金成本压力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第四部分：产品定价 ====== -->
+<div class="section section-purple" id="part4">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">04</div>
+      <h2>产品与定价策略</h2>
+      <div class="line"></div>
+      <p>传承一店味道 · 适配莘庄商圈</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🍜</span> 台州亿方海鲜面 · 产品矩阵</h3>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🍜 招牌海鲜面系列</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">招牌三鲜汤面</span>
+            <span class="item-price">¥32</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">黄鱼海鲜面</span>
+            <span class="item-price">¥42</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">梭子蟹海鲜面</span>
+            <span class="item-price">¥58</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">海鲜大咖面</span>
+            <span class="item-price">¥68</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">特色姜汤面（台州经典）</span>
+            <span class="item-price">¥38</span>
+          </div>
+        </div>
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🍚 台州特色小吃</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">台州炒年糕</span>
+            <span class="item-price">¥28</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">临海炒米面</span>
+            <span class="item-price">¥26</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">麦饼（台州特色）</span>
+            <span class="item-price">¥18</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">海苔饼（临海古街）</span>
+            <span class="item-price">¥12</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">卤味拼盘</span>
+            <span class="item-price">¥38</span>
+          </div>
+        </div>
+        <div class="card" style="margin:0;">
+          <h3 style="font-size: 16px;">🥤 饮品小食</h3>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">红枣茶（免费/自助）</span>
+            <span class="item-price">免费</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">冰镇酸梅汤</span>
+            <span class="item-price">¥8</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">绿豆汤</span>
+            <span class="item-price">¥8</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">卤蛋</span>
+            <span class="item-price">¥3</span>
+          </div>
+          <div class="price-item" style="padding: 10px 0; border: none;">
+            <span class="item-name">饮料（可乐/雪碧）</span>
+            <span class="item-price">¥5</span>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top: 16px;">
+        <p><strong>💡 定价策略：</strong>一店人均¥52，二店位于莘庄（消费力更强），建议人均<strong class="highlight">¥40-55</strong>。基础款三鲜面¥32拉低门槛，黄鱼面¥42为主力，海鲜大咖面¥68做利润款。<strong class="highlight">免费红枣茶</strong>是台州老店的暖心传统，建议保留，增强口碑传播。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">🎯</span> 产品差异化策略</h3>
+        <ul>
+          <li><strong class="highlight">极致鲜味：</strong>汤底每日现熬（大棒骨+鸡架+海鲜壳），至少3-4小时</li>
+          <li><strong class="highlight">台州米面：</strong>坚持使用台州本地细米面（煮不烂、炒不坨），区别于普通面条</li>
+          <li><strong class="highlight">现点现煮：</strong>每碗面现点现烧，锅气足，海鲜现煎现煮，拒绝预制</li>
+          <li><strong class="highlight">台州特色：</strong>保留姜汤面、海苔饼、麦饼等特色小吃，打造"台州美食集合"概念</li>
+          <li><strong class="highlight">场景适配：</strong>午市主打快速出餐，晚市可推出"海鲜小炒+啤酒"组合</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">⏰</span> 时段运营策略</h3>
+        <ul>
+          <li><strong class="highlight">早餐（7:00-9:00）：</strong>台州特色早餐（麦饼、海苔饼、炒米面），人均¥15-25</li>
+          <li><strong class="highlight">午餐（11:00-14:00）：</strong>主力时段，主推海鲜面套餐，快速翻台</li>
+          <li><strong class="highlight">下午茶（14:00-17:00）：</strong>简餐+小吃，可推台州特色点心组合</li>
+          <li><strong class="highlight">晚餐（17:00-21:00）：</strong>海鲜面+小炒+啤酒，延展客单价</li>
+          <li><strong class="highlight">注意：</strong>面馆午市是核心，高峰期需保证出餐速度</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第五部分：推广引流 ====== -->
+<div class="section section-orange" id="part5">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">05</div>
+      <h2>新店推广方案</h2>
+      <div class="line"></div>
+      <p>社区渗透 + 线上引流 + 一店导流</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">📱</span> 大众点评运营</h3>
+      <div class="grid-2">
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">📋 团购套餐建议</h4>
+          <ul>
+            <li><strong>引流款：</strong>招牌三鲜面 ¥19.9（原价¥32），快速积累销量和评价</li>
+            <li><strong>主推款：</strong>黄鱼海鲜面 ¥29.9（原价¥42），主力引流产品</li>
+            <li><strong>双人套餐：</strong>2碗面+小吃 ¥68（原价¥96），适合邻里消费</li>
+            <li><strong>特色体验：</strong>台州特色双人餐（姜汤面+炒年糕+海苔饼）¥58</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">📈 推流计划</h4>
+          <ul>
+            <li><strong>新店期（第1-2周）：</strong>推广通日预算¥200-300，投放"莘庄/龙茗路/报春路"地域标签</li>
+            <li><strong>冲量期（第3-4周）：</strong>推广通日预算¥300-500，追加"面馆/海鲜面/台州菜"品类标签</li>
+            <li><strong>稳定期（第2个月起）：</strong>日预算¥100-200，精细化投放</li>
+            <li><strong>冲榜策略：</strong>主攻"莘庄"区域面馆好评榜，目标TOP3</li>
+            <li><strong>月推广预算：</strong>约¥5,000-8,000</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📕</span> 小红书内容营销</h3>
+        <ul>
+          <li><strong>人设定位：</strong>"莘庄新开的台州海鲜面""来自颛桥4.3分老店的二店"</li>
+          <li><strong>爆款选题：</strong>
+            <br>📌 "莘庄人私藏｜衡园莘光里新开的台州海鲜面，汤鲜掉眉毛"
+            <br>📌 "上海这碗梭子蟹面，58元一整只蟹，鲜到上头"
+            <br>📌 "颛桥老店开二店了！莘庄的台州人快来集合"</li>
+          <li><strong>KOC合作：</strong>邀请5-8位闵行本地博主，置换套餐体验</li>
+          <li><strong>差异化内容：</strong>拍摄台州特色姜汤面制作过程、海鲜现煮过程</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🏪</span> 社区精准渗透</h3>
+        <ul>
+          <li><strong>周边小区地推：</strong>绿世界、佳佳花园、新梅广场等小区，发放开业传单+优惠券</li>
+          <li><strong>开业活动：</strong>"开业前3天，全场面品8折""到店打卡送海苔饼"</li>
+          <li><strong>一店导流：</strong>在一店张贴二店海报，老顾客到二店消费享9折优惠</li>
+          <li><strong>异业合作：</strong>与莘光里内星巴克、肯德基等品牌联合活动（消费满额互送券）</li>
+          <li><strong>外卖平台：</strong>美团+饿了么双平台上线，新店7天"配送费减免"活动</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第六部分：营收预估 ====== -->
+<div class="section section-red" id="part6">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">06</div>
+      <h2>营收预估</h2>
+      <div class="line"></div>
+      <p>面馆模型 · 莘庄社区店</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">100-150人</div>
+        <div class="label">日均客流量（工作日）</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">180-250人</div>
+        <div class="label">日均客流量（周末）</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="font-size: 28px;">¥42-50</div>
+        <div class="label">平均客单价</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📆</span> 月营收估算</h3>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">工作日午餐（22天×100人×¥45）</span>
+          <span class="item-price">¥99,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">晚餐+周末（30天×60人×¥50）</span>
+          <span class="item-price">¥90,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">外卖平台预估</span>
+          <span class="item-price">¥20,000-30,000</span>
+        </div>
+        <div style="border-top: 1px solid rgba(212,168,83,0.2); padding-top: 12px; margin-top: 12px;">
+          <div class="price-item" style="padding: 8px 0; border: none;">
+            <span class="item-name" style="color: #f0d68a; font-weight: 600;">📊 月营收合计</span>
+            <span class="item-price" style="font-size: 22px;">¥209,000-219,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">💰</span> 月成本估算</h3>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">房租（含物业）</span>
+          <span class="item-price">约¥35,000-50,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">人工（3-4人）</span>
+          <span class="item-price">约¥18,000-24,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">食材成本（约35%）</span>
+          <span class="item-price">约¥73,000-77,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">推广费用</span>
+          <span class="item-price">约¥5,000-8,000</span>
+        </div>
+        <div class="price-item" style="padding: 10px 0; border: none;">
+          <span class="item-name">水电杂费</span>
+          <span class="item-price">约¥5,000-8,000</span>
+        </div>
+        <div style="border-top: 1px solid rgba(212,168,83,0.2); padding-top: 12px; margin-top: 12px;">
+          <div class="price-item" style="padding: 8px 0; border: none;">
+            <span class="item-name" style="color: #f0d68a; font-weight: 600;">📊 月成本合计</span>
+            <span class="item-price" style="font-size: 18px;">约¥136,000-167,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">📈</span> 盈利预估</h3>
+        <div class="stat-card" style="margin: 12px 0;">
+          <div class="num" style="font-size: 32px;">¥42,000-83,000</div>
+          <div class="label">月净利润（保守-乐观）</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" style="font-size: 24px;">20-38%</div>
+          <div class="label">净利率</div>
+        </div>
+        <div class="tip-box" style="margin-top: 12px;">
+          <p><strong>💡 提升利润关键：</strong>①控制食材成本（海鲜集中采购）②提升翻台率（午市快速出餐）③外卖占比提升至20%+④增加高毛利小吃占比</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第七部分：连锁经营体系 ====== -->
+<div class="section section-green" id="part7">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">07</div>
+      <h2>连锁经营体系</h2>
+      <div class="line"></div>
+      <p>从1到N · 台州亿方海鲜面品牌化蓝图</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🏗️</span> 连锁经营核心架构</h3>
+      <div class="grid-2" style="margin-top: 16px;">
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">📋 品牌统一化</h4>
+          <ul>
+            <li><strong>统一品牌VI：</strong>门头设计、菜单、餐具、员工服装统一风格</li>
+            <li><strong>统一品牌名：</strong>"台州亿方海鲜面"作为品牌名，后缀加"颛桥店""莘庄店"</li>
+            <li><strong>统一品牌故事：</strong>"来自台州的地道海鲜味，在上海扎根"的品牌叙事</li>
+            <li><strong>统一视觉识别：</strong>以蓝色（海洋）+暖色（烟火气）为主色调</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">📋 供应链标准化</h4>
+          <ul>
+            <li><strong>集中采购：</strong>两店合并采购海鲜食材，降低采购成本10-15%</li>
+            <li><strong>台州直达：</strong>建立台州海鲜直供渠道（黄鱼、梭子蟹、米面等核心食材）</li>
+            <li><strong>冷链配送：</strong>每日冷链从台州→上海，保证食材新鲜度</li>
+            <li><strong>汤底中央厨房：</strong>未来可设立中央厨房统一熬制汤底，配送各店</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <h3><span class="icon">📐</span> 运营标准化</h3>
+        <ul>
+          <li><strong>SOP手册：</strong>编写《台州亿方海鲜面操作手册》，涵盖：汤底熬制标准、海鲜处理流程、出餐时间标准、服务话术、卫生规范</li>
+          <li><strong>出餐标准化：</strong>每碗面的海鲜用量、汤量、煮面时间统一标准</li>
+          <li><strong>培训体系：</strong>一店作为"培训店"，新员工先在一店培训2周再到新店上岗</li>
+          <li><strong>品控巡检：</strong>每周由一店老板/店长到二店巡检品控</li>
+          <li><strong>神秘顾客：</strong>每月安排2次神秘顾客暗访，评估服务与出品质量</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🔄</span> 双店协同机制</h3>
+        <ul>
+          <li><strong>食材调配：</strong>两店食材库存互通，某一店缺货时快速调配</li>
+          <li><strong>人员轮岗：</strong>两店员工定期轮岗，保持服务标准一致</li>
+          <li><strong>联合营销：</strong>"一店二店联动卡"——在一店消费满¥100送二店优惠券，反之亦然</li>
+          <li><strong>数据互通：</strong>统一收银系统（如美团收银），实时掌握两店经营数据</li>
+          <li><strong>会员共享：</strong>建立统一会员体系，两店消费积分通用</li>
+          <li><strong>经验复盘：</strong>每周一次双店线上会议，交流运营心得</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3><span class="icon">🗺️</span> 连锁扩张路线图</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="dot"></div>
+          <div class="phase">阶段一 · 2026年8月-10月</div>
+          <h4>二店站稳脚跟</h4>
+          <p>莘庄二店开业，完成新店冷启动期。目标：大众点评评分冲上4.0+，日均客流稳定100+，验证双店运营模式可行性。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="dot"></div>
+          <div class="phase">阶段二 · 2026年11月-2027年3月</div>
+          <h4>标准化体系搭建</h4>
+          <p>完成SOP手册编写，建立供应链体系，搭建中央厨房（可选），培养核心管理团队，评估双店盈利模型。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="dot"></div>
+          <div class="phase">阶段三 · 2027年4月-8月</div>
+          <h4>三店选址与扩张</h4>
+          <p>基于一店（颛桥·社区店）和二店（莘庄·社区商业体）的经验，选址第三家店。推荐方向：<strong class="highlight">闵行浦江镇/松江九亭/徐汇梅陇</strong>等同类社区型商圈。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="dot"></div>
+          <div class="phase">阶段四 · 2027年9月+</div>
+          <h4>品牌化运营</h4>
+          <p>目标3-5家门店，建立品牌总部，开放加盟/合伙模式，打造"上海台州海鲜面第一连锁品牌"。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3><span class="icon">💡</span> 连锁化关键建议</h3>
+      <div class="grid-2">
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">✅ 必做</h4>
+          <ul>
+            <li>尽快注册"台州亿方海鲜面"商标，保护品牌资产</li>
+            <li>建立统一的品牌视觉体系（门头、菜单、餐具）</li>
+            <li>编写标准化操作手册，降低对"师傅"的依赖</li>
+            <li>建立核心食材供应链（台州海鲜直发）</li>
+            <li>统一收银系统，数据驱动决策</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: #f0d68a; font-size: 15px; margin-bottom: 12px;">⚠️ 避坑</h4>
+          <ul>
+            <li>不要急于扩张——先跑通双店模型再开三店</li>
+            <li>不要降低品质——连锁化≠预制化，海鲜面必须现煮</li>
+            <li>不要忽视一店——一店是品牌根基，品质不能掉</li>
+            <li>不要盲目加盟——先做直营，跑通盈利模型</li>
+            <li>不要忽视品控——每周至少一次品控巡检</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 第八部分：给老板的话 ====== -->
+<div class="section section-gold" id="part8">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">08</div>
+      <h2>给老板的话</h2>
+      <div class="line"></div>
+      <p>台州亿方 · 从一碗面到一份事业</p>
+    </div>
+
+    <div class="card" style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p style="font-size: 16px; line-height: 2; color: rgba(232,224,212,0.8);">
+        老板，您的一店能在颛桥做到<strong class="highlight">4.3分</strong>，说明台州亿方海鲜面的品质已经被市场认可了。<br><br>
+        莘庄二店选在衡园莘光里，周围都是成熟社区，有星巴克、肯德基这些大品牌一起聚人气，<strong class="highlight">品类差异化</strong>的优势很明显——整个莘光里目前没有海鲜面馆，这就是您的机会。<br><br>
+        从单店到连锁，关键是<strong class="highlight">标准化 + 供应链 + 品牌化</strong>三件事。一店是您的"研发中心"和"培训基地"，二店是"样板间"，跑通之后，上海做3-5家店是完全可以实现的。<br><br>
+        这个方案是用大众点评大数据结合美团平台数据综合分析做出来的，老板可以参考一下，具体的定价和运营事项可以根据实际情况灵活调整。祝台州亿方海鲜面越来越好！🎉
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="brand">台州亿方海鲜面</div>
+  <p>以上方案基于大众点评大数据与美团平台数据综合分析</p>
+  <p style="margin-top: 8px;">具体运营事项请根据实际情况调整</p>
+  <p style="margin-top: 20px; font-size: 11px;">— 方案生成时间 2026.08.18 —</p>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / scrollHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+</script>
+
+</body>
+</html>
